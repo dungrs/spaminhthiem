@@ -30,9 +30,10 @@
     $twoStar = $product->reviews()->where('score', 2)->count();
     $oneStar = $product->reviews()->where('score', 1)->count();
 @endphp
-<main class="body">
+@include('frontend.component.breadcrumb', ['model' => $product, 'breadcrumb' => $breadcrumb])
+<section class="body">
     <div class="container mt-4">
         @include('frontend.product.product.component.details')
         @include('frontend.product.product.component.descriptionReview')
     </div>
-</main>
+</section>

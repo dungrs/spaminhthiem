@@ -31,12 +31,12 @@
     }
     
     .noUi-connect {
-      background: #d10000;
+      background: #01964a;
     }
     
     .noUi-handle {
       background: #fff;
-      border: 2px solid #d10000;
+      border: 2px solid #01964a;
       box-shadow: 0 0 2px rgba(0,0,0,0.15);
       cursor: pointer;
     }
@@ -56,7 +56,7 @@
     }
     
     .price-input:focus {
-      border-color: #d10000;
+      border-color: #01964a;
       box-shadow: none;
     }
     

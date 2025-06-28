@@ -91,7 +91,7 @@
                                     <!-- Quantity (Compact Design) -->
                                     <div class="group-quantity">
                                         <div class="d-flex flex-column gap-2 mt-2">
-                                            <span class="fs-6 fw-bold d-block">Số Lượng</span>
+                                            <span class="fs-6 fw-bold d-block mb-1">SỐ LƯỢNG</span>
                                             <div class="d-flex">
                                                 <div class="custom-btn-quantity minus">-</div>
                                                 <input type="number" value="1" name="quantity" id="quantity" class="custom-input-quantity text-center">
@@ -99,15 +99,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mt-auto pt-2 d-grid gap-3">
-                                        <button
-                                            class="btn btn-danger py-3 fw-bold rounded-3 submitCartButton"
-                                            data-check="{{ empty($customer) ? 'false' : 'true' }}">
+                                        <button class="btn btn-primary py-auto fw-bold rounded-pill submitCartButton" 
+                                                data-check="{{ empty($customer) ? 'false' : 'true' }}"
+                                                style="background-color: #01964a; border-color: #01964a; letter-spacing: 0.5px; color: #fff;">
                                             <i class="fas fa-cart-plus me-2"></i> THÊM VÀO GIỎ HÀNG
                                         </button>
-                                        <button class="btn btn-outline-danger py-3 fw-bold rounded-3 buyNowButton" 
-                                            data-check="{{ empty($customer) ? 'false' : 'true' }}">
+                                        <button class="btn btn-outline-primary py-auto fw-bold rounded-pill buyNowButton"
+                                                data-check="{{ empty($customer) ? 'false' : 'true' }}"
+                                                style="color: #01964a; border-color: #01964a; letter-spacing: 0.5px;">
                                             <i class="fas fa-bolt me-2"></i> MUA NGAY
                                         </button>
                                     </div>

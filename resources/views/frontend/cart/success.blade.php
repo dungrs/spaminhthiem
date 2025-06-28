@@ -23,7 +23,7 @@
                         <div class="step-connector active"></div>
                         
                         <div class="step active">
-                            <div class="step-icon bg-danger text-white">
+                            <div class="step-icon bg-primary text-white">
                                 <i class="fas fa-check-circle"></i>
                             </div>
                             <div class="step-label mt-2">Hoàn Thành</div>
@@ -33,6 +33,7 @@
             </div>
         </div>
     </div>
+
     <div class="container py-2">
         <!-- Invoice Card -->
         <div class="invoice-container">
@@ -133,7 +134,7 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Giảm giá:</span>
-                            <span class="text-success">-{{ convert_price($data['order']->first()->promotion['discount']) }}</span>
+                            <span class="text-primary">-{{ convert_price($data['order']->first()->promotion['discount']) }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Phí vận chuyển:</span>
@@ -150,15 +151,16 @@
 
                 <!-- Thank You & Next Steps -->
                 <div class="thank-you mb-4">
-                    <h5 class="fw-bold text-danger mb-3"><i class="fas fa-heart me-2"></i>Cảm ơn bạn đã mua hàng!</h5>
+                    <h5 class="fw-bold text-primary mb-3"><i class="fas fa-heart me-2"></i>Cảm ơn bạn đã mua hàng!</h5>
                     <p class="mb-2">Đơn hàng của bạn đã được xác nhận và sẽ được giao trong 2-3 ngày tới.</p>
-                    <p>Bạn có thể theo dõi đơn hàng trong <a href="#" class="text-danger">Trạng thái đơn hàng</a> hoặc xem <a href="#" class="text-danger">Lịch sử mua hàng</a>.</p>
+                    <p>Bạn có thể theo dõi đơn hàng trong <a href="#" class="text-primary">Trạng thái đơn hàng</a> hoặc xem <a href="#" class="text-primary">Lịch sử mua hàng</a>.</p>
                 </div>
 
                 <!-- Actions -->
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('home.index') }}" class="btn btn-outline-danger">
-                        <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+                    <a href="{{ route('home.index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2 mt-2"></i>
+                        <span>Tiếp tục mua sắm</span>
                     </a>
                     <button class="btn print-btn" onclick="window.print()">
                         <i class="fas fa-print me-2"></i>In hóa đơn
@@ -291,7 +293,7 @@
                             class="img-fluid mb-3" alt="Giao hàng">
                         <h6 class="fw-bold">{{ __('cart.method_shipping.data')[$data['order']->first()->method_shipping] }}</h6>
                         <p class="small text-muted">Mã vận đơn: {{ $data['order']->first()->shipping_code ?? 'Đang cập nhật' }}</p>
-                        <button class="btn btn-sm btn-outline-danger align-self-center">Xem chi tiết</button>
+                        <button class="btn btn-outline-primary align-self-center">Xem chi tiết</button>
                     </div>
                 </div>
             </div>

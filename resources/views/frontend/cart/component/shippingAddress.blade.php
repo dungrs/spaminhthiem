@@ -1,6 +1,10 @@
 <!-- Shipping Address -->
 <div class="mb-4">
-    <h5 class="mb-3 fw-bold text-danger">Địa Chỉ Giao Hàng</h5>
+    <div class="d-flex align-items-center mb-3">
+        <i class="fas fa-map-marker-alt text-primary me-2" style="font-size: 1.4rem;"></i>
+        <h5 class="mb-0 fw-bold text-dark">Địa chỉ giao hàng</h5>
+    </div>
+
     <div class="row g-3">
         <!-- Address Row -->
         <div class="col-md-4 mb-1">

@@ -17,79 +17,87 @@
     $totalRate = number_format($product->reviews()->avg('score'), 1);
     $starPercent = ($totalReviews == 0) ? '0' : $totalRate / 5 * 100;
 @endphp
-<div class="swiper-slide">
-    <div class="card position-relative custom-card-hover h-100">
+<div class="item_product_main">
+    <!-- Ảnh sản phẩm -->
+    <div class="product-thumbnail pos-relative">
+        <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1"
+            href="{{ $canonical }}"
+            title="{{ $name }}">
+            <img loading="lazy"
+                    width="480"
+                    height="480"
+                    style="--image-scale: 1;"
+                    src="{{ $image }}"
+                    alt="{{ $name }}">
+        </a>
+
         @if (isset($product->promotion))
-            <div class="position-absolute top-0 start-0" style="z-index: 1">
-                <div class="discount-ribbon">
-                    <span class="discount-percent">-{{ $discount['value'] }} {{ $discount['type'] }}</span>
-                    <div class="ribbon-tail"></div>
+            <div class="label_product">
+                <div class="label_wrapper">
+                    -{{ $discount['value'] }} {{ $discount['type'] }}
                 </div>
             </div>
         @endif
 
-        <a href="{{ $canonical }}" class="text-decoration-none">
-            <div class="ratio ratio-1x1">
-                <img src="{{ $image }}" 
-                        class="card-img-top p-3 object-fit-contain" 
-                        alt="">
+        <div class="product-action">
+            <div class="group_action" data-url="{{ $canonical }}">
+                <button
+                    data-bs-toggle="modal" 
+                    data-bs-target="#productDetailModal"
+                    class="btn-circle btn-views btn_view btn show-product-btn right-to">
+                    <i class="fas fa-search"></i>
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="language_id" value="{{ $languageId }}">
+                </button>
             </div>
-        </a>
+        </div>
+    </div>
 
-        <div class="card-body p-2 d-flex flex-column">
-            <a href="{{ $canonical }}" class="text-decoration-none text-dark">
-                <h5 class="card-title fs-6 fw-semibold mb-2 product-title hover-red">{{ $name }}
-                </h5>
+    <!-- Thông tin sản phẩm -->
+    <div class="product-info">
+        <span class="product-vendor">Usolab</span>
+
+        <h3 class="product-name">
+            <a href="{{ $canonical }}" title="{{ $name }}">
+                {{ $name }}
             </a>
+        </h3>
 
-            <div class="d-flex align-items-center mb-2">
-                @if($totalReviews > 0)
-                    <div class="text-warning small">
-                        {!! generateStar($totalRate) !!}
+        <div class="sapo-product-reviews-badge" data-id="36047637"></div>
+
+        <div class="product-item-cta position-relative">
+            <div class="price-box">
+                @if (isset($product->promotion))
+                    <span class="price">{{ $discount['sale_price'] }}đ</span>
+                    <span class="compare-price">{{ $discount['old_price'] }}đ</span>
+
+                    <div class="label_product d-lg-none d-md-none d-xl-none d-inline-block">
+                        <div class="label_wrapper">
+                            -{{ $discount['value'] }} {{ $discount['type'] }}
+                        </div>
                     </div>
-                    <span class="text-muted ms-1 small">({{ $totalReviews }} đánh giá)</span>
                 @else
-                    <span class="text-muted ms-1 small">
-                        <i class="fas fa-comment-slash me-1"></i> Chưa có đánh giá
-                    </span>
+                    <span class="price">{{ $price }}đ</span>
                 @endif
             </div>
-            
-            <div class="mt-2">
-                <div class="d-flex align-items-baseline gap-2 mb-2">
-                    @if(isset($product->promotion))
-                        <span class="text-danger fw-bold fs-5">{{ $discount['sale_price'] }}đ</span>
-                        <span class="text-muted text-decoration-line-through small">{{ $discount['old_price'] }}đ</span>
-                    @else
-                        <span class="text-danger fw-bold fs-5">{{ $price }}đ</span>
-                    @endif
-                </div>
 
-                <div class="progress mb-2" style="height: 6px;">
-                    <div class="progress-bar bg-danger" role="progressbar"
-                        style="width: {{ $percent }}%;" 
-                        aria-valuenow="{{ $percent }}" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-                <p class="small text-muted mb-2">Đã bán {{ $sold }}/{{ $total }}</p>
-                
-                @if (!isset($details))
-                    <button class="btn btn-danger w-100 py-2 show-product-btn" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#productDetailModal">
-                        <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="language_id" value="{{ $languageId }}">
-                    </button>
-                @else
-                    <a href="{{ $canonical }}" class="btn btn-danger w-100 py-2" aria-label="Xem chi tiết sản phẩm">
-                        <span class="btn-content">
-                            <i class="fas fa-eye me-2"></i> Xem chi tiết
-                        </span>
-                        <span class="btn-hover-effect"></span>
-                    </a>
-                @endif
-            </div>
+            <button class="product-item-btn btn add_to_cart active" title="Thêm vào giỏ hàng">
+                <svg class="icon">
+                    <use xlink:href="#icon-plus"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Flash Sale -->
+    <div class="flashsale__bottom" style="display: none">
+        <div class="flashsale__label">
+            <b class="flashsale__sold-qty"></b>
+            sản phẩm đã bán
+        </div>
+
+        <div class="flashsale__progressbar">
+            <div class="flashsale___percent"></div>
         </div>
     </div>
 </div>

@@ -263,7 +263,7 @@ const Product = {
         attributeCatalogue.forEach((group, groupIndex) => {
             const groupDiv = $(`
                 <div class="${groupIndex === 0 ? 'mt-2' : 'mt-4'}" data-group-index="${groupIndex}">
-                    <h6 class="fw-bold mb-2 text-uppercase mb-2">${group.name}</h6>
+                    <h6 class="fw-bold mb-3 text-uppercase mb-2">${group.name}</h6>
                     <div class="d-flex flex-wrap gap-2"></div>
                 </div>
             `);
@@ -273,7 +273,7 @@ const Product = {
             if (Array.isArray(group.attributes) && group.attributes.length) {
                 group.attributes.forEach((attr, attrIndex) => {
                     const attrBtn = $(`
-                        <a class="btn btn-outline-dark rounded-pill px-3 py-1 choose-attribute ${attrIndex === 0 ? 'active' : ''}"
+                        <a class="btn btn-outline-primary rounded-pill px-3 py-1 choose-attribute ${attrIndex === 0 ? 'active border-primary' : 'border-dark'}"
                            data-attributeid="${attr.id}"
                            title="${attr.name}"
                            style="font-size: 0.85rem; border-width: 1.5px;">

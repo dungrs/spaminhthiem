@@ -70,3 +70,148 @@
     <link href="{{ asset($css) }}"></link>
 @endforeach
 
+<meta name="google-site-verification" content="UEM9EiIxf4IycCJ5IVey33ujVIAGuQZ9DrWtfPSr9dc"/>
+<meta charset="UTF-8"/>
+<meta name="google-site-verification" content="ZjN2o5ymTH_j2xMWXVmR6T6K4UlnVgJxM6c0SAjuCxM"/>
+<!-- Google Tag Manager -->
+<script>
+      (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+      "gtm.start": (new Date).getTime(),
+      event: "gtm.js"
+      });
+      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-5D5VDGR");
+</script>
+<!-- End Google Tag Manager -->
+<meta name="google-site-verification" content="LySYxdFpQkWOJApLA1rL0c3ZC_rSubWkbsp74nLQtKE"/>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-968062939"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+      dataLayer.push(arguments);
+      }
+      gtag("js", new Date);
+      gtag("config", "AW-968062939");
+</script>
+<meta name="theme-color" content="#f02b2b"/>
+<meta
+      property="og:image"
+      content="https://bizweb.dktcdn.net/100/494/811/themes/921992/assets/share_fb_home.jpg?1717567288856">
+<meta
+      property="og:image:secure_url"
+      content="https://bizweb.dktcdn.net/100/494/811/themes/921992/assets/share_fb_home.jpg?1717567288856">
+<link
+      rel="icon"
+      href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/favicon.png?1717567288856"
+      type="image/x-icon"/>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://bizweb.dktcdn.net">
+<link rel="dns-prefetch" href="https://myphamthucuc.com">
+<link
+      rel="preload"
+      as='style'
+      type="text/css"
+      href="{{ asset('frontend/css/main.scss.css') }}">
+<link
+      rel="preload"
+      as='style'
+      type="text/css"
+      href="{{ asset('frontend/css/index.scss.css') }}">
+<link
+      rel="preload"
+      as='style'
+      type="text/css"
+      href="{{ asset('frontend/css/bootstrap-lite.css') }}">
+<link
+      rel="preload"
+      as='style'
+      type="text/css"
+      href="{{ asset('frontend/css/responsive.scss.css') }}">
+<link
+      rel="preload"
+      as='style'
+      type="text/css"
+      href="{{ asset('frontend/css/product_infor_style.scss.css') }}">
+<link
+      rel="stylesheet"
+      href="{{ asset('frontend/css/bootstrap-lite.css') }}">
+<link
+      href="{{ asset('frontend/css/main.scss.css') }}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"/>
+<link
+      href="{{ asset('frontend/css/product_infor_style.scss.css') }}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"/>
+<link
+      href="{{ asset('frontend/css/index.scss.css') }}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"/>
+<link
+      rel="preload"
+      as="script"
+      href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/jquery.js?1717567288856"/>
+<script src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/jquery.js?1717567288856" type="text/javascript"></script>
+<link
+      href="{{ asset('frontend/css/responsive.scss.css') }}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"/>
+      
+<script>
+      var Bizweb = Bizweb || {};
+      Bizweb.store = "my-pham-cho-spa.mysapo.net";
+      Bizweb.id = 494811;
+      Bizweb.theme = {
+      id: 921992,
+      name: "EGA Cosmetic",
+      role: "main"
+      };
+      Bizweb.template = "index";
+      if (!Bizweb.fbEventId) Bizweb.fbEventId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (function(c) {
+      var r = Math.random() * 16 | 0, v = c == "x" ? r : r & 3 | 8;
+      return v.toString(16);
+      }));
+</script>
+<script>
+      (function() {
+      function asyncLoad() {
+      var urls = [ "//newproductreviews.sapoapps.vn/assets/js/productreviews.min.js?store=my-pham-cho-spa.mysapo.net" ];
+      for (var i = 0; i < urls.length; i++) {
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = urls[i];
+            var x = document.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(s, x);
+      }
+      }
+      window.attachEvent ? window.attachEvent("onload", asyncLoad) : window.addEventListener("load", asyncLoad, false);
+      })();
+</script>
+<script>
+      window.BizwebAnalytics = window.BizwebAnalytics || {};
+      window.BizwebAnalytics.meta = window.BizwebAnalytics.meta || {};
+      window.BizwebAnalytics.meta.currency = "VND";
+      window.BizwebAnalytics.tracking_url = "/s";
+      var meta = {};
+      for (var attr in meta) {
+      window.BizwebAnalytics.meta[attr] = meta[attr];
+      }
+</script>
+<link
+      href="{{ asset('frontend/css/appcombo.css') }}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"/>

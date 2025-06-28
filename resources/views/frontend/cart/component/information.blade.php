@@ -1,6 +1,9 @@
 <!-- Customer Info -->
 <div class="mb-4">
-    <h5 class="mb-3 fw-bold text-danger">Thông Tin Khách Hàng</h5>
+        <div class="d-flex align-items-center mb-3">
+        <i class="fas fa-user-circle text-primary me-2" style="font-size: 1.5rem;"></i>
+        <h5 class="mb-0 text-dark fw-bold">Thông tin khách hàng</h5>
+    </div>
     <div class="row g-3">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
         <div class="col-md-6">

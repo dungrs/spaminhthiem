@@ -102,7 +102,7 @@ const ProductCatalogue = {
             success: function (response) {
                 const productList = $('.product-list');
                 productList.empty();
-        
+                
                 let productsData = [];
                 
                 if (response.data) {
@@ -126,33 +126,29 @@ const ProductCatalogue = {
                         if (!item) return;
                         
                         const name = item.name || 'Sản phẩm';
+                        const brand = item.brand || item.vendor || 'Thương hiệu';
                         const image = item.image && item.image.startsWith('http') ? item.image : `${baseUrl}${item.image || ''}`;
                         const canonical = `${baseUrl}/${item.canonical || 'product-detail'}.html`;
-                        
-                        const total = Math.floor(Math.random() * 71) + 30; // 30-100
-                        const sold = Math.floor(Math.random() * total) + 1; // 1-total
-                        const percent = Math.round((sold / total) * 100);
                         
                         // Process promotion
                         let promotion = null;
                         let discount = null;
                         let price = "0";
+                        let comparePrice = "";
+                        let discountPercent = "";
                         
                         if (item.product_variants && item.product_variants.length > 0) {
-                            price = new Intl.NumberFormat('vi-VN').format(item.product_variants[0].price || item.price || 0);
+                            price = new Intl.NumberFormat('vi-VN').format(item.product_variants[0].price || item.price || 0) + '₫';
                         } else if (item.price) {
-                            price = new Intl.NumberFormat('vi-VN').format(item.price);
+                            price = new Intl.NumberFormat('vi-VN').format(item.price) + '₫';
                         }
                         
                         if (item.promotion) {
                             promotion = item.promotion;
                             if (promotion.discountType === 'percent') {
-                                discount = {
-                                    type: '%',
-                                    value: promotion.discountValue,
-                                    old_price: new Intl.NumberFormat('vi-VN').format(promotion.product_price)
-                                };
-                                price = new Intl.NumberFormat('vi-VN').format(promotion.product_price - promotion.finalDiscount);
+                                discountPercent = Math.round(promotion.discountValue) + '%';
+                                comparePrice = new Intl.NumberFormat('vi-VN').format(promotion.product_price) + '₫';
+                                price = new Intl.NumberFormat('vi-VN').format(promotion.product_price - promotion.finalDiscount) + '₫';
                             }
                         }
                         
@@ -166,86 +162,100 @@ const ProductCatalogue = {
                         
                         // Build the product card HTML
                         let productHtml = `
-                        <div class="col-lg-3">
-                            <div class="card position-relative custom-card-hover">`;
-                        
-                        // Promotion ribbon
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-6 product-col">
+                            <div class="item_product_main">
+                                    <div class="product-thumbnail pos-relative">
+                                        <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="${canonical}" title="${name}">
+                                            <img
+                                                width="480"
+                                                height="480"
+                                                style="--image-scale: 1;"
+                                                src="${image}"
+                                                alt="${name}"
+                                            />
+                                        </a>`;
+
+                        // Promotion label
                         if (promotion) {
                             productHtml += `
-                                <div class="position-absolute top-0 start-0" style="z-index: 1">
-                                    <div class="discount-ribbon">
-                                        <span class="discount-percent">-${discount.value}${discount.type}</span>
-                                        <div class="ribbon-tail"></div>
-                                    </div>
-                                </div>`;
+                                        <div class="label_product">
+                                            <div class="label_wrapper">
+                                                -${discountPercent}
+                                            </div>
+                                        </div>`;
                         }
-                        
-                        // Product image
+
+                        // Quick view button
                         productHtml += `
-                                <a href="${canonical}" class="text-decoration-none">
-                                    <div class="ratio ratio-1x1">
-                                        <img src="${image}" class="card-img-top p-3 object-fit-contain" alt="${name}">
-                                    </div>
-                                </a>
-                                <div class="card-body p-3 d-flex flex-column">
-                                    <a href="${canonical}" class="text-decoration-none text-dark">
-                                        <h5 class="card-title fs-6 fw-semibold mb-2 product-title hover-red">${name}</h5>
-                                    </a>
-                                    <div class="d-flex align-items-center">`;
-                        
-                        // Reviews
-                        if (totalReviews > 0) {
-                            productHtml += `
-                                        <div class="text-warning small">
-                                            ${ProductCatalogue.generateStar(totalRate)}
-                                        </div>
-                                        <span class="text-muted ms-1 small">(${totalReviews} đánh giá)</span>`;
-                        } else {
-                            productHtml += `
-                                        <span class="text-muted ms-1 small">
-                                            <i class="fas fa-comment-slash me-1"></i> Chưa có đánh giá
-                                        </span>`;
-                        }
-                        
-                        // Price
-                        productHtml += `
-                                    </div>
-                                    <div class="mt-2">
-                                        <div class="d-flex align-items-baseline gap-2 mb-2">`;
-                        if (promotion) {
-                            productHtml += `
-                                            <span class="text-danger fw-bold fs-5">${price}đ</span>
-                                            <span class="text-muted text-decoration-line-through small">${discount.old_price}đ</span>`;
-                        } else {
-                            productHtml += `
-                                            <span class="text-danger fw-bold fs-5">${price}đ</span>`;
-                        }
-                        
-                        // Sales progress
-                        productHtml += `
-                                        </div>
-                                        <div class="progress mb-2" style="height: 6px;">
-                                            <div class="progress-bar bg-danger" role="progressbar" 
-                                                style="width: ${percent}%;" 
-                                                aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="product-action">
+                                            <div class="group_action" data-url="${canonical}">
+                                                <a title="Xem nhanh" href="${canonical}" data-handle="${item.canonical || 'product-detail'}" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                                    <i class="fas fa-search"></i>
+                                                </a>
+                                            </div>
+                                            <div class="group_action" data-url="${canonical}">
+                                                <button
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#productDetailModal"
+                                                    class="btn-circle btn-views btn_view btn show-product-btn right-to">
+                                                    <i class="fas fa-search"></i>
+                                                    <input type="hidden" name="product_id" value="${item.id}">
+                                                    <input type="hidden" name="language_id" value="${item.language_id || 1}">
+                                                </button>
                                             </div>
                                         </div>
-                                        <p class="small text-muted text-center mb-2">Đã bán ${sold}/${total}</p>`;
-                        
-                        // Add to cart button
-                        productHtml += `
-                                        <button class="btn btn-danger w-100 py-2 show-product-btn" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#productDetailModal">
-                                            <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
-                                            <input type="hidden" name="product_id" value="${item.id}">
-                                            <input type="hidden" name="language_id" value="${item.language_id || 1}">
-                                        </button>`;
-                        
-                        // Close all tags
-                        productHtml += `
                                     </div>
-                                </div>
+                                    <div class="product-info">
+                                        <span class="product-vendor">${brand}</span>
+                                        <h3 class="product-name"><a href="${canonical}" title="${name}">${name}</a></h3>`;
+
+                        // Reviews
+                        productHtml += `
+                                        <div class="sapo-product-reviews-badge" data-id="${item.id}">
+                                            <div class="sapo-product-reviews-star" data-score="${totalRate}" data-number="5" style="color: #ffbe00;" title="${totalRate > 0 ? 'Rated ' + totalRate + ' stars' : 'Not rated yet!'}">`;
+                        
+                        // Generate star icons
+                        for (let i = 1; i <= 5; i++) {
+                            const starClass = i <= totalRate ? 'star-on-png' : 'star-off-png';
+                            productHtml += `<i data-alt="${i}" class="${starClass}" title="${i <= totalRate ? 'Rated' : 'Not rated'}"></i>&nbsp;`;
+                        }
+                        
+                        productHtml += `
+                                                <input name="score" type="hidden" readonly="" />
+                                            </div>
+                                        </div>`;
+
+                        // Price and add to cart
+                        productHtml += `
+                                        <div class="product-item-cta position-relative">
+                                            <div class="price-box">
+                                                <span class="price">${price}</span>`;
+
+                        if (promotion) {
+                            productHtml += `
+                                                <span class="compare-price">${comparePrice}</span>`;
+                        }
+
+                        // Mobile discount label
+                        if (promotion) {
+                            productHtml += `
+                                                <div class="label_product d-lg-none d-md-none d-xl-none d-inline-block">
+                                                    <div class="label_wrapper">
+                                                        -${discountPercent}
+                                                    </div>
+                                                </div>`;
+                        }
+
+                        productHtml += `
+                                            </div>
+                                            <input type="hidden" name="variantId" value="${item.product_variants && item.product_variants.length > 0 ? item.product_variants[0].id : ''}" />
+                                            <button class="product-item-btn btn add_to_cart active" title="Thêm vào giỏ hàng">
+                                                <svg class="icon">
+                                                    <use xlink:href="#icon-plus"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
                             </div>
                         </div>`;
                         

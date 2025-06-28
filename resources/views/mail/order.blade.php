@@ -48,7 +48,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #dc3545, #c82333);
+            background: linear-gradient(135deg, #01964a, #138e4f);;
             color: #ffffff;
             padding: 30px 20px;
             text-align: center;
@@ -156,7 +156,7 @@
         .total-row {
             font-weight: bold;
             font-size: 16px;
-            color: #dc3545;
+            color: #01964a;
             border-top: 2px solid #eeeeee;
             padding-top: 10px !important;
         }
@@ -164,13 +164,13 @@
         .thank-you {
             padding: 20px;
             background-color: #f8f9fa;
-            border-left: 4px solid #dc3545;
+            border-left: 4px solid #01964a;
             margin: 20px;
             border-radius: 8px;
         }
         
         .thank-you-title {
-            color: #dc3545;
+            color: #01964a;
             font-weight: bold;
             margin-top: 0;
             margin-bottom: 10px;
@@ -188,7 +188,7 @@
         .button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #dc3545;
+            background-color: #01964a;
             color: #ffffff !important;
             text-decoration: none;
             border-radius: 6px;
@@ -218,7 +218,7 @@
         }
         
         .payment-failed {
-            background-color: #dc3545;
+            background-color: #01964a;
         }
         
         .content-section {

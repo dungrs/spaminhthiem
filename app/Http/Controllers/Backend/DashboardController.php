@@ -26,7 +26,7 @@ class DashboardController extends BackendController
         $configs['method'] = 'index';
         $configs['seo'] = __('messages.dashboard');
         $keywords = [
-            'best-seller' => ['keyword' => 'best-seller', 'options' => ['object' => false, 'promotion' => true]],
+            'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
         ];
 
         $widgets = $this->widgetService->getWidget($keywords, 1);

@@ -5,7 +5,7 @@
 
         <div class="filter-header d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0 fw-bold">BỘ LỌC SẢN PHẨM</h5>
-            <button class="btn btn-sm btn-reset text-danger d-flex align-items-center btn-reset" style="border: none; background: none;">
+            <button class="btn btn-sm btn-reset text-danger pe-0 d-flex align-items-center btn-reset" style="border: none; background: none;">
                 <i class="bi bi-trash3-fill" style="font-size: 1.2rem;"></i> <!-- Bootstrap Icon for trash -->
                 <span class="ms-2">Xóa tất cả</span>
             </button>

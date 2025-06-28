@@ -22,3 +22,15 @@
 @foreach ($customScripts as $script)
     <script src="{{ asset($script) }}"></script>
 @endforeach
+
+<!-- Preload and load index.js -->
+<link rel="preload" as="script" href="{{ asset('frontend/js/index.js') }}" />
+<script src="{{ asset('frontend/js/index.js') }}" type="text/javascript"></script>
+
+<!-- Preload and load main.js -->
+<link rel="preload" as="script" href="{{ asset('frontend/js/main.js') }}" />
+<script src="{{ asset('frontend/js/main.js') }}" type="text/javascript"></script>
+
+<!-- Preload and load ega-gateway-min.js -->
+<link rel="preload" as="script" href="{{ asset('frontend/js/ega-gateway-min.js') }}" />
+<script src="{{ asset('frontend/js/ega-gateway-min.js') }}" type="text/javascript"></script>

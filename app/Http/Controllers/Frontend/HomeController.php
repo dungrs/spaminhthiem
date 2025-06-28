@@ -43,13 +43,13 @@ class HomeController extends FrontendController
             'canonical' => config('app.url')
         ];
         $keywords = [
-            'best-seller' => ['keyword' => 'best-seller', 'options' => ['object' => false, 'promotion' => true]],
+            'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
             'product-most-viewed' => ['keyword' => 'product-most-viewed', 'options' => ['object' => false, 'promotion' => true]],
             'post-hl' => ['keyword' => 'post-hl', 'options' => ['object' => false]],
-            'summer-deal-hunt' => ['keyword' => 'summer-deal-hunt', 'options' => ['object' => false]],
+            'auth-spa-skincare' => ['keyword' => 'auth-spa-skincare', 'options' => ['object' => false]],
         ];
 
-        $slides = $this->slideService->getSlideFrontend([SlideEnum::MAIN]);
+        $slides = $this->slideService->getSlideFrontend([SlideEnum::MAIN, SlideEnum::BANNER]);
         $widgets = $this->widgetService->getWidget($keywords, 1);
         return view('frontend.homepage.layout', compact(
             'template',

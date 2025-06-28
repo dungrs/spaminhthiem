@@ -232,6 +232,7 @@ const Home = {
         }
         return stars;
     },
+    
 };
 
 $(document).ready(function () {

@@ -67,7 +67,7 @@ var Library = {
         }
         str= str.slice(0,str.length-1);
         return str;
-     }
+    },
 };
 
 $(document).ready(function () {

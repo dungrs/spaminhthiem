@@ -77,4 +77,46 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     
         return $paginatedResults;
     }
+
+    public function getAllProducts(array $condition = [], array $attributeArray = []) {
+        $query = Product::select('products.id',
+                'products.product_catalogue_id',
+                'products.publish', 
+                'products.image', 
+                'products.follow', 
+                'pl.name', 
+                'pl.canonical',
+                'pl.language_id',)
+            ->join('product_languages as pl', 'pl.product_id', '=', 'products.id')
+            ->leftJoin('product_variants as pv', 'pv.product_id', '=', 'products.id')
+            ->with(['product_variants', 'reviews'])
+            ->whereNull('products.deleted_at')
+            ->groupBy(
+            'products.id',
+            'products.product_catalogue_id',
+            'products.publish',
+            'products.image',
+            'products.follow',
+            'pl.name',
+            'pl.canonical',
+            'pl.language_id'
+        );
+
+        foreach ($condition as $cond) {
+            if (is_array($cond[1])) {
+                $query->whereIn($cond[0], $cond[1]);
+            } else {
+                $query->where($cond[0], $cond[1], $cond[2] ?? null);
+            }
+        }
+
+        // Lọc theo thuộc tính (nếu có)
+        if (!empty($attributeArray)) {
+            foreach ($attributeArray as $attrId) {
+                $query->whereRaw("FIND_IN_SET('$attrId', REPLACE(pv.code, ' ', ''))");
+            }
+        }
+
+        return $query->get();
+    }
 }

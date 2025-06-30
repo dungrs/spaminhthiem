@@ -41,7 +41,9 @@
                     <div>
                         <!-- Nếu chưa có đánh giá -->
                         <div class="accordion-body px-0 py-4 text-center border-bottom {{ $totalReviews ? 'd-none' : '' }}">
-                            <img src="{{ asset('frontend/img/icon/EmtyReview.86be870e.svg') }}" alt="Empty" class="img-fluid mb-4" style="width: 150px;">
+                            <div class="text-primary mb-2">
+                                <i class="bx bx-message-square-dots bx-lg" style="font-size: 64px;"></i>
+                            </div>
                             <h5 class="fw-bold mb-2">Sản phẩm chưa có đánh giá</h5>
                             <p class="text-muted">Hãy là người đầu tiên đánh giá sản phẩm này</p>
                         </div>

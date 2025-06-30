@@ -1,6 +1,6 @@
+@include('frontend.component.breadcrumb', ['model' => $productCatalogue, 'breadcrumb' => $breadcrumb])
 <main class="body pt-4">
     <div class="container">
-        @include('frontend.component.breadcrumb', ['model' => $productCatalogue, 'breadcrumb' => $breadcrumb])
         <div class="row mt-4">
             @include("frontend.product.catalogue.component.filterContent")
             <div class="col-lg-9">
@@ -78,4 +78,55 @@
       height: 15px !important;
       right: -10px !important;
     }
+
+    @media (max-width: 1199.98px) {
+        .filter-card-wrapper {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 380px;
+            background-color: #fff;
+            z-index: 1055;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            display: block !important;
+        }
+
+        .filter-card-wrapper.show {
+            transform: translateX(0);
+        }
+
+        body.filter-open {
+            overflow: hidden;
+        }
+    }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const filterBtn = document.getElementById('mobile-filter-btn');
+      const filterWrapper = document.querySelector('.filter-card-wrapper');
+      const closeBtn = document.querySelector('.btn-close-filter');
+
+      // Mở bộ lọc
+      filterBtn?.addEventListener('click', function () {
+          console.log(123);
+          if (filterWrapper) {
+              filterWrapper.classList.add('show');
+              document.body.classList.add('filter-open');
+          }
+      });
+
+      // Đóng bộ lọc
+      closeBtn?.addEventListener('click', function () {
+          if (filterWrapper) {
+              filterWrapper.classList.remove('show');
+              document.body.classList.remove('filter-open');
+          }
+      });
+  });
+</script>

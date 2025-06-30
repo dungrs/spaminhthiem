@@ -1,26 +1,33 @@
 <div class="row mt-4">
     @if (!empty($album))
         <div class="col-xl-6 col-sm-12">
-            <div class="product-gallery-container d-flex">
-                <div class="swiper thumbSwiperProductDetails" style="width: 100px; height: 400px">
-                    <div class="swiper-wrapper">
-                        @foreach ($album as $key => $value)
-                            <div class="swiper-slide custom-thumb-swiper-slide-product-details">
-                                <img src="{{ $value }}" class="img-fluid cursor-pointer" style="object-fit: contain; height: 80%;" />
-                            </div>
-                        @endforeach
+            <div class="row g-3">
+                <!-- Main Image Swiper -->
+                <div class="col-12">
+                    <div class="swiper productImagesSwiper rounded-3 overflow-hidden" style="height: 100%; background: #f8f9fa;">
+                        <div class="swiper-wrapper">
+                            @foreach ($album as $key => $value)
+                                <div class="swiper-slide">
+                                    <img src="{{ $value }}" class="w-100 h-100 object-fit-contain" alt="Product Image">
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            
-                <div class="swiper mainSwiperProductDetails" style="width: calc(100% - 116px); height: 500px;">
-                    <div class="swiper-wrapper">
-                        @foreach ($album as $key => $value)
-                            <div class="swiper-slide">
-                                <img src="{{ $value }}" class="img-fluid" style="object-fit:cover; width: 100%; height: 100%;" />
-                            </div>
-                        @endforeach
+        
+                <!-- Thumbnail Swiper -->
+                <div class="col-12">
+                    <div class="swiper productThumbsSwiper">
+                        <div class="swiper-wrapper justify-content-center">
+                            @foreach ($album as $key => $value)
+                                <div class="swiper-slide" style="width: 80px;">
+                                    <div class="ratio ratio-1x1 border rounded-2 overflow-hidden" style="cursor: pointer;">
+                                        <img src="{{ $value }}" class="object-fit-cover">
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </div>
@@ -38,9 +45,9 @@
             <div class="d-flex align-items-center flex-wrap gap-2">
                 <div class="d-flex align-items-center">
                     {!! generateStar($totalRate) !!}
-                    <span class="text-muted ms-2" style="font-size: 0.9rem;">{{ $totalReviews }} đánh giá</span>
+                    <span class="text-muted ms-2 mt-1" style="font-size: 0.9rem;">{{ $totalReviews }} đánh giá</span>
                 </div>
-                <div class="border-start ps-3 ms-2 text-muted" style="font-size: 0.9rem;">
+                <div class="border-start ps-3 ms-2 text-muted mt-1" style="font-size: 0.9rem;">
                     Đã bán 320
                 </div>
             </div>
@@ -60,7 +67,7 @@
                     <span class="badge bg-warning text-danger ms-2 discount" style="font-size: 0.8rem;">-{{ $discount[0]['value'] }} {{ $discount[0]['type'] }}</span>
                 @endif
             </div>
-            <div class="d-flex align-items-center text-success">
+            <div class="d-flex align-items-center text-primary">
                 <i class="fas fa-check-circle me-2"></i>
                 <span style="font-size: 0.9rem;">Còn hàng</span>
             </div>
@@ -82,8 +89,10 @@
 
             <div class="group-btn d-flex gap-4 mt-3">
                 <div class="btn border-primary text-primary btn-outline-primary rounded-1 w-100 py-2">
-                    <i class="fa-solid fa-heart"></i>
-                    Yêu Thích
+                    <div class="mt-1">
+                        <i class="fa-solid fa-heart"></i>
+                        Yêu Thích
+                    </div>
                 </div>
             
                 <button data-check="{{ empty($customer) ? 'false' : 'true' }}" type="submit" class="btn btn-primary rounded-1 w-100 py-2 submitCartButton">

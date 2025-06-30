@@ -1975,15 +1975,6 @@ div#social_login {
     border-color: #01964a !important;
 }
 
-.mainSwiperProductDetails {
-  height: 100% !important;
-  padding: 0px !important;
-}
-
-.thumbSwiperProductDetails {
-  padding: 0px !important;
-}
-
 .accordion-button:not(.collapsed) {
   color: #01964a;
 }
@@ -2739,4 +2730,91 @@ div#social_login {
     width: 60%;
     margin: auto;
   }
+}
+
+.product-sorting-bar {
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 20px;
+}
+
+.btn-sorting-dropdown {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.btn-sorting-dropdown:hover {
+    border-color: #01964a;
+    color: #01964a;
+}
+
+.btn-sorting-dropdown:after {
+    margin-left: 10px;
+}
+
+.sorting-label {
+    color: #888;
+    margin-right: 5px;
+}
+
+.current-sort {
+    font-weight: 500;
+    color: #333;
+}
+
+.dropdown-menu {
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    min-width: 220px;
+}
+
+.dropdown-item {
+    padding: 8px 15px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    color: #01964a;
+}
+
+.dropdown-item.active {
+    color: #01964a;
+}
+
+.dropdown-item.active .fa-check {
+    visibility: visible;
+    color: #01964a;
+    margin-right: 8px;
+}
+
+.btn-filter-mobile {
+    background: #01964a;
+    color: white;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.btn-filter-mobile:hover {
+    background: #01964a;
+    color: white;
+}
+
+.btn-reset-section {
+    transition: all 0.3s;
+    opacity: 0.8;
+}
+.btn-reset-section:hover {
+    opacity: 1;
+    color: #01964a !important;
 }

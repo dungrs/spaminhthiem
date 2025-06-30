@@ -104,42 +104,6 @@ const BannerSlide = {
         });
     },
 
-    swiperProductDetails: function () {
-        var thumbSwiper = new Swiper(".thumbSwiperProductDetails", {
-            direction: "vertical",
-            spaceBetween: 10,
-            slidesPerView: 3,
-            freeMode: true,
-            watchSlidesProgress: true,
-            breakpoints: {
-                320: {
-                    direction: "horizontal",
-                    slidesPerView: 3
-                },
-                768: {
-                    direction: "vertical",
-                    slidesPerView: 3
-                }
-            }
-        });
-    
-        var mainSwiper = new Swiper(".mainSwiperProductDetails", {
-            spaceBetween: 10,
-            zoom: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            thumbs: {
-                swiper: thumbSwiper,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-    },
-
     swiperProductModal: function() {
         const thumbsSwiper = new Swiper('.productThumbsSwiper', {
             spaceBetween: 10,

@@ -20,8 +20,8 @@ use App\Repositories\RouterRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 
 use Ramsey\Uuid\Guid\Guid;
 
@@ -100,155 +100,91 @@ class ProductService extends BaseService implements ProductServiceInterface {
     }
 
     public function paginateUser($request, $isJsonResponse = true) {
-        $perPage = $request->input('perpage', 12);
-        $page = $request->input('page', 1);
-        $languageId = $request->input('language_id', session('currentLanguage')->id);
+        $perPage = (int) $request->input('perpage', 12);
+        $page = (int) $request->input('page', 1);
+        $languageId = $request->input('language_id', session('currentLanguage')->id ?? 1);
         $productCatalogueId = $request->input('product_catalogue_id');
         $attributeArray = $request->input('attributes', []);
-        $priceMax = $request->input('price_max', null);
-        $priceMin = $request->input('price_min', null);
+        $priceMin = (int) str_replace(['.', 'đ'], '', $request->input('price_min', 0));
+        $priceMax = (int) str_replace(['.', 'đ'], '', $request->input('price_max', 0));
         $rating = $request->input('score', null);
-        $productCatalogue = $this->productCatalogueService->getProductCatalogueDetails($productCatalogueId, $languageId);
+        $keyword = $request->input('keyword');
 
-        $extend['fieldSearch'] = ['pl.name'];
+        // Lấy danh sách ID danh mục (bao gồm con) nếu có
+        $productCatalogueIds = [];
+        if (!empty($productCatalogueId)) {
+            $catalogue = $this->productCatalogueService->getProductCatalogueDetails($productCatalogueId, $languageId);
+            if ($catalogue) {
+                $productCatalogueIds = $catalogue::where('lft', '>=', $catalogue->lft)
+                    ->where('rgt', '<=', $catalogue->rgt)
+                    ->whereNull('deleted_at')
+                    ->pluck('id')
+                    ->toArray();
+            }
+        }
+
         $condition = [
-            'publish' => $request->input('publish'),
-            'where' => [
-                ['pl.language_id', '=', $languageId],
-                ['pl.name', 'LIKE', "%{$request->input('keyword', null)}%"]
-            ],
-            'whereIn' => [],
+            ['pl.language_id', '=', $languageId]
         ];
-        $rawQuery = [];
-    
-        if ($productCatalogue) {
-            $productCatalogueIds = $productCatalogue::where('lft', '>=', $productCatalogue->lft)
-                                                    ->where('rgt', '<=', $productCatalogue->rgt)
-                                                    ->whereNull('deleted_at')
-                                                    ->pluck('id')
-                                                    ->toArray();
-    
-            if (!empty($productCatalogueIds)) {
-                $condition['whereIn'][] = ['products.product_catalogue_id', $productCatalogueIds];
-            }
+        if ($keyword) {
+            $condition[] = ['pl.name', 'LIKE', "%{$keyword}%"];
+        }
+        if (!empty($productCatalogueIds)) {
+            $condition[] = ['products.product_catalogue_id', $productCatalogueIds];
         }
 
-        
-        if ($priceMax) {
-            $priceMax = (int) str_replace(['.', 'đ'], '', $priceMax);
-            $priceMin = (int) str_replace(['.', 'đ'], '', $priceMin);
-        }
+        $products = $this->productRepository->getAllProducts($condition, $attributeArray);
 
-        if (!empty($attributeArray)) {
-            $attributeIds = array_values($attributeArray);
-            
-            foreach ($attributeIds as $attrId) {
-                $rawQuery['whereRaw'][] = "FIND_IN_SET('$attrId', REPLACE(pv.code, ' ', ''))";
+        // Lấy danh sách khuyến mãi cho toàn bộ sản phẩm
+        $productIds = $products->pluck('id')->toArray();
+        $promotions = $this->promotionService->getBestPromotion('product', $productIds);
+
+        // Xử lý giá khuyến mãi và lọc theo điều kiện
+        $filtered = $products->filter(function ($product) use ($priceMin, $priceMax, $rating, $promotions) {
+            $promotion = $promotions->firstWhere('product_id', $product->id);
+
+            if ($promotion) {
+                $product->promotion = $promotion;
+                $product->price = $promotion->product_price - $promotion->finalDiscount;
+            } else {
+                $product->price = optional($product->product_variants->first())->price ?? 0;
             }
-        }
-        
-        $basePath = $productCatalogue 
-            ? '/' . $productCatalogue->canonical . config('apps.general.suffix')
-            : 'product/index';
-    
-        $extend = [
-            'path' => $basePath,
-            'groupBy' => [
-                'products.id',
-                'products.product_catalogue_id',
-                'products.publish',
-                'products.image',
-                'products.follow',
-                'pl.name',
-                'pl.canonical',
-                'pl.language_id'
-            ],
-            'fieldSearch' => ['name']
-        ];
-    
-        $join = [
-            [
-                'table' => 'product_languages as pl', 
-                'on' => [['pl.product_id', 'products.id']]
-            ],
-            [   
-                'type' => 'left',
-                'table' => 'product_variants as pv', 
-                'on' => [['pv.product_id', 'products.id']]
-            ],
-            [   
-                'type' => 'left',
-                'table' => 'product_variant_languages as pvl', 
-                'on' => [['pvl.product_variant_id', 'pv.id']]
-            ],
-            [   
-                'table' => 'product_variant_attributes as pva', 
-                'on' => [['pva.product_variant_id', 'pv.id']]
-            ],
-            [   
-                'type' => 'left',
-                'table' => 'reviews', 
-                'on' => [['reviews.reviewable_id', 'products.id'], ['reviews.reviewable_type', 'App\\Models\\Product']]
-            ],
-        ];
-    
-        $products = $this->productRepository->paginate(
-            $this->paginateSelect(true),
-            $condition,
+
+            if ($priceMin && $product->price < $priceMin) return false;
+            if ($priceMax && $product->price > $priceMax) return false;
+
+            if (!is_null($rating) && isset($product->average_rating)) {
+                if ($product->average_rating < $rating) return false;
+            }
+
+            return true;
+        })->values();
+
+        // Tính phân trang thủ công
+        $total = $filtered->count();
+        $offset = ($page - 1) * $perPage;
+        $items = $filtered->slice($offset, $perPage)->values();
+
+        $paginator = new LengthAwarePaginator(
+            $items,
+            $total,
             $perPage,
             $page,
-            $extend,
-            ['products.id', 'DESC'],
-            $join,
-            ['languages', 'product_catalogues', 'reviews', 'product_variants'],
-            $rawQuery
+            ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        $productIds = $products->pluck('id')->toArray();
-        $bestPromotions = $this->promotionService->getBestPromotion("product", $productIds);
-    
-        foreach ($products->items() as $product) {
-            if ($promotion = $bestPromotions->firstWhere('product_id', $product->id)) {
-                $product->promotion = $promotion;
-            }
-        }
-
-        $filteredProducts = $products->filter(function($product) use ($priceMin, $priceMax, $rating, $bestPromotions) {
-            if ($bestPromotions->firstWhere('product_id', $product->id)) {
-                $discountedPrice = $product->promotion->product_price - $product->promotion->finalDiscount; // Giảm giá theo tỷ lệ phần trăm
-                $product->price = $discountedPrice;
-            } else {
-                $product->price = $product->product_variants->first()->price;
-            }
-        
-            if (isset($priceMin) && $product->price <= $priceMin) {
-                return false;
-            }
-        
-            if (isset($priceMax) && $product->price >= $priceMax) {
-                return false;
-            }
-
-            if (!is_null($rating)) {
-                if ($product->average_rating >= $rating) {
-                    return true;
-                }
-                return false;
-            }
-        
-            return true;
-        });
-
+        // Trả JSON nếu được yêu cầu
         if ($isJsonResponse) {
             return response()->json([
-                'status' => $filteredProducts ? 'success' : 'error',
-                'data' => $filteredProducts ?: null,
-                'message' => $filteredProducts ? null : 'Lấy dữ liệu không thành công!'
-            ], $products ? 200 : 500);
+                'status' => $items->isNotEmpty() ? 'success' : 'error',
+                'data' => $paginator,
+                'message' => $items->isNotEmpty() ? null : 'Không có sản phẩm phù hợp'
+            ]);
         }
 
-        return $filteredProducts;
+        return $paginator;
     }
+
 
     public function loadProductAnimation($request) {
         $get = $request->input();

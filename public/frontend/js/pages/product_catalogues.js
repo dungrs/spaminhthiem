@@ -10,11 +10,11 @@ const ProductCatalogue = {
     
         if ($priceSlider.length) {
             noUiSlider.create($priceSlider[0], {
-                start: [100000, 500000],
+                start: [100000, 1000000],
                 connect: true,
                 range: {
                     'min': 100000,
-                    'max': 1000000
+                    'max': 5000000
                 },
                 step: 10000,
                 format: {
@@ -59,7 +59,6 @@ const ProductCatalogue = {
     sendDataFilter: function(page = 1, minPrice = null, maxPrice = null) {
         let dataFilterSend = { page: page };
     
-        // Collect all filter inputs
         $('.filter-data').find("input, select").each(function () {
             const $this = $(this);
             const name = $this.attr("name");
@@ -67,10 +66,8 @@ const ProductCatalogue = {
             
             if (!name) return;
             
-            // Handle different input types
             if (type === 'checkbox' || type === 'radio') {
                 if ($this.is(':checked')) {
-                    // For checkbox groups, create array if multiple selections allowed
                     if (type === 'checkbox') {
                         if (!dataFilterSend[name]) {
                             dataFilterSend[name] = [];
@@ -81,7 +78,6 @@ const ProductCatalogue = {
                     }
                 }
             } else {
-                // Handle text inputs, hidden fields, etc.
                 dataFilterSend[name] = $this.val();
             }
         });
@@ -160,7 +156,6 @@ const ProductCatalogue = {
                             totalRate = parseFloat((sum / totalReviews).toFixed(1));
                         }
                         
-                        // Build the product card HTML
                         let productHtml = `
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6 product-col">
                             <div class="item_product_main">
@@ -262,14 +257,9 @@ const ProductCatalogue = {
                         productList.append(productHtml);
                     });
                     
-                    // Setup post-render functions
+                    console.log(response.data.links)
                     Product.setupProductDetailAndShowModal();
-                    HT.openChangeStatus();
-                    
-                    // Update pagination if available
-                    if (response.data && (response.data.links || response.data.current_page)) {
-                        HT.renderPagination(response);
-                    }
+                    ProductCatalogue.renderPagination(response);
                 } else {
                     productList.html('<div class="col-12 text-center py-5"><p>Không tìm thấy sản phẩm phù hợp</p></div>');
                 }
@@ -324,6 +314,48 @@ const ProductCatalogue = {
             }, 500);
         });
     },
+
+    renderPagination: function(response) {
+        const pagination = $('.pagination');
+        pagination.empty();
+
+        pagination.append(`
+            <li class="page-item ${response.data.current_page === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page - 1}" aria-label="Previous">
+                    <i class="mdi mdi-chevron-left"></i>
+                </a>
+            </li>
+        `);
+
+        if (response.data.links.length > 3) {
+            response.data.links.forEach(link => {
+                if (link.label !== 'pagination.previous' && link.label !== 'pagination.next') {
+                    if (link.url) {
+                        pagination.append(`
+                            <li class="page-item ${link.active ? 'active' : ''}">
+                                <a class="page-link" href="javascript:void(0)" data-page="${link.label}">${link.label}</a>
+                            </li>
+                        `);
+                    } else {
+                        pagination.append(`
+                            <li class="page-item disabled">
+                                <span class="page-link">${link.label}</span>
+                            </li>
+                        `);
+                    }
+                }
+            });
+        }
+
+
+        pagination.append(`
+            <li class="page-item ${response.data.current_page === response.data.last_page ? 'disabled' : ''}">
+                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page + 1}" aria-label="Next">
+                    <i class="mdi mdi-chevron-right"></i>
+                </a>
+            </li>
+        `);
+    },
 };
 
 ProductCatalogue.attachFilterEvent = function () {
@@ -345,14 +377,43 @@ ProductCatalogue.attachResetEvent = function () {
         $('.filter-data').find("input[type=text], input[type=number]").val('');
         
         if ($('#price-slider')[0].noUiSlider) {
-            $('#price-slider')[0].noUiSlider.set([100000, 500000]);
+            $('#price-slider')[0].noUiSlider.set([100000, 5000000]);
         }
         
         $('.price-min').text('100.000đ');
-        $('.price-max').text('500.000đ');
+        $('.price-max').text('1.000.000đ');
         $('.price-input-min').val('100000');
-        $('.price-input-max').val('500000');
+        $('.price-input-max').val('5000000');
         
+        ProductCatalogue.sendDataFilter(1);
+    });
+};
+
+ProductCatalogue.attachResetFilterSections = function () {
+    $('.btn-reset-section').off('click').on('click', function (e) {
+        e.preventDefault(); 
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        const section = $(this).data('section');
+
+        if (section === 'price') {
+            if ($('#price-slider')[0].noUiSlider) {
+                $('#price-slider')[0].noUiSlider.set([100000, 5000000]);
+            }
+            $('.price-min').text('100.000đ');
+            $('.price-max').text('5.000.000đ');
+            $('.price-input-min').val('100000');
+            $('.price-input-max').val('5000000');
+
+        } else if (section === 'rating') {
+            $('input[name="score"]').prop('checked', false);
+
+        } else if (section.startsWith('attribute-')) {
+            const groupId = section.replace('attribute-', '');
+            $(`.filterAttribute[data-group="${groupId}"]`).prop('checked', false);
+        }
+
         ProductCatalogue.sendDataFilter(1);
     });
 };
@@ -363,5 +424,6 @@ $(document).ready(function () {
     ProductCatalogue.attachFilterEvent();
     ProductCatalogue.attachPaginationEvent();
     ProductCatalogue.attachResetEvent();
+    ProductCatalogue.attachResetFilterSections();
     HT.attachFilterEvent(ProductCatalogue);
 });

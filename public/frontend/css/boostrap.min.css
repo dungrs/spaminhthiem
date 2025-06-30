@@ -4039,7 +4039,7 @@ fieldset:disabled .btn {
 .btn-outline-primary.active,
 .btn-outline-primary.dropdown-toggle.show,
 .btn-outline-primary:active {
-    color: #fff;
+    color: #fff !important;
     background-color: #01964a;
     border-color: #01964a
 }
@@ -4229,7 +4229,7 @@ fieldset:disabled .btn {
 
 .btn-outline-danger {
     color: rgb(175, 25, 25);
-    border-color: rgb(175, 25, 25)
+    border-color: rgb(175, 25, 25) !important;
 }
 
 .btn-outline-danger:hover {

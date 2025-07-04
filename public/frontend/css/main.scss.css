@@ -2286,7 +2286,7 @@ h2.thucuc {
   }
 }
 
-.minhthiem-desc {
+.minhthiem-desc p {
   font-size: 18px;
   font-weight: 400;
   color: #555;
@@ -2328,4 +2328,59 @@ h2.thucuc {
 
 .choose-attribute:hover {
   color: #fff;
+}
+
+.category-link {
+    color: #333;
+    transition: all 0.3s ease;
+    background-color: rgba(1, 150, 74, 0.05);
+    border-left: 3px solid transparent;
+}
+
+.category-link:hover {
+    background-color: rgba(1, 150, 74, 0.1);
+    color: #01964a;
+    border-left-color: #01964a;
+}
+
+.category-link[aria-expanded="true"] {
+    background-color: rgba(1, 150, 74, 0.1);
+    color: #01964a;
+    font-weight: 500;
+    border-left-color: #01964a;
+}
+
+.category-link[aria-expanded="true"] .category-arrow {
+    transform: rotate(180deg);
+}
+
+.category-arrow {
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.subcategory-link {
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.subcategory-link:hover {
+    color: #01964a;
+    background-color: rgba(1, 150, 74, 0.05);
+    padding-left: 15px !important;
+}
+
+.subcategory-link i {
+    transition: transform 0.2s ease;
+}
+
+.subcategory-link:hover i {
+    transform: translateX(3px);
+}
+
+.badge {
+    font-size: 0.7rem;
+    font-weight: normal;
+    padding: 0.25em 0.6em;
 }

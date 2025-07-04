@@ -1,4 +1,4 @@
-var Library = {
+const Library = {
     setValueSwitchChoices: function(selectElement, value) {
         selectElement.val(value);
     
@@ -67,6 +67,48 @@ var Library = {
         }
         str= str.slice(0,str.length-1);
         return str;
+    },
+
+    renderPagination: function(response) {
+        const pagination = $('.pagination');
+        pagination.empty();
+
+        pagination.append(`
+            <li class="page-item ${response.data.current_page === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page - 1}" aria-label="Previous">
+                    <i class="mdi mdi-chevron-left"></i>
+                </a>
+            </li>
+        `);
+
+        if (response.data.links.length > 3) {
+            response.data.links.forEach(link => {
+                if (link.label !== 'pagination.previous' && link.label !== 'pagination.next') {
+                    if (link.url) {
+                        pagination.append(`
+                            <li class="page-item ${link.active ? 'active' : ''}">
+                                <a class="page-link" href="javascript:void(0)" data-page="${link.label}">${link.label}</a>
+                            </li>
+                        `);
+                    } else {
+                        pagination.append(`
+                            <li class="page-item disabled">
+                                <span class="page-link">${link.label}</span>
+                            </li>
+                        `);
+                    }
+                }
+            });
+        }
+
+
+        pagination.append(`
+            <li class="page-item ${response.data.current_page === response.data.last_page ? 'disabled' : ''}">
+                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page + 1}" aria-label="Next">
+                    <i class="mdi mdi-chevron-right"></i>
+                </a>
+            </li>
+        `);
     },
 };
 

@@ -259,7 +259,7 @@ const ProductCatalogue = {
                     
                     console.log(response.data.links)
                     Product.setupProductDetailAndShowModal();
-                    ProductCatalogue.renderPagination(response);
+                    Library.renderPagination(response);
                 } else {
                     productList.html('<div class="col-12 text-center py-5"><p>Không tìm thấy sản phẩm phù hợp</p></div>');
                 }
@@ -315,47 +315,22 @@ const ProductCatalogue = {
         });
     },
 
-    renderPagination: function(response) {
-        const pagination = $('.pagination');
-        pagination.empty();
+    initMobileFilterToggle: function() {
+        const $filterBtn = $('#mobile-filter-btn');
+        const $filterWrapper = $('.filter-card-wrapper');
+        const $closeBtn = $('.btn-close-filter');
 
-        pagination.append(`
-            <li class="page-item ${response.data.current_page === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page - 1}" aria-label="Previous">
-                    <i class="mdi mdi-chevron-left"></i>
-                </a>
-            </li>
-        `);
+        $filterBtn.on('click', function () {
+            console.log(123);
+            $filterWrapper.addClass('show');
+            $('body').addClass('filter-open');
+        });
 
-        if (response.data.links.length > 3) {
-            response.data.links.forEach(link => {
-                if (link.label !== 'pagination.previous' && link.label !== 'pagination.next') {
-                    if (link.url) {
-                        pagination.append(`
-                            <li class="page-item ${link.active ? 'active' : ''}">
-                                <a class="page-link" href="javascript:void(0)" data-page="${link.label}">${link.label}</a>
-                            </li>
-                        `);
-                    } else {
-                        pagination.append(`
-                            <li class="page-item disabled">
-                                <span class="page-link">${link.label}</span>
-                            </li>
-                        `);
-                    }
-                }
-            });
-        }
-
-
-        pagination.append(`
-            <li class="page-item ${response.data.current_page === response.data.last_page ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page + 1}" aria-label="Next">
-                    <i class="mdi mdi-chevron-right"></i>
-                </a>
-            </li>
-        `);
-    },
+        $closeBtn.on('click', function () {
+            $filterWrapper.removeClass('show');
+            $('body').removeClass('filter-open');
+        });
+    }
 };
 
 ProductCatalogue.attachFilterEvent = function () {
@@ -425,5 +400,6 @@ $(document).ready(function () {
     ProductCatalogue.attachPaginationEvent();
     ProductCatalogue.attachResetEvent();
     ProductCatalogue.attachResetFilterSections();
+    ProductCatalogue.initMobileFilterToggle();
     HT.attachFilterEvent(ProductCatalogue);
 });

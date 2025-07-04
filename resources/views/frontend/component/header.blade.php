@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-6 col-xl-3 col-lg-3 header-left">
                     <a href="/" class="logo-wrapper">
-                        <img class="img-fluid" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo.png?1717567288856" alt="logo Mỹ Phẩm Thu Cúc" width="248" height="53" />
+                        <img class="img-fluid" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo.png?1717567288856" alt="logo Mỹ Phẩm Minh Thiêm" width="248" height="53" />
                     </a>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-12 header-center" id="search-header">
@@ -54,7 +54,7 @@
                         <!-- Tài khoản -->
                         <li class="ml-4 mr-4 mr-md-3 ml-md-3 media d-lg-flex d-none">
                             @if (isset($customer))
-                                <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
+                                <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
                                 <div class="media-body d-md-flex flex-column d-none">
                                     @php
                                         $fullName = $customer->name ?? '';
@@ -277,7 +277,7 @@
 
                             <li class="ml-4 mr-4 mr-md-3 ml-md-3 media d-lg-flex d-none">
                                 @if (isset($customer))
-                                    <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
+                                    <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
                                     <div class="media-body d-md-flex flex-column d-none">
                                         <a href="{{ route('customer.profile') }}" title="Thông tin tài khoản" class="d-block" title="{{ $customer->name }}">
                                             Xin chào, {{ $firstName }}
@@ -289,7 +289,7 @@
                                         </small>
                                     </div>
                                 @else
-                                    <img loading="lazy" src="{{ asset('frontend/img/icon/account_icon.webp') }}" width="32" height="32" alt="account_icon" class="mr-3 align-self-center" />
+                                    <img loading="lazy" src="{{ asset('frontend/img/icon/account_icon.webp') }}" style="object-fit: cover" width="32" height="32" alt="account_icon" class="mr-3 align-self-center" />
                                     <div class="media-body d-md-flex flex-column d-none">
                                         <a rel="nofollow" href="{{ writeUrl('dang-nhap', true, true) }}" class="d-block" title="Đăng nhập">
                                             Tài khoản của bạn
@@ -305,7 +305,7 @@
                             
                             <li class="cartgroup ml-0 mr-2 mr-md-0">
                                 <div class="mini-cart text-xs-center">
-                                    <a class="img_hover_cart" href="/cart" title="Giỏ hàng">
+                                    <a class="img_hover_cart" href="{{ route('cart') }}" title="Giỏ hàng">
                                         <img loading="lazy"
                                             src="{{ asset('frontend/img/icon/cart_icon.png') }}"
                                             width="24" height="24"

@@ -81,7 +81,7 @@
                 @endif
             </div>
 
-            <button class="product-item-btn btn add_to_cart active" title="Thêm vào giỏ hàng">
+            <button class="product-item-btn btn active" title="Thêm vào giỏ hàng">
                 <svg class="icon">
                     <use xlink:href="#icon-plus"/>
                 </svg>
@@ -89,15 +89,4 @@
         </div>
     </div>
 
-    <!-- Flash Sale -->
-    <div class="flashsale__bottom" style="display: none">
-        <div class="flashsale__label">
-            <b class="flashsale__sold-qty"></b>
-            sản phẩm đã bán
-        </div>
-
-        <div class="flashsale__progressbar">
-            <div class="flashsale___percent"></div>
-        </div>
-    </div>
 </div>

@@ -44,6 +44,7 @@ class HomeController extends FrontendController
         ];
         $keywords = [
             'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
+            'spa-brand-highlight' => ['keyword' => 'spa-brand-highlight', 'options' => ['object' => false]],
             'product-most-viewed' => ['keyword' => 'product-most-viewed', 'options' => ['object' => false, 'promotion' => true]],
             'post-hl' => ['keyword' => 'post-hl', 'options' => ['object' => false]],
             'auth-spa-skincare' => ['keyword' => 'auth-spa-skincare', 'options' => ['object' => false]],

@@ -1,8 +1,8 @@
 <body id="template-index">
     @php $slideKeyword = app('App\\Classes\\SlideEnum'); @endphp
 
-    <h1 class="d-none">Mỹ Phẩm Thu Cúc | Mỹ Phẩm Ngành Spa Chính Hãng</h1>
-    <section class="section awe-section-1">
+    <h1 class="d-none">{{ $systems['homepage_slogan'] }}</h1>
+    <section class="section">
         <div class="container section mt-0">
             <div class="row">
                 @include("frontend.homepage.component.navigation") 
@@ -12,36 +12,38 @@
     </section>
 
     {{-- Main --}}
-    <section class="section awe-section-2 my-4">
+    <section class="section my-4">
         <div class="text-center my-3">
             <h2 class="fw-bold section-home-header">
-                Mỹ Phẩm Cho Spa Cao Cấp
+                {{ $widgets['auth-spa-skincare']['name'] }}
             </h2>
         </div>
         <div class="container card border-0 shadow-none">
-            <p class="minhthiem-desc">
-                👉 Mỹ Phẩm Thu Cúc - Chuyên nhập khẩu và phân phối sỉ lẻ mỹ phẩm cho Spa trên toàn quốc. Hơn <strong>5000+ sản phẩm chính hãng</strong>, <strong>600+ thương hiệu</strong> đến từ <strong>20 quốc gia</strong>.
-            </p>
+            <div class="minhthiem-desc">
+                {!! $widgets['auth-spa-skincare']['description'] !!}
+            </div>
         </div>
         <section class="section_collections section">
             <div class="container card border-0 shadow-none">
                 <div class="text-center row flex-nowrap collections-slide">
-                    @if (isset($widgets['auth-spa-skincare'])) @foreach ($widgets['auth-spa-skincare']['object'] as $object)
-                    <div class="item">
-                        <a href="{{ writeUrl($object->canonical, true, true) }}" title="{{ $object->name }}" class="pos-relative d-flex align-items-center" style="aspect-ratio: 120/ 120;">
-                            <img class="img-fluid object-contain mh-100 rounded-pill" loading="lazy" src="{{ $object->image }}" width="120" height="120" alt="coll_1_title" />
-                        </a>
-                        <h3 class="mb-0">
-                            <a href="{{ writeUrl($object->canonical, true, true) }}" title="{{ $object->name }}">{{ $object->name }}</a>
-                        </h3>
-                    </div>
-                    @endforeach @endif
+                    @if (isset($widgets['auth-spa-skincare'])) 
+                        @foreach ($widgets['auth-spa-skincare']['object'] as $object)
+                        <div class="item">
+                            <a href="{{ writeUrl($object->canonical, true, true) }}" title="{{ $object->name }}" class="pos-relative d-flex align-items-center" style="aspect-ratio: 120/ 120;">
+                                <img class="img-fluid object-contain mh-100 rounded-pill" loading="lazy" src="{{ $object->image }}" width="120" height="120" alt="coll_1_title" />
+                            </a>
+                            <h3 class="mb-0">
+                                <a href="{{ writeUrl($object->canonical, true, true) }}" title="{{ $object->name }}">{{ $object->name }}</a>
+                            </h3>
+                        </div>
+                        @endforeach 
+                    @endif
                 </div>
             </div>
         </section>
     </section>
 
-    <section class="section awe-section-4">
+    <section class="section">
         <link rel="stylesheet" href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/flashsale.css?1717567288856" media="print" onload="this.media='all'" />
         <noscript>
             <link href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/flashsale.css?1717567288856" rel="stylesheet" type="text/css" media="all" />
@@ -84,13 +86,13 @@
                 </div>
                 <div>
                     @if (isset($widgets['hot-deal']))
-                    <div class="row mt-3" style="--limit-column: 5;">
-                        @foreach ($widgets['hot-deal']['object']->take(5) as $object)
-                        <div class="flashsale__item col-12 col-xl-15">
-                            @include('frontend.component.productItem', ['product' => $object])
+                        <div class="row mt-3" style="--limit-column: 5;">
+                            @foreach ($widgets['hot-deal']['object']->take(5) as $object)
+                            <div class="flashsale__item col-12 col-xl-15">
+                                @include('frontend.component.productItem', ['product' => $object])
+                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
-                    </div>
                     @endif
                     <div class="text-center mb-3 mt-1">
                         <a href="uu-dai-hot" title="Xem tất cả" class="btn btn-main btn-icon">
@@ -131,71 +133,33 @@
     </section>
 
     {{-- Danh sách thương hiệu --}}
-    <section class="section awe-section-5">
+    <section class="section">
         <section class="section_brand section">
             <div class="container card border-0 shadow-none">
-                <div class="text-center my-4">
-                    <h3 class="fw-bold section-home-header">
-                        Thương Hiệu Mỹ Phẩm Spa
-                    </h3>
+                <div class="text-center my-3">
+                    <h2 class="fw-bold section-home-header">
+                        {{ $widgets['spa-brand-highlight']['name'] }}
+                    </h2>
                 </div>
-
-                <p class="minhthiem-desc">
-                    👉 Thương hiệu Mỹ Phẩm Spa – Nơi hội tụ các dòng mỹ phẩm cao cấp dành riêng cho Spa. Hơn <strong>600+ thương hiệu uy tín</strong>, <strong>5000+ sản phẩm chính hãng</strong> từ <strong>20 quốc gia hàng đầu</strong>.
-                </p>
-                
+                <div class="container card border-0 shadow-none">
+                    <div class="minhthiem-desc">
+                        {!! $widgets['spa-brand-highlight']['description'] !!}
+                    </div>
+                </div>
                 <div class="row mx-0 hrz-scroll text-center flex-nowrap js-slider justify-content-around">
-                    <div class="item">
-                        <a href="/esthemax" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Esthemax -Esthepro" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_1.jpg?1717567288856" alt="brand_1_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/desembre-han-quoc" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Desembre" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_2.jpg?1717567288856" alt="brand_2_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/gsc" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="GSC+" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_3.jpg?1717567288856" alt="brand_3_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/my-pham-skindom" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Skindom" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_4.jpg?1717567288856" alt="brand_4_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/smas" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Smas" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_5.jpg?1717567288856" alt="brand_5_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/huesday" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Huesday" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_6.jpg?1717567288856" alt="brand_6_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/kamel" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Karmel" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_7.jpg?1717567288856" alt="brand_7_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/lindsay" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Lindsay" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_8.jpg?1717567288856" alt="brand_8_title" width="176" height="99" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="/medic-roller" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="Medic roller" style="--width: 176; --height: 99;">
-                            <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/brand_9.jpg?1717567288856" alt="brand_9_title" width="176" height="99" />
-                        </a>
-                    </div>
+                    @foreach ($widgets['spa-brand-highlight']['object'] as $brand)
+                        <div class="item">
+                            <a href="{{ writeUrl($brand->canonical, true, true) }}" class="brand-item pos-relative d-flex align-items-center aspect-ratio" title="{{ $brand->name }}" style="--width: 176; --height: 99;">
+                                <img loading="lazy" class="img-fluid m-auto object-contain mh-100 w-auto" src="{{ $brand->image }}" alt="{{ $brand->name }}" width="176" height="99" />
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </section>
     </section>
 
-    <section class="section awe-section-6">
+    <section class="section">
         <section class="section_product_tag section">
             <div class="container card border-0 shadow-none">
                 <div class="text-center my-4">
@@ -224,9 +188,9 @@
                     <div class="col-lg-9 col-12">
                         <div class="row mt-3" data-section="product-tag-section">
                             @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
-                            <div class="col-6 product-col col-md-3 col-lg-4 col-xl-3">
-                                <div class="item_product_main product-col item_skeleton"></div>
-                            </div>
+                                <div class="col-6 product-col col-md-3 col-lg-4 col-xl-3">
+                                    <div class="item_product_main product-col item_skeleton"></div>
+                                </div>
                             @endforeach
                             <script type="text/x-custom-template" data-template="product-tag-section">
                                 @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
@@ -251,7 +215,7 @@
     </section>
 
     {{-- Banner Trong Trang --}}
-    <section class="section awe-section-7">
+    <section class="section">
         <div class="section_banner_adv">
             <div class="container">
                 <div class="text-center row">
@@ -266,22 +230,14 @@
         </div>
     </section>
 
-    <section class="section awe-section-8">
+    <section class="section">
         <section class="section_product_top section">
             <div class="container card border-0 shadow-none">
-                
                 <div class="text-center my-4">
                     <h3 class="fw-bold section-home-header">
                         {{ $widgets['product-most-viewed']['name'] }}
                     </h3>
                 </div>
-                    {{--
-                    <ul class="tabs tabs-title list-unstyled m-0 mt-2 tabs-group d-flex align-items-center">
-                        <li class="ega-small tab-link px-3 py-2 link current" data-tab="tab-1">Kem Massage</li>
-                        <li class="ega-small tab-link px-3 py-2 linkml-2" data-tab="tab-2">Sữa Rửa Mặt</li>
-                        <li class="ega-small tab-link px-3 py-2 linkml-2" data-tab="tab-3">Mặt Nạ Spa</li>
-                    </ul>
-                    --}}
                 <div class="e-tabs">
                     <div id="tab-1" class="tab-content content_extab current">
                         <div class="row mt-3" style="--limit-column: 5;" data-section="tab-section">
@@ -313,7 +269,7 @@
         </section>
     </section>
 
-    <section class="section awe-section-9">
+    <section class="section">
         <section class="section_product_new section">
             <div class="container card border-0 shadow-none">
                 <div class="text-center my-4">
@@ -339,9 +295,9 @@
                     </div>
 
                     @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-15 product-col">
-                        <div class="item_product_main item_skeleton"></div>
-                    </div>
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-15 product-col">
+                            <div class="item_product_main item_skeleton"></div>
+                        </div>
                     @endforeach
                     <script type="text/x-custom-template" data-template="hot-section">
                         @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
@@ -363,57 +319,50 @@
         </section>
     </section>
 
-    <section class="section awe-section-11">
-        <section class="section_blog section">
-            <div class="container card border-0 shadow-none">
-                <div class="text-center my-4">
-                    <h3 class="fw-bold section-home-header">
-                        {{ $widgets['post-hl']['name'] }}
-                    </h3>
-                </div>
-                <div class="row mt-3">
-                    @foreach ($widgets['post-hl']['object']->take(4) as $post)
-                    <div class="col-lg-3 col-6 product-col">
-                        <div class="blogwp clearfix card border-0 shadow-none">
-                            <a
-                                class="image-blog card-img-top text-center position-relative d-flex align-items-center justify-content-center aspect-ratio"
-                                href="{{ writeUrl($post->canonical, true, true) }}"
-                                title="{{ Str::limit($post->name, 60) }}"
-                                style="--width: 600; --height: 450;"
-                            >
-                                <img class="img-fluid m-auto object-contain mh-100 w-auto position-absolute" loading="lazy" src="{{ $post->image }}" width="600" height="450" alt="{{ Str::limit($post->name, 60) }}" />
-                            </a>
-                            <div class="content_blog clearfix card-body px-0 py-2">
-                                <h3>
-                                    <a class="link" href="{{ writeUrl($post->canonical, true, true) }}" title="{{ Str::limit($post->name, 60) }}">{{ Str::limit($post->name, 60) }}</a>
-                                </h3>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <div class="mt-0">Minh Thiêm</div>
-                                        <small class="text-muted font-weight-light">
-                                            {{ $post->created_at->format('d/m/Y') }}
-                                        </small>
-                                    </div>
-                                </div>
-                                <p class="justify">
-                                    <span class="art-summary">{{ Str::limit($post->meta_description ?? '', 70) }}...</span>
-                                    <a class="button_custome_35 link" href="{{ writeUrl($post->canonical, true, true) }}" title="Đọc tiếp">Đọc tiếp</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-                <div class="text-center">
-                    <a href="tin-tuc" title="Xem tất cả" class="btn btn-main btn-icon">
-                        Xem tất cả
-                        <svg class="icon">
-                            <use xlink:href="#icon-arrow" />
-                        </svg>
-                    </a>
-                </div>
+    <!-- Blog Section -->
+    <section class="section pt-1 pb-2">
+        <div class="container">
+            <div class="text-center my-4">
+                <h3 class="fw-bold section-home-header">
+                    {{ $widgets['post-hl']['name'] }}
+                </h3>
             </div>
-        </section>
+
+            <div class="row">
+                @foreach ($widgets['post-hl']['object']->take(4) as $post)
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <article class="blog-card">
+                        <a href="{{ writeUrl($post->canonical, true, true) }}" class="blog-image">
+                            <img src="{{ $post->image }}" 
+                                    alt="{{ Str::limit($post->name, 60) }}" 
+                                    class="img-fluid" 
+                                    loading="lazy">
+                        </a>
+                        <div class="blog-content">
+                            <h3 class="blog-title">
+                                <a href="{{ writeUrl($post->canonical, true, true) }}">{{ Str::limit($post->name, 60) }}</a>
+                            </h3>
+                            <div class="blog-meta">
+                                <span class="author">Minh Thiêm</span>
+                                <span class="date">{{ $post->created_at->format('d/m/Y') }}</span>
+                            </div>
+                            <p class="blog-excerpt">{{ Str::limit($post->meta_description ?? '', 100) }}...</p>
+                            <a href="{{ writeUrl($post->canonical, true, true) }}" class="read-more">Đọc tiếp</a>
+                        </div>
+                    </article>
+                </div>
+                @endforeach
+            </div>
+
+            <div class="text-center mt-3 col-12">
+                <a href="{{ writeUrl('tin-tuc', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
+                    Xem tất cả
+                    <svg class="icon">
+                        <use xlink:href="#icon-arrow" />
+                    </svg>
+                </a>
+            </div>
+        </div>
     </section>
 
     @include("frontend.component.productDetailsModal")

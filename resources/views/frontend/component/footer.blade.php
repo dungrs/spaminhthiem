@@ -1,148 +1,133 @@
-<footer class="footer bg-white" style="--footer-overlay: #f6f6f6;">
-    <div class="mid-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-xl-4 footer-click footer-1">
-                    <h4 class="title-menu clicked">Về chúng tôi</h4>
-                    <a href="/" class="logo-wrapper mb-3 d-block">
-                        <img loading="lazy" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo-footer.png?1717567288856" alt="logo Mỹ Phẩm Thu Cúc" width="150" height="75" />
+<footer class="footer" style="background-color: #f8f9fa;">
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- About Us Column -->
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-about mb-4">
+                    <a href="/" class="d-block mb-3">
+                        <img loading="lazy" 
+                             src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo-footer.png?1717567288856" 
+                             alt="Mỹ Phẩm Minh Thiêm" 
+                             width="180" 
+                             class="img-fluid">
                     </a>
-                    <p>Mỹ Phẩm Minh Thiêm | Mỹ Phẩm Ngành Spa Chính Hãng Cao Cấp</p>
-                    <div class="single-contact">
-                        <i class="fa fa-map-marker-alt"></i>
-                        <div class="content">
-                            Địa chỉ:
-                            <span>Căn số 8-10 TM2-08, KĐT The Manor Central, Nguyễn Xiển, Đại Kim, Hoàng Mai, Hà Nội</span>
-                        </div>
-                    </div>
-                    <div class="single-contact">
-                        <i class="fa fa-mobile-alt"></i>
-                        <div class="content">
-                            Số điện thoại:
-                            <a class="link" title="0982723468" href="tel:0982723468">0982723468</a>
-                        </div>
-                    </div>
-                    <div class="single-contact">
-                        <i class="fa fa-envelope"></i>
-                        <div class="content">
-                            Email:
-                            <a title="myphamthucuc.com@gmail.com" class="link" href="mailto:myphamthucuc.com@gmail.com">myphamthucuc.com@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="social-footer">
-                        <!--<h4 class="title-menu">
-                            Theo dõi chúng tôi 
-                        </h4>-->
-                        <ul class="follow_option d-flex flex-wrap align-items-center p-0 list-unstyled">
-                            <li>
-                                <a class="facebook link" href="https://bikipweb.site" target="_blank" title="Theo dõi Facebook Mỹ Phẩm Thu Cúc">
-                                    <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/facebook.png?1717567288856" loading="lazy" width="24" height="24" alt="facebook" />
-                                </a>
-                            </li>
-                            <li>
-                                <a class="zalo link" href="https://zalo.me/834141234794359440" target="_blank" title="Theo dõi zalo Mỹ Phẩm Thu Cúc">
-                                    <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/zalo.png?1717567288856" loading="lazy" width="24" height="24" alt="zalo" />
-                                </a>
-                            </li>
-                            <li>
-                                <a class="instgram link" href="#" target="_blank" title="Theo dõi instgram Mỹ Phẩm Thu Cúc">
-                                    <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/instagram.png?1717567288856" loading="lazy" width="24" height="24" alt="instgram" />
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-6 col-xl-2 footer-click">
-                    <h4 class="title-menu clicked">
-                        Hướng dẫn
-                        <i class="fa fa-angle-down d-md-none d-inline-block"></i>
-                    </h4>
-                    <ul class="list-menu toggle-mn">
-                        <li class="li_menu">
-                            <a class="link" href="/lien-he" title="Liên Hệ">Liên Hệ</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/tuyen-dung" title="Tuyển Dụng">Tuyển Dụng</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/phuong-thuc-thanh-toan" title="Hướng dẫn thanh toán">Hướng dẫn thanh toán</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/huong-dan" title="Hướng dẫn giao nhận">Hướng dẫn giao nhận</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/dieu-khoan" title="Điều khoản dịch vụ">Điều khoản dịch vụ</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6 col-xl-2 footer-click">
-                    <h4 class="title-menu clicked">
-                        Chính sách
-                        <i class="fa fa-angle-down d-md-none d-inline-block"></i>
-                    </h4>
-                    <ul class="list-menu toggle-mn">
-                        <li class="li_menu">
-                            <a class="link" href="/chinh-sach-bao-mat" title="Chính sách bảo mật">Chính sách bảo mật</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/van-chuyen" title="Chính sách vận chuyển">Chính sách vận chuyển</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/chinh-sach-doi-tra" title="Chính sách đổi trả">Chính sách đổi trả</a>
-                        </li>
-                        <li class="li_menu">
-                            <a class="link" href="/dieu-khoan" title="Quy định sử dụng">Quy định sử dụng</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6 col-xl-4 footer-click">
-                    <h4 class="title-menu">Đăng ký nhận tin</h4>
-                    <div class="form_register">
-                        <form id="mc-form" class="newsletter-form custom-input-group mb-3" data-toggle="validator">
-                            <input class="form-control input-group-field" aria-label="Địa chỉ Email" type="email" placeholder="Nhập địa chỉ email" name="EMAIL" required autocomplete="off" />
-                            <div class="input-group-btn btn-action">
-                                <button class="h-100 btn text-white button_subscribe subscribe" type="submit" aria-label="Đăng ký nhận tin" name="subscribe">Đăng ký</button>
+                    <p class="text-muted mb-4">{{ $systems['homepage_slogan'] }}</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item d-flex mb-3">
+                            <i class="fas fa-map-marker-alt text-primary mt-1 me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Địa chỉ</h6>
+                                <p class="text-muted mb-0">{{ $systems['contact_address'] }}</p>
                             </div>
-                        </form>
-                        <div class="mailchimp-alerts">
-                            <div class="mailchimp-submitting"></div>
-                            <!-- mailchimp-submitting end -->
-                            <div class="mailchimp-success mb-2"></div>
-                            <!-- mailchimp-success end -->
-                            <div class="mailchimp-error mb-2"></div>
-                            <!-- mailchimp-error end -->
+                        </div>
+                        
+                        <div class="contact-item d-flex mb-3">
+                            <i class="fas fa-phone-alt text-primary mt-1 me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Điện thoại</h6>
+                                <a href="tel:{{ $systems['contact_hotline'] }}" class="text-muted">{{ $systems['contact_hotline'] }}</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item d-flex mb-3">
+                            <i class="fas fa-envelope text-primary mt-1 me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Email</h6>
+                                <a href="mailto:{{ $systems['contact_email'] }}" class="text-muted">{{ $systems['contact_email'] }}</a>
+                            </div>
                         </div>
                     </div>
-                    <span class="title-menu">Phương thức thanh toán</span>
-                    <div class="product-trustbadge my-3">
-                        <a href="/collections/all" target="_blank" title="Phương thức thanh toán">
-                            <img class="img-fluid" loading="lazy" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/footer_trustbadge.jpg?1717567288856" alt="Phương thức thanh toán" width="246" height="53" />
-                        </a>
+                    
+                    <div class="social-links mt-4">
+                        <h6 class="mb-3">Kết nối với chúng tôi</h6>
+                        <div class="d-flex gap-3">
+                            <a href="https://facebook.com" target="_blank" class="social-icon">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://zalo.me/834141234794359440" target="_blank" class="social-icon">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" target="_blank" class="social-icon">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" class="social-icon">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a target="_blank" href="/collections/all" title="Logo bộ công thương">
-                        <img loading="lazy" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo_bct.png?1717567288856" width="200" height="76" alt="Logo bộ công thương" />
-                    </a>
+                </div>
+            </div>
+
+            <!-- Footer Menus -->
+            @foreach ($menus['menu-footer'] as $menuBlock)
+            <div class="col-lg-2 col-md-6">
+                <div class="footer-menu mb-4">
+                    <h5 class="mb-3">{{ $menuBlock['item']->name }}</h5>
+                    <ul class="list-unstyled">
+                        @foreach ($menuBlock['children'] as $child)
+                        <li class="mb-2">
+                            <a href="{{ url($child['item']->canonical) }}" class="text-muted text-decoration-none hover-primary">
+                                {{ $child['item']->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            @endforeach
+
+            <!-- Newsletter & Payment -->
+            <div class="col-lg-4 col-md-6">
+                <div class="newsletter mb-4">
+                    <h5 class="mb-3">Đăng ký nhận tin</h5>
+                    <p class="text-muted mb-3">Nhận thông tin khuyến mãi và sản phẩm mới</p>
+                    
+                    <form class="mb-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email của bạn" required>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-paper-plane me-1"></i> Đăng ký
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="payment-methods mb-4">
+                        <h5 class="mb-3">Chấp nhận thanh toán</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/footer_trustbadge.jpg?1717567288856" 
+                                 alt="Payment methods" 
+                                 class="img-fluid rounded" 
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="certification">
+                        <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo_bct.png?1717567288856" 
+                             alt="Bộ Công Thương" 
+                             class="img-fluid" 
+                             loading="lazy"
+                             width="180">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="bg-footer-bottom copyright clearfix py-2">
+
+    <!-- Copyright -->
+    <div class="bg-dark py-3">
         <div class="container">
-            <div class="row">
-                <div id="copyright" class="col-xl-4 col-lg-12 col-md-12 col-xs-12 fot_copyright">
-                    <span class="wsp">
-                        © Bản quyền thuộc về
-                        <a href="//myphamthucuc.com" rel="nofollow" target="_blank">Mỹ Phẩm Thu Cúc</a>
-                        | Cung cấp bởi
-                        <a
-                            href="https://www.sapo.vn/?utm_campaign=cpn:kho_theme-plm:footer&utm_source=Tu_nhien&utm_medium=referral&utm_content=fm:text_link-km:-sz:&utm_term=&campaign=kho_theme-sapo"
-                            rel="nofollow"
-                            title="Sapo"
-                            target="_blank"
-                        >
-                            Sapo
-                        </a>
-                    </span>
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white">
+                        © {{ date('Y') }} <a href="/" class="text-white text-decoration-none">{{ $systems['homepage_company'] }}</a>. 
+                        All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 text-white-50">
+                        Powered by <a href="https://www.sapo.vn" target="_blank" class="text-white text-decoration-none">Sapo</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -159,6 +144,7 @@
         </symbol>
     </defs>
 </svg>
+
 <svg style="display: none;">
     <defs>
         <symbol id="icon-minus" class="icon icon-minus" viewBox="0 0 16 2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -166,6 +152,7 @@
         </symbol>
     </defs>
 </svg>
+
 <svg style="display: none;">
     <defs>
         <symbol id="icon-plus" class="icon icon-plus" viewBox="0 0 93.562 93.562" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -177,6 +164,7 @@
         </symbol>
     </defs>
 </svg>
+
 <svg style="display: none;">
     <defs>
         <symbol class="icon icon-arrow" id="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.8 490.8" fill="none" aria-hidden="true" focusable="false" role="presentation">
@@ -190,6 +178,7 @@
         </symbol>
     </defs>
 </svg>
+
 <svg style="display: none;">
     <defs>
         <symbol id="icon-search" class="icon icon-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904">

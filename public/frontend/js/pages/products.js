@@ -273,7 +273,7 @@ const Product = {
             if (Array.isArray(group.attributes) && group.attributes.length) {
                 group.attributes.forEach((attr, attrIndex) => {
                     const attrBtn = $(`
-                        <a class="btn btn-outline-primary rounded-pill px-3 py-1 choose-attribute ${attrIndex === 0 ? 'active border-primary' : 'border-dark'}"
+                        <a class="btn btn-outline-primary rounded-pill px-3 py-1 choose-attribute border-primary ${attrIndex === 0 ? 'active' : ''}"
                            data-attributeid="${attr.id}"
                            title="${attr.name}"
                            style="font-size: 0.85rem; border-width: 1.5px;">

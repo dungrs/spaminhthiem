@@ -33,4 +33,8 @@ class Review extends Model
     public function customers() {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
+
+    public function likedUsers() {
+        return $this->belongsToMany(Customer::class, 'review_likes', 'review_id', 'customer_id');
+    }
 }

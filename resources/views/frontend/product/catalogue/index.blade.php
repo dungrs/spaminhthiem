@@ -105,28 +105,3 @@
         }
     }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const filterBtn = document.getElementById('mobile-filter-btn');
-      const filterWrapper = document.querySelector('.filter-card-wrapper');
-      const closeBtn = document.querySelector('.btn-close-filter');
-
-      // Mở bộ lọc
-      filterBtn?.addEventListener('click', function () {
-          console.log(123);
-          if (filterWrapper) {
-              filterWrapper.classList.add('show');
-              document.body.classList.add('filter-open');
-          }
-      });
-
-      // Đóng bộ lọc
-      closeBtn?.addEventListener('click', function () {
-          if (filterWrapper) {
-              filterWrapper.classList.remove('show');
-              document.body.classList.remove('filter-open');
-          }
-      });
-  });
-</script>

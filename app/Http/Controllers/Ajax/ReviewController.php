@@ -20,6 +20,11 @@ class ReviewController extends BackendController
         $response = $this->reviewService->create($request);
         return $response;
     }
+
+    public function toggleLike(Request $request) {
+        $response = $this->reviewService->toggleLike($request);
+        return $response;
+    }
     
     public function filter(Request $request) {
         $reviews = $this->reviewService->paginate($request);

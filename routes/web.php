@@ -16,7 +16,6 @@ use App\Http\Controllers\Backend\Menu\MenuController;
 use App\Http\Controllers\Backend\Customer\CustomerCatalogueController;
 use App\Http\Controllers\Backend\Customer\CustomerController;
 
-
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\LanguageController;
@@ -32,13 +31,14 @@ use App\Http\Controllers\Backend\ReviewController;
 // FRONTEND CONTROLLER
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
-use App\Http\Controllers\Frontend\AuthController as AuthCustomerController;
-use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
-use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\MomoController;
 use App\Http\Controllers\Frontend\PaypalController;
 use App\Http\Controllers\Frontend\VnpayController;
+use App\Http\Controllers\Frontend\AuthController as AuthCustomerController;
+use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
+use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
+use App\Http\Controllers\Frontend\Post\PostCatalogueController as FrontendPostCatalogueController;
 
 
 // AJAX CONTROLLER
@@ -456,6 +456,7 @@ Route::prefix('ajax')->group(function() {
     // REVIEW
     Route::prefix('review')->group(function() {
         Route::post('/create', [AjaxReviewController::class, 'create'])->name('ajax.review.create');
+        Route::post('/toggleLike', [AjaxReviewController::class, 'toggleLike'])->name('ajax.review.toggleLike');
         Route::get('/delete/{id}', [AjaxReviewController::class, 'delete'])->name('ajax.review.delete')->where(['id' => '[0-9]+']);
         Route::get('/filter', [AjaxReviewController::class, 'filter'])->name('ajax.review.filter');
     });

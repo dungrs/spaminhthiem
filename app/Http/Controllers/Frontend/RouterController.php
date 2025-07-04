@@ -19,7 +19,7 @@ class RouterController extends FrontendController
         $this->routerRepository = $routerRepository;
     }
 
-    public function index(string $canonical = '', int $page = 1,  Request $request) {
+    public function index(string $canonical = '', int $page = 1, Request $request) {
         $router = $this->routerRepository->findByCondition([
             ['canonical', '=', $canonical],
             ['language_id', '=', $this->language]

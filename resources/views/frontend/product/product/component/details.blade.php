@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row my-4">
     @if (!empty($album))
         <div class="col-xl-6 col-sm-12">
             <div class="row g-3">

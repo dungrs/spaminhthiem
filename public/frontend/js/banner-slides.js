@@ -173,7 +173,6 @@ const SwiperInitializer = {
         BannerSlide.swiperProduct();
         BannerSlide.swiper();
         BannerSlide.swiperProductModal();
-        BannerSlide.swiperProductDetails();
     }
 };
 

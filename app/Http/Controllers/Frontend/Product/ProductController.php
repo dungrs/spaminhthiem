@@ -8,22 +8,24 @@ use App\Repositories\SystemRepository;
 
 use App\Services\Product\ProductCatalogueService;
 use App\Services\Product\ProductService;
-
-use Illuminate\Support\Facades\DB;
+use App\Services\WidgetService;
 
 class ProductController extends FrontendController
 {   
     protected $productCatalogueService;
     protected $productService;
+    protected $widgetService;
 
     public function __construct(    
         SystemRepository $systemRepository,
         ProductCatalogueService $productCatalogueService,
         ProductService $productService,
+        WidgetService $widgetService,
     ) {
         parent::__construct($systemRepository);
         $this->productCatalogueService = $productCatalogueService;
         $this->productService = $productService;
+        $this->widgetService = $widgetService;
     }
 
     public function index($request, $canonical, $id) {
@@ -37,6 +39,11 @@ class ProductController extends FrontendController
         $productCatalogue = $data['productCatalogue'];
         $productRelateds = $this->productService->getRelatedProductsByCategory($productCatalogue->id, $id, $languageId);
         $seo = $data['seo'];
+        $keywords = [
+            'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
+        ];
+
+        $widgets = $this->widgetService->getWidget($keywords, 1);
 
         $breadcrumb = $this->productCatalogueService->breadcrumb("ProductCatalogue", "Product", $productCatalogue, $languageId);
         return view('frontend.homepage.layout', compact(
@@ -49,6 +56,7 @@ class ProductController extends FrontendController
             'productRelateds',
             'seo',
             'breadcrumb',
+            'widgets'
         ));
     }
 

@@ -9,17 +9,17 @@
                         <span class="mr_lr">&nbsp;/&nbsp;</span>
                     </li>
 
-                    @if(!is_null($breadcrumb))
-                        @foreach ($breadcrumb as $item)
+                    @if (!is_null($breadcrumb))
+                        @foreach ($breadcrumb->sortBy('level') as $item)
                             @if ($item->canonical == $model->canonical)
                                 @continue
                             @endif
                             @php
                                 $name = $item->name;
-                                $canonical = writeUrl($item->canonical, true, true)
+                                $canonical = writeUrl($item->canonical, true, true);
                             @endphp
-                            <li class="">
-                                <a  href="{{ $canonical }}" class='link' >{{ $name }}</span></a>						
+                            <li>
+                                <a href="{{ $canonical }}" class="link">{{ $name }}</a>
                                 <span class="mr_lr">&nbsp;/&nbsp;</span>
                             </li>
                         @endforeach

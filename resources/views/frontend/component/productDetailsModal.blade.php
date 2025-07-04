@@ -67,8 +67,8 @@
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star-half-alt"></i>
                                         </div>
-                                        <span class="text-muted me-3" style="font-size: 0.85rem;">128 đánh giá</span>
-                                        <span class="text-muted" style="font-size: 0.85rem;">Đã bán 320</span>
+                                        <span class="text-muted me-2" style="font-size: 0.85rem;">128 đánh giá</span>
+                                        <span class="text-muted ps-3 ms-2 text-muted border-start" style="font-size: 0.85rem;">Đã bán 320</span>
                                     </div>
     
                                     <!-- Price -->
@@ -78,7 +78,7 @@
                                             <span class="text-decoration-line-through text-muted ms-2 price-old" style="font-size: 0.9rem;"></span>
                                             <span class="badge bg-danger ms-2 discount" style="font-size: 0.8rem;"></span>
                                         </div>
-                                        <div class="d-flex align-items-center text-success">
+                                        <div class="d-flex align-items-center text-primary">
                                             <i class="fas fa-check-circle me-2"></i>
                                             <span style="font-size: 0.9rem;">Còn hàng</span>
                                         </div>
@@ -90,7 +90,7 @@
     
                                     <!-- Quantity (Compact Design) -->
                                     <div class="group-quantity">
-                                        <div class="d-flex flex-column gap-2 mt-2">
+                                        <div class="d-flex flex-column gap-2 mt-2 mb-4">
                                             <span class="fs-6 fw-bold d-block mb-1">SỐ LƯỢNG</span>
                                             <div class="d-flex">
                                                 <div class="custom-btn-quantity minus">-</div>

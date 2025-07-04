@@ -1,5 +1,6 @@
 
 @php
+    $productId          = $product->id;
     $name               = $product->name;
     $image              = asset(image($product->image));
     $price              = number_format($product->product_variants->first()->price ?? 0);

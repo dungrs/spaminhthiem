@@ -241,6 +241,7 @@ class WidgetService extends BaseService implements WidgetServiceInterface {
             "{$model}s.album",
             "{$model}s.created_at",
             "{$model}_languages.name",
+            "{$model}_languages.description",
             "{$model}_languages.canonical",
             "{$model}_languages.meta_description",
         ];

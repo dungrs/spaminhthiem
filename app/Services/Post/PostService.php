@@ -7,37 +7,64 @@ use App\Services\BaseService;
 use App\Repositories\Post\PostRepository;
 use App\Repositories\RouterRepository;
 
+use App\Services\Post\PostCatalogueService;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PostService extends BaseService implements PostServiceInterface {
     protected $postRepository;
     protected $routerRepository;
+    protected $postCatalogueService;
 
-    public function __construct(PostRepository $postRepository, RouterRepository $routerRepository) {
+
+    public function __construct(
+        PostRepository $postRepository, 
+        RouterRepository $routerRepository,
+        PostCatalogueService $postCatalogueService
+        ) {
         $this->postRepository = $postRepository;
         $this->routerRepository = $routerRepository;
+        $this->postCatalogueService = $postCatalogueService;
     }
 
     public function paginate($request) {
-        $perpage = $request->input('perpage');
-        $page = $request->integer('page');
-        $languageId = $request->integer('language_id') ?? session('currentLanguage')->id;
+        $perpage = $request->input('perpage') ?? 6;
+        $page = $request->input('page');
+        $languageId = $request->input('language_id') ?? session('currentLanguage')->id ?? 1;
+        $postCatalogueId = $request->input('post_catalogue_id') ?? null;
+
         $condition = [
             'keyword' => addslashes($request->input('keyword')),
-            'publish' => $request->integer('publish'),
-            'where' => [
-                ['pl.language_id', '=',  $languageId]
-            ]
-        ];
-        $extend['path'] = '/post/index';
-        $extend['fieldSearch'] = ['name'];
-        $join = [
-            [
-                'table' => 'post_languages as pl', 
-                'on' => [['pl.post_id', 'posts.id']]
+            'publish' => $request->input('publish') ?? 2,
+            'where'   => [
+                ['pl.language_id', '=', $languageId],
             ],
         ];
+
+        if (!is_null($postCatalogueId)) {
+            $condition['where'][] = ['pcp.post_catalogue_id', '=', $postCatalogueId];
+        }
+
+        $extend = [
+            'path'        => '/post/index',
+            'fieldSearch' => ['name'],
+        ];
+
+        $join = [
+            [
+                'table' => 'post_languages as pl',
+                'on'    => [['pl.post_id', 'posts.id']],
+            ],
+        ];
+
+        if (!is_null($postCatalogueId)) {
+            $join[] = [
+                'table' => 'post_catalogue_post as pcp',
+                'on'    => [['posts.id', 'pcp.post_id']],
+            ];
+        }
+
         $posts = $this->postRepository->paginate(
             $this->paginateSelect(),
             $condition,
@@ -52,12 +79,12 @@ class PostService extends BaseService implements PostServiceInterface {
         if ($posts) {
             return response()->json([
                 'status' => 'success',
-                'data' => $posts,
+                'data'   => $posts,
             ], 200);
         } else {
             return response()->json([
-                'status' => 'error',
-                'message' => "Lấy dữ liệu không thành công!"
+                'status'  => 'error',
+                'message' => 'Lấy dữ liệu không thành công!',
             ], 500);
         }
     }
@@ -182,6 +209,74 @@ class PostService extends BaseService implements PostServiceInterface {
         ], true);
     }
 
+    // FRONTEND SERVICE
+    public function prepareFrontendPostData($id, $languageId, $isJsonResponse = true) {
+        $post = $this->getPostDetails($id, $languageId);
+        $postCatalogue = $this->postCatalogueService->getPostCatalogueDetails($post->post_catalogue_id, $languageId);
+        $seo = seo($post);
+    
+        if ($isJsonResponse) {
+            $postArray = [
+                'id' => $post->id,
+                'name' => $post->name,
+                'description' => $post->description,
+                'content' => $post->content,
+                'image' => $post->image,
+                'promotions' => $post->promotions,
+                'attributes' => $post->attributes,
+            ];
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'post' => $postArray,
+                    'seo' => $seo,
+                ]
+            ], 200, [], JSON_PARTIAL_OUTPUT_ON_ERROR);
+        }
+    
+        return [
+            'post' => $post,
+            'postCatalogue' => $postCatalogue,
+            'seo' => $seo,
+        ];
+    }
+
+    public function getRelatedPostsByCategory($postCatalogueId, $postId, $languageId) {
+        $conditions = [
+            ['pl.language_id', '=', $languageId],
+            ['posts.post_catalogue_id', '=', $postCatalogueId],
+            ['posts.id', '!=', $postId],
+        ];
+        $postRelateds = $this->basePostQuery($conditions);
+        return $postRelateds;
+    }
+
+    protected function basePostQuery(array $conditions, bool $multiple = true) {
+        return $this->postRepository->findByCondition(
+            $conditions,
+            $multiple,
+            [
+                [
+                    'table' => 'post_languages as pl',
+                    'on' => [['pl.post_id', 'posts.id']]
+                ]
+            ],
+            ['posts.id' => 'DESC'],
+            [
+                'posts.*',
+                'pl.name',
+                'pl.description',
+                'pl.content',
+                'pl.meta_title',
+                'pl.meta_keyword',
+                'pl.meta_description',
+                'pl.canonical',
+                'pl.language_id',
+            ]
+        );
+    }
+
     private function createPost($request) {
         $payload = $request->only($this->payload());
         $payload['user_id'] = Auth::id();
@@ -246,9 +341,11 @@ class PostService extends BaseService implements PostServiceInterface {
             'posts.publish', 
             'posts.image', 
             'posts.follow', 
+            'posts.created_at', 
             'pl.name', 
             'pl.canonical',
-            'pl.language_id'
+            'pl.language_id',
+            'pl.meta_description',
         ];
     }
 }

@@ -34,4 +34,9 @@ class Post extends Model
     public function post_catalogues() {
         return $this->belongsToMany(PostCatalogue::class, 'post_catalogue_post', 'post_id', 'post_catalogue_id');
     }
+
+    
+    public function reviews() {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

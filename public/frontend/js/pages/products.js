@@ -1,20 +1,4 @@
 const Product = {
-    initQuantityHandler: function() {
-        $(document).on('click', '.custom-btn-quantity.minus', function() {
-            let $input = $(this).siblings('#quantity');
-            let currentVal = parseInt($input.val());
-            if (currentVal > 1) {
-                $input.val(currentVal - 1);
-            }
-        });
-    
-        $(document).on('click', '.custom-btn-quantity.add', function() {
-            let $input = $(this).siblings('#quantity');
-            let currentVal = parseInt($input.val());
-            $input.val(currentVal + 1);
-        });
-    },
-
     handleAttributeSelection: function (formData = null) {
         let selectedAttributes = {};
         let totalGroups = $('[data-group-index]').length;
@@ -47,11 +31,11 @@ const Product = {
                         'language_id': $("input[name=language_id]").val()
                     };
                 }
-    
+
                 if (ajaxRequest) {
                     ajaxRequest.abort();
                 }
-    
+
                 ajaxRequest = $.ajax({
                     url: '/ajax/product/loadVariant',
                     type: 'GET',
@@ -61,6 +45,8 @@ const Product = {
                         if (response.data) {
                             Product.setupVariantName(response.data);
                             Product.setupVariantPrice(response.data);
+                            Product.updateStockInfo(response.data);
+                            Product.initQuantityHandler();
                         }
                         ajaxRequest = null;
                     },
@@ -136,6 +122,102 @@ const Product = {
             $('.price-old').text('');
             $('.discount').hide();
         }
+    },
+
+    updateStockInfo: function (variantData) {
+        const quantity = parseInt(variantData.quantity) || 0;
+        const stockStatus = $('.stock-status');
+        const quantityInput = $('#quantity');
+        const submitButton = $('.submitCartButton');
+        const availableQuantity = $('.available-quantity span');
+        const skuElement = $('.sku');
+
+        // Cập nhật SKU
+        skuElement.text(variantData.sku || '');
+
+        // Cập nhật số lượng còn lại và giới hạn
+        availableQuantity.text(quantity);
+        quantityInput.attr('max', quantity);
+
+        const isAvailable = quantity > 0;
+
+        // Trạng thái còn hàng / hết hàng
+        if (isAvailable) {
+            stockStatus.html(`
+                <i class="fas fa-check-circle me-2 text-success"></i>
+                <span class="text-success" style="font-size: 0.9rem;">Còn hàng</span>
+            `);
+            quantityInput.prop('disabled', false);
+            submitButton.prop('disabled', false).html(`
+                <img src="frontend/img/icon/icon-cart-plus.svg" />
+                 Thêm Vào Giỏ Hàng
+            `);
+        } else {
+            stockStatus.html(`
+                <i class="fas fa-times-circle me-2 text-danger"></i>
+                <span class="text-danger" style="font-size: 0.9rem;">Hết hàng</span>
+            `);
+            quantityInput.prop('disabled', true);
+            submitButton.prop('disabled', true).html(`
+                <i class="fas fa-times-circle me-2"></i> Hết hàng
+            `);
+        }
+
+        // Reset số lượng nếu vượt quá tồn kho
+        const currentQty = parseInt(quantityInput.val());
+        if (currentQty > quantity && isAvailable) {
+            quantityInput.val(1).trigger('change');
+        }
+
+        // Cập nhật nút tăng/giảm
+        Product.updateQuantityButtons();
+    },
+
+    initQuantityHandler: function () {
+        $(document).off('click', '.custom-btn-quantity.minus');
+        $(document).off('click', '.custom-btn-quantity.add');
+
+        $(document).on('click', '.custom-btn-quantity.minus', () => {
+            const quantityInput = $('#quantity');
+            const current = parseInt(quantityInput.val()) || 1;
+
+            if (current > 1) {
+                quantityInput.val(current - 1).trigger('change');
+            }
+        });
+
+        $(document).on('click', '.custom-btn-quantity.add', () => {
+            const quantityInput = $('#quantity');
+            const max = parseInt(quantityInput.attr('max')) || 0;
+            const current = parseInt(quantityInput.val()) || 1;
+
+            if (current < max) {
+                quantityInput.val(current + 1).trigger('change');
+            } else {
+                if (max <= 0) {
+                    alert('Sản phẩm đã hết hàng!');
+                } else {
+                    alert(`Bạn chỉ có thể mua tối đa ${max} sản phẩm`);
+                }
+            }
+        });
+
+        this.updateQuantityButtons();
+    },
+
+    updateQuantityButtons: function () {
+        const quantityInput = $('#quantity');
+        const max = parseInt(quantityInput.attr('max')) || 0;
+        const current = parseInt(quantityInput.val()) || 1;
+
+        const minusBtn = $('.custom-btn-quantity.minus');
+        const addBtn = $('.custom-btn-quantity.add');
+        
+        addBtn.prop('disabled', current >= max || max <= 0)
+            .css('opacity', current >= max || max <= 0 ? '0.5' : '1');
+
+        minusBtn.prop('disabled', current < 1 || max <= 0)
+                .css('opacity', current < 1 || max <= 0 ? '0.5' : '1');
     },
 
     setupProductDetailAndShowModal: function() {
@@ -402,7 +484,6 @@ const Product = {
 };
 
 $(document).ready(function () {
-    Product.initQuantityHandler();
     Product.handleAttributeSelection();
     Product.bindStoreCartHandler();
     Product.setupProductDetailAndShowModal();

@@ -69,12 +69,29 @@ class ProductService extends BaseService implements ProductServiceInterface {
                 ['pl.language_id', '=',  $languageId]
             ]
         ];
-        $extend['path'] = '/product/index';
-        $extend['fieldSearch'] = ['name'];
+        $extend = [
+            'path' => '/product/index',
+            'fieldSearch' => ['pl.name'],
+            'groupBy' => [
+                'products.id',
+                'products.product_catalogue_id',
+                'products.publish', 
+                'products.image', 
+                'products.follow', 
+                'pl.name', 
+                'pl.canonical',
+                'pl.language_id',
+            ]
+        ];
         $join = [
             [
                 'table' => 'product_languages as pl', 
                 'on' => [['pl.product_id', 'products.id']]
+            ],
+            [
+                'type' => 'left',
+                'table' => 'product_variants as pv',
+                'on' => [['pv.product_id', 'products.id']],
             ],
         ];
         $products = $this->productRepository->paginate(
@@ -85,7 +102,7 @@ class ProductService extends BaseService implements ProductServiceInterface {
             $extend,
             ['products.id', 'DESC'],
             $join,
-            ['languages', 'product_catalogues'],
+            ['languages', 'product_catalogues', 'product_variants'],
         );
 
         if ($products) {
@@ -184,7 +201,6 @@ class ProductService extends BaseService implements ProductServiceInterface {
 
         return $paginator;
     }
-
 
     public function loadProductAnimation($request) {
         $get = $request->input();
@@ -398,7 +414,7 @@ class ProductService extends BaseService implements ProductServiceInterface {
         }
     }
 
-    protected function baseProductQuery(array $conditions, bool $multiple = true) {
+    protected function baseProductQuery(array $conditions, bool $multiple = true, array $relations = []) {
         return $this->productRepository->findByCondition(
             $conditions,
             $multiple,
@@ -419,16 +435,17 @@ class ProductService extends BaseService implements ProductServiceInterface {
                 'pl.meta_description',
                 'pl.canonical',
                 'pl.language_id',
-            ]
+            ],
+            $relations
         );
     }
 
-    public function getProductDetails($id, $languageId) {
+    public function getProductDetails($id, $languageId, $relations = []) {
         $conditions = [
             ['pl.language_id', '=', $languageId],
             ['products.id', '=', $id],
         ];
-        return $this->baseProductQuery($conditions, false);
+        return $this->baseProductQuery($conditions, false, $relations);
     }
 
     public function getProductOtherLanguages($id, $languageId) {
@@ -438,10 +455,83 @@ class ProductService extends BaseService implements ProductServiceInterface {
         ];
         return $this->baseProductQuery($conditions);
     }
+
+    public function getBestSellingProduct() {
+        $condition = [
+            ["product_languages.language_id", '=', session('currentLanguage')->id],
+            ["orders.confirm", '=', 'confirm'],
+            ["orders.payment", '=', 'paid'],
+        ];
+
+        $join = [
+            [
+                'table' => "product_languages",
+                'on' => [["product_languages.product_id", "products.id"]],
+            ],
+            [
+                'table' => "order_products",
+                'on' => [["order_products.product_id", "products.id"]],
+            ],
+            [
+                'table' => "orders",
+                'on' => [["orders.id", "order_products.order_id"]],
+            ],
+        ];
+
+        $columns = [
+            "products.id", 
+            "products.image", 
+            "products.album",
+            "products.made_in",
+            "products.created_at",
+            "product_languages.name",
+            "product_languages.description",
+            "product_languages.canonical",
+            "product_languages.meta_description",
+            DB::raw("SUM(order_products.qty) as total_qty_sold")
+        ];
+
+        $relations = ['product_variants', 'orders'];
+
+        $groupBy = [
+            "products.id",
+            "products.image",
+            "products.album",
+            "products.created_at",
+            "products.made_in",
+            "product_languages.name",
+            "product_languages.description",
+            "product_languages.canonical",
+            "product_languages.meta_description"
+        ];
+
+        $orderBy = [
+            'total_qty_sold' => 'DESC'
+        ];
+
+        $limit = 6;
+
+        $products = $this->productRepository->findByCondition(
+            $condition,
+            true,
+            $join,
+            $orderBy,
+            $columns,
+            $relations,
+            null,
+            $groupBy,
+            $limit
+        );
+
+        foreach ($products as $val) {
+            $this->promotionService->applyPromotionToProduct($val, 'product');
+        }
+        return $products;
+    }
     
     // FRONTEND SERVICE
     public function prepareFrontendProductData($id, $languageId, $isJsonResponse = true) {
-        $product = $this->getProductDetails($id, $languageId);
+        $product = $this->getProductDetails($id, $languageId, ['orders']);
         $productCatalogue = $this->productCatalogueService->getProductCatalogueDetails($product->product_catalogue_id, $languageId);
         $product->promotions = $this->promotionService->getPromotionForProduct('product', $id);
         $product->attributes = $this->attributeService->getAttributeFrontEnd($product, $languageId);
@@ -643,6 +733,7 @@ class ProductService extends BaseService implements ProductServiceInterface {
             'pl.name', 
             'pl.canonical',
             'pl.language_id',
+            DB::raw('SUM(pv.quantity) as product_quantity'),
         ];
     
         if ($isFrontend) {

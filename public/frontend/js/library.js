@@ -101,7 +101,6 @@ const Library = {
             });
         }
 
-
         pagination.append(`
             <li class="page-item ${response.data.current_page === response.data.last_page ? 'disabled' : ''}">
                 <a class="page-link" href="javascript:void(0)" data-page="${response.data.current_page + 1}" aria-label="Next">
@@ -110,9 +109,46 @@ const Library = {
             </li>
         `);
     },
+
+    // initReviewReplyHandlers: function() {
+    //     $('.btn-reply').on('click', function () {
+    //         const reviewId = $(this).data('review-id');
+    //         const replyForm = $(`#reply-form-${reviewId}`);
+
+    //         $('.reply-form').hide();
+
+    //         replyForm.show();
+
+    //         $('html, body').animate({
+    //             scrollTop: replyForm.offset().top - 100
+    //         }, 300);
+    //     });
+
+    //     $('.btn-cancel-reply').on('click', function () {
+    //         const reviewId = $(this).data('review-id');
+    //         $(`#reply-form-${reviewId}`).hide();
+    //     });
+
+    //     $('.reply-form-inner').on('submit', function (e) {
+    //         e.preventDefault();
+
+    //         const form = $(this);
+    //         const reviewId = form.data('review-id');
+    //         const content = form.find('.reply-textarea').val();
+
+    //         // Gửi AJAX ở đây nếu cần
+    //         console.log(`Gửi phản hồi cho review ${reviewId}: ${content}`);
+
+    //         // Sau khi gửi thành công
+    //         form.closest('.reply-form').hide();
+    //         form.find('.reply-textarea').val('');
+            
+    //     });
+    // }
 };
 
 $(document).ready(function () {
     Library.setupLocation();
+    // Library.initReviewReplyHandlers(); 
     Library.initAvatarPreview('#avatar', '#avatarPreview');
 });

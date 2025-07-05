@@ -1,5 +1,10 @@
 
 @php
+    $sold = $product->orders
+            ->where('confirm', 'confirm')
+            ->sum(function ($order) {
+                return $order->pivot->qty;
+            });
     $productId          = $product->id;
     $name               = $product->name;
     $image              = asset(image($product->image));

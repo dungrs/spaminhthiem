@@ -4,7 +4,7 @@
         <div class="d-flex flex-wrap gap-2">
             @if (!is_null($val->attributes))
                 @foreach ($val->attributes as $attrKey => $attr)
-                    <a class="btn btn-outline-primary rounded-pill px-3 py-1 choose-attribute {{ $attrKey == 0 ? 'active border-primary' : 'border-primary text-dark' }}"
+                    <a class="btn btn-outline-primary rounded-pill px-3 py-1 choose-attribute {{ $attrKey == 0 ? 'active border-primary' : 'border-primary text-primary' }}"
                         data-attributeid="{{ $attr->id }}"
                         title="{{ $attr->name }}"
                         style="font-size: 0.85rem; border-width: 1.5px;">

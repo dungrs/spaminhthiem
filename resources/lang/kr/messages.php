@@ -669,6 +669,8 @@ return [
                     'phone' => "전화번호",
                     'description' => "내용",
                     'score' => "평점",
+                    'like_count' => "좋아요 수",
+                    'review_type' => "리뷰 유형",
                 ],
             ],
         ],
@@ -1118,4 +1120,5 @@ return [
     ],
     'day' => '일',
     'month' => '월',
+    'quantity_title' => '수량',
 ];

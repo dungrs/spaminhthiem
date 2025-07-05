@@ -33,6 +33,8 @@ class ProductVariantService extends BaseService implements ProductVariantService
             ['product_variants.id' => 'ASC'],
             [
                 'product_variants.id',
+                'product_variants.quantity',
+                'product_variants.sku',
                 'product_variants.code',
                 'product_variants.price',
                 'product_variants.uuid',

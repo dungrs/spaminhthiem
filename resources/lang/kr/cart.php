@@ -2,36 +2,36 @@
 
 return [
     'confirm' => [
+        'icon' => 'fas fa-clipboard-check',
         'label' => '확인 상태',
         'data' => [
-            'none' => '상태 선택',
             'pending' => '확인 대기 중',
             'confirm' => '확인됨',
             'cancel' => '취소됨'
         ]
     ],
     'payment' => [
+        'icon' => 'fas fa-credit-card',
         'label' => '결제 상태',
         'data' => [
-            'none' => '결제 상태 선택',
             'unpaid' => '미결제',
             'paid' => '결제 완료',
             'failed' => '환불됨'
         ]
     ],
     'delivery' => [
+        'icon' => 'fas fa-truck',
         'label' => '배송 상태',
         'data' => [
-            'none' => '배송 상태 선택',
             'pending' => '미배송',
             'processing' => '배송 중',
             'success' => '성공'
         ]
     ],
     'method_shipping' => [
+        'icon' => 'fas fa-shipping-fast',
         'label' => '배송 방법',
         'data' => [
-            'none' => '배송 방법 선택',
             'ghtk' => '경제 배송',
             'ghn' => '빠른 배송',
             'vnpost' => '베트남 우체국 (VNPost)',

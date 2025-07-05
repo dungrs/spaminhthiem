@@ -643,7 +643,6 @@ const Product = {
 
     bindEditProductVariant: function () {
         const decoded = JSON.parse(atob(variants));
-        console.log(decoded);
     
         $('.variant-row').each(function (index) {
             const $row = $(this);
@@ -794,6 +793,9 @@ const Product = {
                                         </div>
                                     </div>
                                 </div>
+                            </td>
+                            <td>
+                                ${item.product_quantity}
                             </td>
                             <td>
                                 <input type="checkbox" id="switch${item.id}" data-field="publish" data-id="${item.id}" class="publish-check" switch="none" ${item.publish == 2 ? 'checked' : ''}>

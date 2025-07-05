@@ -129,29 +129,6 @@
     display: block
 }
 
-.page_customer_account {
-    margin-bottom: 30px
-}
-
-.page_customer_account .col-right-ac .name-account {
-    margin-bottom: 40px
-}
-
-.page_customer_account .col-right-ac .title-yorder {
-    font-size: 19px;
-    line-height: 22px;
-    font-weight: 500;
-    color: #212B25;
-    margin-bottom: 12px;
-    text-transform: uppercase
-}
-
-.page_customer_account .col-right-ac .my-account .table-responsive-block .table-cart thead th {
-    border-bottom: 1px solid #dee2e6;
-    color: var(--text-color);
-    padding: 5px
-}
-
 @media (max-width: 992px) {
     .page_customer_account .col-right-ac .my-account .table-responsive-block .table-cart thead th {
         display:none
@@ -165,11 +142,6 @@
         margin-bottom: 20px;
         display: block
     }
-}
-
-.page_customer_account .col-right-ac .my-account .table-responsive-block tbody .first td {
-    width: 15%;
-    padding: 20px 5px
 }
 
 @media (max-width: 992px) {
@@ -314,259 +286,6 @@
     vertical-align: top;
     text-align: left;
     margin-bottom: 8px
-}
-
-.page_order .table-order {
-    padding: 0 20px;
-    border: 1px solid #e0e0e0;
-    margin-top: 24px;
-    border-radius: 5px
-}
-
-@media (max-width: 992px) {
-    .page_order .table-order {
-        padding:0;
-        border: 0
-    }
-}
-
-.page_order .table-order .table-cart thead tr th {
-    padding: 25px 0;
-    border: 0;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 16px;
-    line-height: 19px;
-    width: 15%;
-    float: left;
-    font-weight: 400
-}
-
-@media (max-width: 992px) {
-    .page_order .table-order .table-cart thead tr th {
-        display:none
-    }
-}
-
-.page_order .table-order .table-cart thead tr th:first-child {
-    text-align: left;
-    width: 55%
-}
-
-@media (max-width: 992px) {
-    .page_order .table-order .table-cart tbody tr {
-        border-top:0 !important;
-        display: block
-    }
-
-    .page_order .table-order .table-cart tbody tr:last-child {
-        border-bottom: 1px solid #e1e1e1
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td {
-    border: 0;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 15px 0;
-    width: 15%;
-    float: left;
-    font-size: 16px
-}
-
-@media (min-width: 992px) {
-    .page_order .table-order .table-cart tbody tr td {
-        justify-content:center;
-        align-items: center;
-        display: flex;
-        min-height: 130px
-    }
-}
-
-@media (max-width: 992px) {
-    .page_order .table-order .table-cart tbody tr td {
-        border-bottom:none;
-        position: relative;
-        padding-right: 10px;
-        text-align: right;
-        padding-top: 0;
-        padding-bottom: 10px;
-        display: inline-block;
-        float: none;
-        width: 100% !important
-    }
-
-    .page_order .table-order .table-cart tbody tr td:first-child {
-        border-top: #e1e1e1 1px solid;
-        padding-top: 10px
-    }
-
-    .page_order .table-order .table-cart tbody tr td:nth-child(2) {
-        display: none
-    }
-
-    .page_order .table-order .table-cart tbody tr td:nth-child(3) {
-        display: none
-    }
-
-    .page_order .table-order .table-cart tbody tr td:nth-child(4) {
-        display: none
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td:first-child {
-    width: 55%
-}
-
-.page_order .table-order .table-cart tbody tr td .image_order {
-    float: left;
-    width: 90px
-}
-
-@media (max-width: 767px) {
-    .page_order .table-order .table-cart tbody tr td .image_order {
-        width:50px
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td .image_order a {
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-items: center
-}
-
-@media (max-width: 767px) {
-    .page_order .table-order .table-cart tbody tr td .image_order a {
-        height:50px
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td .image_order a img {
-    max-height: 100%;
-    max-width: 100%
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right {
-    float: left;
-    width: calc(100% - 90px);
-    padding-left: 15px;
-    text-align: left;
-    font-size: 14px;
-    line-height: 16px;
-    align-self: normal;
-    display: flex;
-    flex-flow: column;
-    justify-content: center
-}
-
-@media (max-width: 992px) {
-    .page_order .table-order .table-cart tbody tr td .content_right {
-        text-align:right;
-        width: auto;
-        float: none;
-        text-align: left
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right .title_order {
-    display: block
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right p {
-    margin: 10px 0 0
-}
-
-@media (max-width: 767px) {
-    .page_order .table-order .table-cart tbody tr td .content_right p {
-        margin:5px 0 0
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right .bottom_mb {
-    font-size: 16px;
-    margin-top: 5px
-}
-
-@media (min-width: 992px) {
-    .page_order .table-order .table-cart tbody tr td .content_right .bottom_mb {
-        display:none
-    }
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right .bottom_mb .quantity_mb {
-    float: left
-}
-
-.page_order .table-order .table-cart tbody tr td .content_right .bottom_mb .sum_mb {
-    float: right
-}
-
-.page_order .table-order .totalorders tr td {
-    border: 0;
-    font-size: 16px;
-    text-align: right
-}
-
-@media (max-width: 767px) {
-    .page_order .table-order .totalorders tr td {
-        padding:10px 5px
-    }
-}
-
-.page_order .table-order .totalorders tr td:first-child {
-    width: 75%
-}
-
-@media (max-width: 767px) {
-    .page_order .table-order .totalorders tr td:first-child {
-        width:45%
-    }
-}
-
-@media (max-width: 992px) {
-    .table-responsive-block .table-order td:nth-of-type(1):before {
-        content:"Đơn hàng:"
-    }
-
-    .table-responsive-block .table-order td:nth-of-type(2):before {
-        content: "Ngày:"
-    }
-
-    .table-responsive-block .table-order td:nth-of-type(3):before {
-        content: "Địa chỉ:"
-    }
-
-    .table-responsive-block .table-order td:nth-of-type(4):before {
-        content: "Giá trị đơn hàng:"
-    }
-
-    .table-responsive-block .table-order td:nth-of-type(5):before {
-        content: "TT Thanh toán:"
-    }
-
-    .table-responsive-block .table-order td:nth-of-type(6):before {
-        content: "TT Vận chuyển:"
-    }
-
-    .table-responsive-block .totalorders td:nth-of-type(1):before {
-        content: "Phí vận chuyển"
-    }
-
-    .table-responsive-block .totalorders td:nth-of-type(2):before {
-        content: "Tổng tiền"
-    }
-
-    .table-responsive-block .totalorders td:nth-of-type(3):before {
-        content: "Số lượng"
-    }
-
-    .table-responsive-block .totalorders td:nth-of-type(4):before {
-        content: "Tổng"
-    }
-
-    .table-responsive-block .totalorders td:nth-of-type(5):before {
-        content: "Tình trạng"
-    }
 }
 
 .btn_register,
@@ -1874,4 +1593,187 @@
 .btn-like-review.active {
     background-color: rgba(13, 110, 253, 0.1);
     border-color: #0d6efd;
+}
+
+.submitCartButton:disabled {
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.btn-disabled {
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+.custom-btn-quantity {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 767.98px) {
+.body {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Form tra cứu */
+.bg-white.rounded.shadow-sm {
+    padding: 1.5rem !important;
+}
+
+h4.text-center.mb-4 {
+    font-size: 1.25rem;
+}
+
+/* Invoice card */
+.invoice-container {
+    padding: 1rem !important;
+}
+
+.invoice-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem !important;
+}
+
+.d-flex.justify-content-between.align-items-center.mb-4 {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+}
+
+.payment-status {
+    width: 100%;
+    text-align: center;
+}
+
+.payment-status .badge {
+    display: inline-flex;
+    width: auto;
+}
+
+/* Thông tin đơn hàng */
+.row.text-start {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Thanh toán */
+.row.justify-content-end .col-md-6 {
+    width: 100%;
+}
+
+.card.border-0.shadow-sm {
+    margin-top: 1.5rem;
+}
+
+/* Nút hành động */
+.d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn, .print-btn {
+    width: 100%;
+}
+
+/* Thông báo không tìm thấy đơn hàng */
+.bg-white.rounded.shadow-sm.text-center {
+    padding: 1.5rem !important;
+}
+
+/* Điều chỉnh kích thước chữ */
+h5, h6 {
+    font-size: 1rem;
+}
+
+p, .form-text {
+    font-size: 0.875rem;
+}
+
+/* Input form */
+.form-control.px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Badge trạng thái */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem !important;
+}
+}
+
+/* Small mobile devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .invoice-header h1 {
+      font-size: 1.25rem;
+  }
+
+  .thank-you h5 {
+      font-size: 1rem;
+  }
+
+  .table-responsive-block {
+      padding-left: 0;
+      padding-right: 0;
+  }
+
+  .lookup-btn {
+      font-size: 0.9rem;
+  }
+}
+
+/* Style cho phần reply */
+.reply-form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.reply-textarea {
+    border-radius: 8px;
+    resize: none;
+    border: 1px solid #dee2e6;
+    transition: border-color 0.3s;
+}
+
+.reply-textarea:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-submit-reply {
+    border-radius: 20px;
+    padding: 0.375rem 1.25rem;
+}
+
+.btn-cancel-reply {
+    border-radius: 20px;
+    padding: 0.375rem 1.25rem;
+}
+
+.replies-list {
+    margin-left: 1.5rem;
+}
+
+.reply-item {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Animation khi mở form reply */
+.reply-form {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

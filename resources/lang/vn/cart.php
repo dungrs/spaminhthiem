@@ -1,6 +1,7 @@
 <?php
 return [
     'confirm' => [
+        'icon' => 'fas fa-clipboard-check',
         'label' => 'Tình trạng xác nhận',
         'data' => [
             'none' => 'Chọn tình trạng',
@@ -10,6 +11,7 @@ return [
         ]
     ],
     'payment' => [
+        'icon' => 'fas fa-credit-card',
         'label' => 'Tình trạng thanh toán',
         'data' => [
             'none' => 'Chọn tình trạng thanh toán',
@@ -19,6 +21,7 @@ return [
         ]
     ],
     'delivery' => [
+        'icon' => 'fas fa-truck',
         'label' => 'Tình trạng giao hàng',
         'data' => [
             'none' => 'Chọn tình trạng giao hàng',
@@ -28,6 +31,7 @@ return [
         ]
     ],
     'method_shipping' => [
+        'icon' => 'fas fa-shipping-fast',
         'label' => 'Phương thức giao hàng',
         'data' => [
             'none' => 'Chọn phương thức giao hàng',

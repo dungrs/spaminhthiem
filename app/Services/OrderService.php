@@ -2,12 +2,14 @@
 
 namespace App\Services;
 use App\Services\Interfaces\OrderServiceInterface;
+
 use App\Repositories\OrderRepository;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductVariantRepository;
+
 use Illuminate\Support\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-
 
 /**
  * Class OrderService
@@ -16,9 +18,17 @@ use Illuminate\Support\Facades\Hash;
 class OrderService extends BaseService implements OrderServiceInterface
 {   
     protected $orderRepository;
+    protected $productVariantRepository;
+    protected $productRepository;
 
-    public function __construct(OrderRepository $orderRepository) {
+    public function __construct(
+        OrderRepository $orderRepository,
+        ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository,
+        ) {
         $this->orderRepository = $orderRepository;
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
     public function paginate($request) {
@@ -28,6 +38,12 @@ class OrderService extends BaseService implements OrderServiceInterface
             $condition['dropdown'][$key] = $request->string($key);
         }
         $condition['created_at'] = $request->string('created_at');
+
+        if (!is_null($request->input("customer_id"))) {
+            $condition['where'] = [
+                ['customer_id', '=', $request->input("customer_id")]
+            ];
+        }
 
         $orders = $this->orderRepository->pagination(
             $this->paginateSelect(), 
@@ -103,6 +119,7 @@ class OrderService extends BaseService implements OrderServiceInterface
         try {
             $payload = $request->except('_token');
             $this->orderRepository->update($id, $payload);
+            $this->updateStockByOrderStatus($payload);
             $condition = [
                 ['orders.id', '=', $id]
             ];
@@ -149,10 +166,11 @@ class OrderService extends BaseService implements OrderServiceInterface
         }
     }
 
-    public function getOrderByCode($code) {
+    public function findOrderByCodeAndCustomer($request) {
         $order = $this->orderRepository->findByCondition(
             [
-                ['code', '=', $code],
+                ['code', '=', $request->input('code')],
+                ['customer_id', '=', $request->input('customer_id')],
             ]
         );
         return $order;
@@ -229,6 +247,37 @@ class OrderService extends BaseService implements OrderServiceInterface
                     'dataDonutChart' => $this->orderRepository->getOrderStatusStats('7days')
                 ];
         }
+    }
+
+    public function updateStockByOrderStatus(array $data) {
+        $rowIdQuantities = $data['quantity_rowId'] ?? [];
+        $confirmStatus = $data['confirm'] ?? null;
+        $orderId = $data['order_id'] ?? null;
+
+        if (!$orderId || empty($rowIdQuantities)) return;
+
+        $order = $this->orderRepository->findById($orderId);
+        if (!$order) return;
+
+        if ($order->stock_updated === 1 && $confirmStatus === 'confirm') return;
+
+        if ($order->stock_updated === 0 && $confirmStatus === 'cancel') return;
+
+        $operator = ($confirmStatus === "confirm") ? '-' : '+';
+
+        foreach ($rowIdQuantities as $rowId => $qty) {
+            [$productId, $variantId] = explode('_', $rowId);
+            $qty = (int) $qty;
+
+            $this->productVariantRepository->updateByWhere(
+                [['uuid', '=', $variantId]],
+                ['quantity' => DB::raw("quantity {$operator} {$qty}")]
+            );
+        }
+
+        $this->orderRepository->update($orderId, [
+            'stock_updated' => ($confirmStatus === 'confirm') ? 1 : 0
+        ]);
     }
 
     private function paginateSelect() {

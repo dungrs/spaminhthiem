@@ -196,7 +196,7 @@
                     </div>
                 </div>
 
-                @if (isset($widgets['best-seller']))
+                @if (isset($bestSellProduct))
                     <div class="slider mt-4">
                         <!-- Navigation buttons -->
                         <div class="swiper-button-next"><i class="mdi mdi-arrow-right"></i></div>
@@ -204,7 +204,7 @@
                         
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                @foreach ($widgets['best-seller']['object'] as $object)
+                                @foreach ($bestSellProduct as $object)
                                     @include('backend.dashboard.home.component.productItem', ['product' => $object])
                                 @endforeach
                             </div>

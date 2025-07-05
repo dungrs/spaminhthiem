@@ -678,6 +678,8 @@ return [
                     'phone' => "Phone Number",
                     'description' => "Content",
                     'score' => "Rating",
+                    'like_count' => "Likes",
+                    'review_type' => "Review Type",
                 ],
             ],
         ],
@@ -1127,4 +1129,5 @@ return [
     ],
     'day' => 'Day',
     'month' => 'Month',
+    'quantity_title' => 'Quantity',
 ];

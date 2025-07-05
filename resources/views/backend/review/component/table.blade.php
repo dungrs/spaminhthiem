@@ -7,6 +7,8 @@
                 <th>{{ $seoTableHeaders['phone'] }}</th>
                 <th style="width: 400px;">{{ $seoTableHeaders['description'] }}</th>
                 <th class="text-center">{{ $seoTableHeaders['score'] }}</th>
+                <th class="text-center">{{ $seoTableHeaders['like_count'] }}</th>
+                <th>{{ $seoTableHeaders['review_type'] }}</th> 
                 <th>{{ __('messages.actions.title') }}</th>
             </tr>
         </thead>
@@ -16,5 +18,5 @@
     </table>
 </div>
 <ul class="pagination pagination-rounded justify-content-end mb-2">
-    
+
 </ul>

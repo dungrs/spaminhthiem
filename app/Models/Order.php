@@ -30,7 +30,8 @@ class Order extends Model
         'payment',
         'confirm',
         'delivery',
-        'shipping'
+        'shipping',
+        'stock_updated'
     ];
 
     protected $table = 'orders';

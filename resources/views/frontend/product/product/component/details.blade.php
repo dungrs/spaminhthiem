@@ -48,13 +48,17 @@
                     <span class="text-muted ms-2 mt-1" style="font-size: 0.9rem;">{{ $totalReviews }} đánh giá</span>
                 </div>
                 <div class="border-start ps-3 ms-2 text-muted mt-1" style="font-size: 0.9rem;">
-                    Đã bán 320
+                    Đã bán {{ $sold }}
                 </div>
             </div>
         </div>
 
-        <!-- Price -->
-        <div class="d-flex align-items-center pb-3 border-bottom">
+        @php
+            $totalQty = 1
+        @endphp
+
+       <!-- Price + Stock + SKU -->
+        <div class="d-flex align-items-center pb-3 border-bottom flex-wrap gap-2">
             <div class="me-auto">
                 @if (!empty($product->promotions) && isset($discount[0]))
                     <span class="text-danger fw-bold price-sale" style="font-size: 1.3rem;">{{ $discount[0]['sale_price'] }}đ</span>
@@ -62,28 +66,41 @@
                 @else
                     <span class="text-danger fw-bold price-sale" style="font-size: 1.3rem;">{{ $price }}đ</span>
                 @endif
-                
+
                 @if (!empty($product->promotions) && isset($discount[0]))
-                    <span class="badge bg-warning text-danger ms-2 discount" style="font-size: 0.8rem;">-{{ $discount[0]['value'] }} {{ $discount[0]['type'] }}</span>
+                    <span class="badge bg-warning text-danger ms-2 discount" style="font-size: 0.8rem;">
+                        -{{ $discount[0]['value'] }} {{ $discount[0]['type'] }}
+                    </span>
+                @endif
+
+                <!-- SKU -->
+                @if (!empty($product->product_variants->first()))
+                    <div class="mt-1 text-muted text-right" style="font-size: 0.85rem;">
+                        Mã sản phẩm (SKU): 
+                        <span class="fw-semibold text-dark sku">{{ $product->product_variants->first()->sku ?? '---' }}</span>
+                    </div>
                 @endif
             </div>
-            <div class="d-flex align-items-center text-primary">
-                <i class="fas fa-check-circle me-2"></i>
-                <span style="font-size: 0.9rem;">Còn hàng</span>
+
+            <!-- Stock status - Sẽ được cập nhật bằng JS -->
+            <div class="stock-status d-flex align-items-center">
+                
             </div>
         </div>
 
         <form action="" id="form-store-cart">
             @csrf
             @include('frontend.product.product.component.variant')
+
             <div class="group-quantity my-4">
                 <div class="d-flex flex-column gap-2">
                     <span class="fs-6 fw-bold d-block text-uppercase">Số Lượng</span>
                     <div class="d-flex">
                         <div class="custom-btn-quantity minus">-</div>
-                        <input type="number" value="1" name="quantity" id="quantity" class="custom-input-quantity text-center">
+                        <input type="number" value="1" name="quantity" id="quantity" class="custom-input-quantity text-center" min="1" max="">
                         <div class="custom-btn-quantity add">+</div>
                     </div>
+                    <small class="text-muted available-quantity">Còn <span class="fw-bold"></span> sản phẩm</small>
                 </div>
             </div>
 
@@ -94,10 +111,13 @@
                         Yêu Thích
                     </div>
                 </div>
-            
-                <button data-check="{{ empty($customer) ? 'false' : 'true' }}" type="submit" class="btn btn-primary rounded-1 w-100 py-2 submitCartButton">
-                    <img src="{{ asset('frontend/img/icon/icon-cart-plus.svg') }}" />
-                    Thêm Vào Giỏ Hàng
+
+                <button
+                    data-check="{{ empty($customer) ? 'false' : 'true' }}"
+                    type="submit" 
+                    class="btn btn-primary rounded-1 w-100 py-2 submitCartButton"
+                    >
+                    
                 </button>
             </div>
         </form>

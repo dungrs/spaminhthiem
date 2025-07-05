@@ -9,6 +9,7 @@
                     </div>
                 </th>
                 <th>{{ __('messages.title') }}</th>
+                <th>{{ __('messages.quantity_title') }}</th>
                 <th style="vertical-align: middle; width: 200px">{{ __('messages.status') }}</th>
                 <th style="vertical-align: middle; width: 200px">{{ __('messages.actions.title') }}</th>
             </tr>

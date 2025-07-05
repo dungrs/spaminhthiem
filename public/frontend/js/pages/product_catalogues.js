@@ -122,7 +122,7 @@ const ProductCatalogue = {
                         if (!item) return;
                         
                         const name = item.name || 'Sản phẩm';
-                        const brand = item.brand || item.vendor || 'Thương hiệu';
+                        const brand = item.made_in || 'Thương hiệu';
                         const image = item.image && item.image.startsWith('http') ? item.image : `${baseUrl}${item.image || ''}`;
                         const canonical = `${baseUrl}/${item.canonical || 'product-detail'}.html`;
                         
@@ -148,7 +148,7 @@ const ProductCatalogue = {
                             }
                         }
                         
-                        const totalReviews = item.reviews_count || 0;
+                        const totalReviews = item.reviews.length || 0;
                         let totalRate = 0;
                         
                         if (totalReviews > 0 && item.reviews && item.reviews.length > 0) {
@@ -205,20 +205,21 @@ const ProductCatalogue = {
                                         <h3 class="product-name"><a href="${canonical}" title="${name}">${name}</a></h3>`;
 
                         // Reviews
-                        productHtml += `
-                                        <div class="sapo-product-reviews-badge" data-id="${item.id}">
-                                            <div class="sapo-product-reviews-star" data-score="${totalRate}" data-number="5" style="color: #ffbe00;" title="${totalRate > 0 ? 'Rated ' + totalRate + ' stars' : 'Not rated yet!'}">`;
-                        
-                        // Generate star icons
-                        for (let i = 1; i <= 5; i++) {
-                            const starClass = i <= totalRate ? 'star-on-png' : 'star-off-png';
-                            productHtml += `<i data-alt="${i}" class="${starClass}" title="${i <= totalRate ? 'Rated' : 'Not rated'}"></i>&nbsp;`;
+                        if (totalReviews > 0) {
+                            productHtml += `
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="text-warning small">
+                                            ${ProductCatalogue.generateStar(totalRate)}
+                                        </div>
+                                        <span class="text-muted ms-1 small">(${totalReviews} đánh giá)</span>
+                                    </div>`;
+                        } else {
+                            productHtml += `
+                                        <span class="text-muted small mb-1">
+                                            <i class="fas fa-comment-slash me-2"></i> Chưa có đánh giá
+                                        </span>
+                                    `;
                         }
-                        
-                        productHtml += `
-                                                <input name="score" type="hidden" readonly="" />
-                                            </div>
-                                        </div>`;
 
                         // Price and add to cart
                         productHtml += `
@@ -244,11 +245,6 @@ const ProductCatalogue = {
                         productHtml += `
                                             </div>
                                             <input type="hidden" name="variantId" value="${item.product_variants && item.product_variants.length > 0 ? item.product_variants[0].id : ''}" />
-                                            <button class="product-item-btn btn add_to_cart active" title="Thêm vào giỏ hàng">
-                                                <svg class="icon">
-                                                    <use xlink:href="#icon-plus"></use>
-                                                </svg>
-                                            </button>
                                         </div>
                                     </div>
                             </div>
@@ -281,13 +277,13 @@ const ProductCatalogue = {
         
         let stars = '';
         for (let i = 0; i < fullStars; i++) {
-            stars += '<i class="fas fa-star"></i>';
+            stars += '<i class="fas fa-star me-1"></i>';
         }
         if (halfStar) {
-            stars += '<i class="fas fa-star-half-alt"></i>';
+            stars += '<i class="fas fa-star-half-alt me-1"></i>';
         }
         for (let i = 0; i < emptyStars; i++) {
-            stars += '<i class="far fa-star"></i>';
+            stars += '<i class="far fa-star me-1"></i>';
         }
         return stars;
     },

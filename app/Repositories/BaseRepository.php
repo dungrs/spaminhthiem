@@ -164,11 +164,13 @@ class BaseRepository implements BaseRepositoryInterface  {
     }
 
     public function updateByWhere(array $condition = [], array $payload = []) {
+        $query = $this->model->newQuery();
+
         foreach ($condition as $val) {
             if ($val[1] == 'IN') {
-                $query = $this->model->whereIn($val[0], $val[2]);
+                $query->whereIn($val[0], $val[2]);
             } else {
-                $query = $this->model->where($val[0], $val[1], $val[2]);
+                $query->where($val[0], $val[1], $val[2]);
             }
         }
 

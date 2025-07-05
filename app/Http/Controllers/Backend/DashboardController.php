@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\BackendController;
 
 use App\Services\OrderService;
-use App\Services\WidgetService;
 use App\Services\Customer\CustomerService;
+use App\Services\Product\ProductService;
 
 class DashboardController extends BackendController
 {   
     protected $orderService;
     protected $customerService;
-    protected $widgetService;
+    protected $productService;
 
-    public function __construct(OrderService $orderService, WidgetService $widgetService, CustomerService $customerService) {
+    public function __construct(OrderService $orderService, ProductService $productService, CustomerService $customerService) {
         $this->orderService = $orderService;
-        $this->widgetService = $widgetService;
         $this->customerService = $customerService;
+        $this->productService = $productService;
     }
 
     public function index() {
@@ -29,7 +29,8 @@ class DashboardController extends BackendController
             'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
         ];
 
-        $widgets = $this->widgetService->getWidget($keywords, 1);
+        $bestSellProduct = $this->productService->getBestSellingProduct();
+
         $orderStatistic = $this->orderService->orderStatistic();
         $customerStatistic = $this->customerService->customerStatistic();
         return view('backend.dashboard.layout', compact(
@@ -37,7 +38,7 @@ class DashboardController extends BackendController
             'configs',
             'orderStatistic',
             'customerStatistic',
-            'widgets',
+            'bestSellProduct',
         ));
     }
 

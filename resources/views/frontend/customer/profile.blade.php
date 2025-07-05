@@ -18,26 +18,10 @@
 <section class="signup page_customer_account section">
     <div class="container card p-3 shadow-none">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-lg-3 col-left-ac">
-                <div class="block-account">
-                    <h5 class="title-account">Trang tài khoản</h5>
-                    <p>
-                        Xin chào, <span style="color:#01964a;">{{ $customer->name }}</span>&nbsp;!
-                    </p>
-                    <ul>
-                        <li>
-                            <a disabled="disabled" class="title-info active" href="/account">Thông tin tài khoản</a>
-                        </li>
-                        <li>
-                            <a disabled="disabled" class="title-info" href="javascript:void(0);">Đơn hàng của bạn</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @include("frontend.customer.component.aside", ['active' => 'tai-khoan'])
             <div class="col-xs-12 col-sm-12 col-lg-9 col-right-ac">
                 <h1 class="title-head ms-4">Thông tin tài khoản</h1>
                 <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                    
                     <div class="container py-4">
                         <div class="card border-0 shadow-none rounded-3">
                             <div class="card-body p-0">

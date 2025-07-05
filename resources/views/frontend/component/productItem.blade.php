@@ -1,4 +1,10 @@
 @php
+    $total = $product->product_variants->sum('quantity');
+    $sold = $product->orders
+            ->where('confirm', 'confirm')
+            ->sum(function ($order) {
+                return $order->pivot->qty;
+            });
     $name = $product->name;
     $image = asset(image($product->image));
     $price = number_format($product->product_variants->first()->price ?? 0);
@@ -8,9 +14,6 @@
     }
 
     $canonical = writeUrl($product->canonical, true, true);
-
-    $total = rand(30, 100);
-    $sold = rand(1, $total); 
     $percent = round(($sold / $total) * 100);
 
     $totalReviews = $product->reviews()->count();
@@ -55,7 +58,7 @@
 
     <!-- Thông tin sản phẩm -->
     <div class="product-info">
-        <span class="product-vendor">Usolab</span>
+        <span class="product-vendor">{{ $product->made_in }}</span>
 
         <h3 class="product-name">
             <a href="{{ $canonical }}" title="{{ $name }}">
@@ -63,7 +66,18 @@
             </a>
         </h3>
 
-        <div class="sapo-product-reviews-badge" data-id="36047637"></div>
+        <div class="d-flex align-items-center mb-2">
+            @if($totalReviews > 0)
+                <div class="text-warning small">
+                    {!! generateStar($totalRate) !!}
+                </div>
+                <span class="text-muted me-1 small">({{ $totalReviews }} đánh giá)</span>
+            @else
+                <span class="text-muted me-1 small">
+                    <i class="fas fa-comment-slash me-1"></i> Chưa có đánh giá
+                </span>
+            @endif
+        </div>
 
         <div class="product-item-cta position-relative">
             <div class="price-box">
@@ -80,13 +94,65 @@
                     <span class="price">{{ $price }}đ</span>
                 @endif
             </div>
+        </div>
 
-            <button class="product-item-btn btn active" title="Thêm vào giỏ hàng">
-                <svg class="icon">
-                    <use xlink:href="#icon-plus"/>
-                </svg>
-            </button>
+        <!-- Progress Bar - Giao diện đã bán -->
+        <div class="sales-progress mt-3">
+            <div class="progress-wrapper">
+                <div class="progress-info d-flex justify-content-between mb-1">
+                    <span class="progress-label"><i class="fas fa-fire text-danger me-1"></i>Đã bán {{ $sold }}</span>
+                    <span class="progress-value">{{ $percent }}%</span>
+                </div>
+                <div class="progress bg-light">
+                    <div class="progress-bar progress-fill" 
+                        role="progressbar" 
+                        style="width: {{ $percent }}%" 
+                        aria-valuenow="{{ $percent }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
+
+<style>
+    /* Sales Progress - Green Theme */
+    .sales-progress {
+        margin-top: 14px;
+        padding: 8px 0;
+    }
+    
+    .progress-info {
+        font-size: 12px;
+    }
+    
+    .progress-text {
+        color: #4a5568;
+    }
+    
+    .progress-text strong {
+        color: #2d3748;
+        font-weight: 600;
+    }
+    
+    .progress-percent {
+        color: #38a169;
+    }
+    
+    .progress-bar {
+        height: 6px;
+        background: #edf2f7;
+        border-radius: 3px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #48bb78, #2f855a);
+        border-radius: 3px;
+        transition: width 0.6s ease;
+    }
+</style>

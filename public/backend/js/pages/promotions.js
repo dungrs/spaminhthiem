@@ -663,7 +663,12 @@ const Promotion = {
         
         thead.html(`
             <tr>
-                <th width="50px"></th>
+                <th width="50px">
+                    <div class="form-check font-size-16">
+                        <input class="form-check-input checkStatusProductAll" type="checkbox">
+                        <label class="form-check-label"></label>
+                    </div>
+                </th>
                 <th>${PromotionDetailsMessages.messages.product_quantity.product_row.product_name}</th>
                 <th class="text-end">${PromotionDetailsMessages.messages.product_quantity.product_row.product_details}</th>
             </tr>
@@ -683,7 +688,7 @@ const Promotion = {
                     data-variant-uuid="${product.variant_uuid}"
                     data-name="${product.variant_name || ''}">
                     <td>
-                        <div class="form-check font-size-16 d-flex justify-content-center">
+                        <div class="form-check font-size-16">
                             <input name="product-${product.id}" 
                                    value="${product.id}_${product.variant_uuid}" 
                                    ${isChecked ? 'checked' : ''} 
@@ -720,6 +725,7 @@ const Promotion = {
         tbody.append(rows.join(''));
         Promotion.setupProductSelection();
         Promotion.confirmProductPromotion();
+        Promotion.handleCheckAllProducts();
         HT.renderPagination(response);
     },
     
@@ -730,7 +736,12 @@ const Promotion = {
         
         thead.html(`
             <tr>
-                <th width="50px"></th>
+                <th width="50px">
+                    <div class="form-check font-size-16">
+                        <input class="form-check-input checkStatusProductCatalogueAll" type="checkbox">
+                        <label class="form-check-label"></label>
+                    </div>
+                </th>
                 <th>${PromotionDetailsMessages.messages.product_quantity.product_catalogue_row.product_catalogue_name}</th>
             </tr>
         `);
@@ -746,7 +757,7 @@ const Promotion = {
                         data-product-catalogue-id="${catalogue.id}" 
                         data-name="${catalogue.name}">
                         <td>
-                            <div class="form-check font-size-16 d-flex justify-content-center">
+                            <div class="form-check font-size-16">
                                 <input class="form-check-input product-checkbox" 
                                        type="checkbox" 
                                        name="product_catalogue-${catalogue.id}" 
@@ -762,6 +773,7 @@ const Promotion = {
             tbody.append(rows.join(''));
             Promotion.setupProductCatalogueSelection();
             Promotion.confirmProductCataloguePromotion();
+            Promotion.handleCheckAllProductCatalogues();
             HT.renderPagination(response);
         }
     },
@@ -973,6 +985,48 @@ const Promotion = {
         });
     },
 
+    handleCheckAllProducts: function() {
+        $('.checkStatusProductAll').off('change').on('change', function () {
+            const isChecked = $(this).is(':checked');
+
+            $('.product-checkbox').each(function () {
+                $(this).prop('checked', isChecked);
+                const $row = $(this).closest('.product-row');
+                $row.toggleClass('selected', isChecked);
+
+                const productData = {
+                    product_id: $row.data('product-id'),
+                    variant_uuid: $row.data('variant-uuid'),
+                    name: $row.data('name')
+                };
+
+                if (isChecked) {
+                    Promotion.objectChooses.push(productData);
+                }
+            });
+        });
+    },
+
+    handleCheckAllProductCatalogues: function() {
+        $('.checkStatusProductCatalogueAll').off('change').on('change', function () {
+            const isChecked = $(this).is(':checked');
+
+            $('.product-checkbox').each(function () {
+                $(this).prop('checked', isChecked);
+                const $row = $(this).closest('.product-row');
+                $row.toggleClass('selected', isChecked);
+
+                const catalogueData = {
+                    product_catalogue_id: $row.data('product-catalogue-id'),
+                    name: $row.data('name')
+                };
+
+                if (isChecked) {
+                    Promotion.objectChooses.push(catalogueData);
+                }
+            });
+        });
+    },
 
     submitFormData: function (url) {
         $(".ckeditor-classic").each(function () {

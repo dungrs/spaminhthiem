@@ -18,17 +18,18 @@ const Review = {
                 const tbody = $('.data-table');
                 tbody.empty();
                 response.data.data.forEach(item => {
+                    const isProduct = item.reviewable_type === 'App\\Models\\Product';
+                    const typeLabel = isProduct ? 'Bình luận sản phẩm' : 'Bình luận bài viết';
+
                     tbody.append(`
                         <tr>
                             <td>${item.name ?? '-'}</td>
                             <td>${item.email ?? '-'}</td>
                             <td>${item.phone ?? '-'}</td>
-                            <td>
-                                ${item.description ?? '-'}
-                            </td>
-                            <td class="text-center">
-                                ${item.score ?? '-'}
-                            </td>
+                            <td>${item.description ?? '-'}</td>
+                            <td class="text-center">${item.score ?? '-'}</td>
+                            <td>${item.like_count ?? 0}</td>
+                            <td>${typeLabel}</td>
                             <td>
                                 <div class="dropdown">
                                     <p class="dropdown-toggle card-drop" data-bs-toggle="dropdown" aria-expanded="false">

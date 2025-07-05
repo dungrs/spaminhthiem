@@ -396,7 +396,7 @@
 
 .badge {
     font-weight: 500;
-    padding: 0.35em 0.65em;
+    padding: 0.55em 0.65em;
     font-size: 0.75em;
 }
 
@@ -431,7 +431,7 @@
     border-radius: 4px;
     cursor: pointer;
     height: 500px;
-    width: 500px;
+    width: 555px;
     overflow-y: auto;
 }
 .product-item {

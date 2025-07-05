@@ -1,4 +1,11 @@
 @php
+    $total = $product->product_variants->sum('quantity');
+    $sold = $product->orders
+        ->where('confirm', 'confirm')
+        ->sum(function ($order) {
+            return $order->pivot->qty;
+        });
+
     $name = $product->name;
     $image = asset(image($product->image));
     $price = number_format($product->product_variants->first()->price ?? 0);
@@ -9,8 +16,6 @@
 
     $canonical = writeUrl($product->canonical, true, true);
 
-    $total = rand(30, 100);
-    $sold = rand(1, $total); 
     $percent = round(($sold / $total) * 100);
 
     $totalReviews = $product->reviews()->count();

@@ -42,6 +42,18 @@ class CustomerController extends FrontendController
         }
     }
 
+    public function orderHistory() {
+        if (Auth::guard('customer')->check()) {
+            $template = 'frontend.customer.orders';
+            $extra = [
+                'template' => $template
+            ];
+            return view('frontend.homepage.layout', $this->prepareViewData($extra));
+        } else {
+            return redirect()->route('home.index');
+        }
+    }
+
     public function update(UpdateCustomerRequest $request, $id) {
         $customer = $this->customerService->update($request, $id, false);
         if ($customer) {
@@ -81,6 +93,7 @@ class CustomerController extends FrontendController
                 'backend/js/library.js',
                 'backend/js/location.js',
                 'frontend/js/library.js',
+                'frontend/js/pages/orders.js',
             ],
         ];
     }

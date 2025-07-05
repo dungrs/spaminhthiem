@@ -54,7 +54,7 @@
                         <!-- Tài khoản -->
                         <li class="ml-4 mr-4 mr-md-3 ml-md-3 media d-lg-flex d-none">
                             @if (isset($customer))
-                                <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
+                                <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/account_icon.webp') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
                                 <div class="media-body d-md-flex flex-column d-none">
                                     @php
                                         $fullName = $customer->name ?? '';
@@ -277,7 +277,7 @@
 
                             <li class="ml-4 mr-4 mr-md-3 ml-md-3 media d-lg-flex d-none">
                                 @if (isset($customer))
-                                    <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/icon-user.svg') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
+                                    <img loading="lazy" src="{{ $customer->image ? writeUrl($customer->image, true) : asset('frontend/img/icon/account_icon.webp') }}" style="object-fit: cover" width="40" height="40" alt="account_icon" class="mr-3 align-self-center rounded-pill" />
                                     <div class="media-body d-md-flex flex-column d-none">
                                         <a href="{{ route('customer.profile') }}" title="Thông tin tài khoản" class="d-block" title="{{ $customer->name }}">
                                             Xin chào, {{ $firstName }}

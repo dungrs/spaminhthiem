@@ -894,6 +894,8 @@ return [
                     'phone' => "Số điện thoại",
                     'description' => "Nội dung",
                     'score' => "Đánh giá",
+                    'like_count' => "Lượt thích",
+                    'review_type' => "Loại đánh giá"
                 ],
             ],
         ],
@@ -1129,5 +1131,6 @@ return [
         'upload_placeholder' => 'Kéo và thả tệp vào đây hoặc nhấn để tải lên.',
     ],
     'day' => 'Ngày',
-    'month' => 'Tháng'
+    'month' => 'Tháng',
+    'quantity_title' => 'Số lượng',
 ];

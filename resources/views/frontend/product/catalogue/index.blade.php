@@ -1,5 +1,5 @@
 @include('frontend.component.breadcrumb', ['model' => $productCatalogue, 'breadcrumb' => $breadcrumb])
-<main class="body pt-4">
+<main class="body py-4">
     <div class="container">
         <div class="row mt-4">
             @include("frontend.product.catalogue.component.filterContent")

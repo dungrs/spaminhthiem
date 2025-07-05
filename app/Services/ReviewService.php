@@ -185,6 +185,7 @@ class ReviewService extends BaseService implements ReviewServiceInterface {
             'customer_id',
             'reviewable_id',
             'reviewable_type',
+            'like_count',
             'c.name', 
             'c.email', 
             'score',

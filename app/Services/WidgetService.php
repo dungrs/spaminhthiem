@@ -245,10 +245,28 @@ class WidgetService extends BaseService implements WidgetServiceInterface {
             "{$model}_languages.canonical",
             "{$model}_languages.meta_description",
         ];
+        $groupBy = [];
+        $relations = [];
         
         if (isset($params['object']) && $params['object'] === true) {
             $columns[] = "{$model}s.lft";
             $columns[] = "{$model}s.rgt";
+        }
+        
+        if (isset($params['model']) && $params['model'] === "Product") {
+            $columns[] = "{$model}s.made_in";
+            $relations = ['product_variants', 'orders'];
+            $groupBy = [
+                "{$model}s.id",
+                "{$model}s.image",
+                "{$model}s.album",
+                "{$model}s.created_at",
+                "{$model}s.made_in",
+                "{$model}_languages.name",
+                "{$model}_languages.description",
+                "{$model}_languages.canonical",
+                "{$model}_languages.meta_description",
+            ];
         }
         
         $widgetItemData = $repositoryInstance->findByCondition(
@@ -257,6 +275,9 @@ class WidgetService extends BaseService implements WidgetServiceInterface {
             $join,
             ["{$model}s.id" => 'ASC'],
             $columns,
+            $relations,
+            null,
+            $groupBy
         );
 
         $fields = ['id', 'canonical', 'image', 'name', 'created_at', 'meta_description'];

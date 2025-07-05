@@ -40,7 +40,7 @@ class ProductController extends FrontendController
         $productRelateds = $this->productService->getRelatedProductsByCategory($productCatalogue->id, $id, $languageId);
         $seo = $data['seo'];
         $keywords = [
-            'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true]],
+            'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true, 'model' => "Product"]],
         ];
 
         $widgets = $this->widgetService->getWidget($keywords, 1);

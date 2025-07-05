@@ -910,6 +910,7 @@ a.product-vendor:hover {
 }
 .item_product_main .product-info {
   padding: 3px 0px;
+  text-align: left;
 }
 @media (min-width: 992px) {
   .item_product_main .product-info {

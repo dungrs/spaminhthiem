@@ -41,7 +41,6 @@ class OrderController extends FrontendController
     }
 
     public function getOrder(Request $request) {
-        $code = $request->input('code');
         $seo = [
             'meta_title' => 'Tìm kiếm hóa đơn',
             'meta_keyword' => '',
@@ -50,12 +49,12 @@ class OrderController extends FrontendController
             'canonical' => writeUrl('gio-hang', true, true)
         ];
     
-        $order = $this->orderService->getOrderByCode($code);
+        $order = $this->orderService->findOrderByCodeAndCustomer($request);
         
         $template = 'frontend.lookup.index';
         $data = [
             'order' => $order,
-            'code' => $code,
+            'code' => $request->input('code'),
         ];
 
         $extra = [

@@ -98,13 +98,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $quantityByRowId = [];
+                                        @endphp
                                         @foreach ($order->first()->cart['details'] as $item)
+                                            @php
+                                                $quantityByRowId[$item['id']] = (int) $item['qty'];
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     <div>
                                                         <h6 class="mb-1 fw-semibold">{{ $item['name'] }}</h6>
                                                         @foreach ($item['options']['attributes'] as $attribute)
-                                                            <small class="text-muted">{{ $attribute['attribute_catalogue_name'] }}: {{ $attribute['attribute_name'] }}</small>
+                                                            <small class="text-muted">{{ $attribute['attribute_catalogue_name'] }}: {{ $attribute['attribute_name'] }} | </small>
                                                         @endforeach
                                                     </div>
                                                 </td>

@@ -2,36 +2,36 @@
 
 return [
     'confirm' => [
+        'icon' => 'fas fa-clipboard-check',
         'label' => 'Confirmation Status',
         'data' => [
-            'none' => 'Select status',
             'pending' => 'Pending confirmation',
             'confirm' => 'Confirmed',
             'cancel' => 'Cancelled'
         ]
     ],
     'payment' => [
+        'icon' => 'fas fa-credit-card',
         'label' => 'Payment Status',
         'data' => [
-            'none' => 'Select payment status',
             'unpaid' => 'Unpaid',
             'paid' => 'Paid',
             'failed' => 'Refunded'
         ]
     ],
     'delivery' => [
+        'icon' => 'fas fa-truck',
         'label' => 'Delivery Status',
         'data' => [
-            'none' => 'Select delivery status',
             'pending' => 'Not delivered',
             'processing' => 'Delivering',
             'success' => 'Successful'
         ]
     ],
     'method_shipping' => [
+        'icon' => 'fas fa-shipping-fast',
         'label' => 'Shipping Method',
         'data' => [
-            'none' => 'Select shipping method',
             'ghtk' => 'Economical shipping',
             'ghn' => 'Fast shipping',
             'vnpost' => 'Vietnam Post (VNPost)',

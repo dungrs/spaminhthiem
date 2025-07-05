@@ -90,9 +90,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('tai-khoan' . config('apps.general.suffix'), [FrontendCustomerController::class, 'profile'])->name('customer.profile');
 Route::get('gio-hang' . config('apps.general.suffix'), [CartController::class, 'cart'])->name('cart');
 Route::get('thanh-toan' . config('apps.general.suffix'), [CartController::class, 'checkout'])->name('checkout');
-Route::get('tim-kiem-hoa-don'  . config('apps.general.suffix'), [FrontendOrderController::class, 'lookup'])->name('lookup');
+Route::get('don-hang'  . config('apps.general.suffix'), [FrontendOrderController::class, 'lookup'])->name('lookup');
 Route::get('tinh-trang-thanh-toan/{code}', [CartController::class, 'success'])->name('cart.success')->where(['code' => '[0-9]+']);
-Route::post('tim-kiem-hoa-don' . config('apps.general.suffix'), [FrontendOrderController::class, 'getOrder'])->name('getOrder');
+Route::get('don-hang-cua-toi' . config('apps.general.suffix'), [FrontendCustomerController::class, 'orderHistory'])->name('customer.orderHistory');
+Route::get('don-hang' . config('apps.general.suffix'), [FrontendOrderController::class, 'getOrder'])->name('getOrder');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 
 Route::post('customer/update/{id}', [FrontendCustomerController::class, 'update'])->name('customer.update')->where(['id' => '[0-9]+']);

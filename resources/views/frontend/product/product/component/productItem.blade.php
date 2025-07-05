@@ -10,7 +10,7 @@
                 <div class="swiper products-swiper" data-row="1">
                     <div class="swiper-wrapper">
                         @foreach ($productRelateds as $object)
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-15 product-col swiper-slide">
+                            <div class="col-6 col-md-4 col-lg-3 col-xl-15 swiper-slide">
                                 @include('frontend.component.productItem', ['product' => $object, 'details' => true])
                             </div>
                         @endforeach

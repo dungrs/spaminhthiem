@@ -423,15 +423,15 @@ if (!function_exists('generateStar')) {
         $output = '';
         
         for ($i = 0; $i < $fullStars; $i++) {
-            $output .= '<i class="ms-1 fas fa-star text-warning"></i>';
+            $output .= '<i class="me-1 fas fa-star text-warning"></i>';
         }
         
         if ($hasHalfStar) {
-            $output .= '<i class="ms-1 fas fa-star-half-alt text-warning"></i>';
+            $output .= '<i class="me-1 fas fa-star-half-alt text-warning"></i>';
         }
         
         for ($i = 0; $i < $emptyStars; $i++) {
-            $output .= '<i class="ms-1 far fa-star text-warning"></i>';
+            $output .= '<i class="me-1 far fa-star text-warning"></i>';
         }
         
         return $output;

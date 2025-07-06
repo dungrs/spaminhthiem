@@ -26,7 +26,7 @@ class SystemService extends BaseService implements SystemServiceInterface {
         try {
             $configs = $request->only(['config', 'language_id']);
             if (count($configs['config'])) {
-                foreach($configs['config'] as $key => $val) {
+                foreach ($configs['config'] as $key => $val) {
                     $payload = [
                         'keyword' => $key,
                         'content' => $val,
@@ -34,8 +34,15 @@ class SystemService extends BaseService implements SystemServiceInterface {
                         'user_id' => Auth::id(),
                     ];
 
-                    $conditions = ['keyword' => $key, 'language_id' => $configs['language_id'], 'user_id' => Auth::id()];
-                    $flag = $this->systemRepository->updateOrInsert($payload, $conditions);
+                    $conditions = [
+                        ['keyword', '=', $key],
+                        ['language_id', '=', $configs['language_id']],
+                        ['user_id', '=', Auth::id()],
+                    ];
+
+                    $this->systemRepository->deleteByCondition($conditions);
+                    $flag = $this->systemRepository->create($payload);
+
                     $languages = $this->languageRepository->findById($configs['language_id']);
                 }
             }
@@ -49,9 +56,9 @@ class SystemService extends BaseService implements SystemServiceInterface {
                 ], 201);
             }
     
-            throw new \Exception(__('messages.notifications.update_error'));
         } catch (\Exception $e) {
             DB::rollBack();
+            echo $e->getMessage(); die();
             return response()->json([
                 'status' => 'error',
                 'message' => __('messages.notifications.update_error')

@@ -235,20 +235,20 @@
             <div class="container card border-0 shadow-none">
                 <div class="text-center my-4">
                     <h3 class="fw-bold section-home-header">
-                        {{ $widgets['product-most-viewed']['name'] }}
+                        {{ $widgets['spa-cosmetics']['name'] }}
                     </h3>
                 </div>
                 <div class="e-tabs">
                     <div id="tab-1" class="tab-content content_extab current">
                         <div class="row mt-3" style="--limit-column: 5;" data-section="tab-section">
-                            @foreach ($widgets['product-most-viewed']['object']->take(5) as $object)
+                            @foreach ($widgets['spa-cosmetics']['object']->take(5) as $object)
                             <div class="col-12 col-xl-15 product-col">
                                 <div class="item_product_main item_skeleton"></div>
                             </div>
                             @endforeach
 
                             <script type="text/x-custom-template" data-template="tab-section">
-                                @foreach ($widgets['product-most-viewed']['object']->take(5) as $object)
+                                @foreach ($widgets['spa-cosmetics']['object']->take(5) as $object)
                                   <div class="col-12 col-xl-15 product-col">
                                     @include('frontend.component.productItem', ['product' => $object])
                                   </div>
@@ -274,12 +274,12 @@
             <div class="container card border-0 shadow-none">
                 <div class="text-center my-4">
                     <h3 class="fw-bold section-home-header">
-                        {{ $widgets['product-most-viewed']['name'] }}
+                        {{ $widgets['spa-cleansing']['name'] }}
                     </h3>
                 </div>
                 <div class="row mt-3" data-section="hot-section">
                     <div class="col-12 col-xl-30 text-center pb-3 product-col">
-                        <a class="banner" href="#" title="{{ $widgets['product-most-viewed']['name'] }}">
+                        <a class="banner" href="#" title="{{ $widgets['spa-cleansing']['name'] }}">
                             <picture>
                                 <source media="(max-width: 480px)" srcset="//bizweb.dktcdn.net/thumb/large/100/494/811/themes/921992/assets/section_hot.jpg?1717567288856" />
                                 <img
@@ -288,19 +288,19 @@
                                     src="//bizweb.dktcdn.net/thumb/grande/100/494/811/themes/921992/assets/section_hot.jpg?1717567288856"
                                     width="546"
                                     height="353"
-                                    alt="{{ $widgets['product-most-viewed']['name'] }}"
+                                    alt="{{ $widgets['spa-cleansing']['name'] }}"
                                 />
                             </picture>
                         </a>
                     </div>
 
-                    @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
+                    @foreach ($widgets['spa-cleansing']['object']->take(8) as $object)
                         <div class="col-6 col-md-4 col-lg-3 col-xl-15 product-col">
                             <div class="item_product_main item_skeleton"></div>
                         </div>
                     @endforeach
                     <script type="text/x-custom-template" data-template="hot-section">
-                        @foreach ($widgets['product-most-viewed']['object']->take(8) as $object)
+                        @foreach ($widgets['spa-cleansing']['object']->take(8) as $object)
                           <div class="col-6 col-md-4 col-lg-3 col-xl-15 product-col">
                             @include('frontend.component.productItem', ['product' => $object])
                           </div>

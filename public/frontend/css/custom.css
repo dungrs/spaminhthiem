@@ -1581,10 +1581,6 @@
         cursor: pointer;
     }
     
-    .footer-menu ul {
-        display: none;
-    }
-    
     .footer-menu h5.active + ul {
         display: block;
     }

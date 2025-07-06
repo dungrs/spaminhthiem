@@ -42,7 +42,7 @@
                 <select class="form-control choice-multi" name="catalogue[]" multiple>
                     @foreach ($dropdown as $key => $val)
                         <option value="{{ $key }}" 
-                            {{ in_array($key, $selectedCatalogues) && (!isset($model->product_catalogue_id) || $key !== $model->product_catalogue_id) ? 'selected' : '' }}>
+                            {{ in_array($key, $selectedCatalogues) ? 'selected' : '' }}>
                             {{ $val }}
                         </option>
                     @endforeach

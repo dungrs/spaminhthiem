@@ -25,22 +25,23 @@
             </form>
         </div> <!-- container-fluid -->
     </div>
+    <script>
+        var PromotionAsidesMessages = {
+            messages: {!! json_encode(__('messages.promotion.aside')) !!}
+        };
+
+        var PromotionDetailsMessages = {
+            messages: {!! json_encode(__('messages.promotion.details')) !!}
+        };
+    </script>
+
+    <input type="hidden" class="preload_select_module_type" value="{{ old('module_type', $promotion->discount_information['info']['model'] ?? '') }}">
+    <input type="hidden" class="input_order_amount_range" value='@json(old('promotion_order_amount_range', $promotion->discount_information['info'] ?? []))'>
+    <input type="hidden" class="input_product_and_quantity" value='@json(old('product_and_quantity', $inputProductAndQuantity ?? []))'>\
+    <input type="hidden" class="input_object" value='@json(old('object', $promotion->discount_information['info']['object'] ?? []))'>
+    <div id="productData" data-products='@json(__('module.item'))'></div>
     <!-- End Page-content -->
     @include('backend.component.footer')
 </div>
 {{-- End Begin Content --}}
 @include('backend.promotion.component.productModal')
-<script>
-    var PromotionAsidesMessages = {
-        messages: {!! json_encode(__('messages.promotion.aside')) !!}
-    };
-
-    var PromotionDetailsMessages = {
-        messages: {!! json_encode(__('messages.promotion.details')) !!}
-    };
-</script>
-<input type="hidden" class="preload_select_module_type" value="{{ old('module_type', $promotion->discount_information['info']['model'] ?? '') }}">
-<input type="hidden" class="input_order_amount_range" value='@json(old('promotion_order_amount_range', $promotion->discount_information['info'] ?? []))'>
-<input type="hidden" class="input_product_and_quantity" value='@json(old('product_and_quantity', $inputProductAndQuantity ?? []))'>\
-<input type="hidden" class="input_object" value='@json(old('object', $promotion->discount_information['info']['object'] ?? []))'>
-<div id="productData" data-products='@json(__('module.item'))'></div>

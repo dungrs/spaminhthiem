@@ -20,17 +20,15 @@
 <meta name="google-site-verification" content="LySYxdFpQkWOJApLA1rL0c3ZC_rSubWkbsp74nLQtKE"/>
 
 <!-- Favicon -->
-<link rel="icon" href="{{ $systems['homepage_favicon'] }}" type="image/png" sizes="30x30" />
-<link rel="shortcut icon" href="{{ asset('frontend/img/icon/favicon.webp') }}" type="image/x-icon">
-<link rel="icon" href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/favicon.png?1717567288856" type="image/x-icon"/>
+<link rel="icon" href="{{ writeUrl($systems['homepage_favicon'], true) }}" type="image/png" sizes="30x30" />
+<link rel="shortcut icon" href="{{ writeUrl($systems['homepage_favicon'], true) }}" type="image/x-icon">
+<link rel="icon" href="{{ writeUrl($systems['homepage_favicon'], true) }}" type="image/x-icon"/>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:locale" content="vi_VN" />
 <meta property="og:title" content="{{ $seo['meta_title'] }}" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="{{ $seo['meta_image'] }}" />
-<meta property="og:image" content="https://bizweb.dktcdn.net/100/494/811/themes/921992/assets/share_fb_home.jpg?1717567288856">
-<meta property="og:image:secure_url" content="https://bizweb.dktcdn.net/100/494/811/themes/921992/assets/share_fb_home.jpg?1717567288856">
 <meta property="og:url" content="{{ $seo['canonical'] }}" />
 <meta property="og:description" content="{{ $seo['meta_description'] }}" />
 <meta property="og:site_name" content="" />

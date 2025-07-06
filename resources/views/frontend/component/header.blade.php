@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-6 col-xl-3 col-lg-3 header-left">
                     <a href="/" class="logo-wrapper">
-                        <img class="img-fluid" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo.png?1717567288856" alt="logo Mỹ Phẩm Minh Thiêm" width="248" height="53" />
+                        <img class="img-fluid" style="max-width: 80% !important;" src="{{ writeUrl($systems['homepage_logo'], true) }}" alt="logo Mỹ Phẩm Minh Thiêm" width="248" height="50" />
                     </a>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-12 header-center" id="search-header">
@@ -45,8 +45,8 @@
                             <img loading="lazy" src="{{ asset('frontend/img/icon/phone_icon.webp') }}" width="32" height="32" class="mr-3 align-self-center" alt="phone_icon" />
                             <div class="media-body d-md-flex flex-column d-none">
                                 <span>Hỗ trợ khách hàng</span>
-                                <a class="font-weight-bold d-block" href="tel:0982723468" title="Gọi 0982723468">
-                                    0982 723 468
+                                <a class="font-weight-bold d-block" href="tel:{{ $systems['contact_hotline'] }}" title="Gọi {{ $systems['contact_hotline'] }}">
+                                    {{ $systems['contact_hotline'] }}
                                 </a>
                             </div>
                         </li>
@@ -269,8 +269,8 @@
                                     alt="phone_icon"/>
                                 <div class="media-body d-md-flex flex-column d-none">
                                     <span>Hỗ trợ khách hàng</span>
-                                    <a class="font-weight-bold d-block" href="tel:0982723468" title="0982723468">
-                                        0982723468
+                                    <a class="font-weight-bold d-block" href="tel:{{ $systems['contact_hotline'] }}" title="{{ $systems['contact_hotline'] }}">
+                                        {{ $systems['contact_hotline'] }}
                                     </a>
                                 </div>
                             </li>

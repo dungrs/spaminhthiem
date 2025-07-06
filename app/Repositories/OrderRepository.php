@@ -269,8 +269,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                     COUNT(CASE WHEN confirm = "pending" THEN 1 END) as processing_orders,
                     COUNT(CASE WHEN confirm = "cancel" THEN 1 END) as canceled_orders
                 ')
-            )
-            ->where('payment', '=', 'paid');
+            );
     
         $previousQuery = clone $currentQuery;
     

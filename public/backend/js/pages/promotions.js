@@ -93,9 +93,9 @@ const Promotion = {
 
         return `
             <div class="mt-3 mb-1 select-apply-wrapper">
-                <label for="applyValue[]">${PromotionAsidesMessages.messages.source.select_groups}</label>
+                <label for="applyValue[]">${PromotionAsidesMessages.messages.object.select_groups}</label>
                 <select name="applyValue[]" id="applySelect" class="choice-multi-condition conditionItem" multiple>
-                    <option value="">${PromotionAsidesMessages.messages.source.select_groups_placeholder}</option>
+                    <option value="">${PromotionAsidesMessages.messages.object.select_groups_placeholder}</option>
                     ${dataHtml}
                 </select>
             </div>
@@ -564,7 +564,7 @@ const Promotion = {
         });
     
         const preloadModal = $('.preload_select_module_type').val();
-        const preloadObject = JSON.parse($('.input_object').val() || '{}');
+        const preloadObject = $('.input_object').val() || '{}';
     
         if (preloadModal) {
             Promotion.objectChooses = initializeObjectChooses(preloadModal, preloadObject);

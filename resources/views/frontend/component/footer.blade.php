@@ -6,7 +6,7 @@
                 <div class="footer-about mb-4">
                     <a href="/" class="d-block mb-3">
                         <img loading="lazy" 
-                             src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo-footer.png?1717567288856" 
+                             src="{{ writeUrl($systems['homepage_logo'], true) }}"
                              alt="Mỹ Phẩm Minh Thiêm" 
                              width="180" 
                              class="img-fluid">
@@ -42,16 +42,16 @@
                     <div class="social-links mt-4">
                         <h6 class="mb-3">Kết nối với chúng tôi</h6>
                         <div class="d-flex gap-3">
-                            <a href="https://facebook.com" target="_blank" class="social-icon">
+                            <a href="{{ writeUrl($systems['socical_facebook'], true) }}" target="_blank" class="social-icon">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://zalo.me/834141234794359440" target="_blank" class="social-icon">
+                            <a href="{{ writeUrl($systems['socical_twitter'], true) }}" target="_blank" class="social-icon">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="#" target="_blank" class="social-icon">
+                            <a href="{{ writeUrl($systems['socical_instagram'], true) }}" target="_blank" class="social-icon">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="#" target="_blank" class="social-icon">
+                            <a href="{{ writeUrl($systems['socical_youtube'], true) }}" target="_blank" class="social-icon">
                                 <i class="fab fa-youtube"></i>
                             </a>
                         </div>

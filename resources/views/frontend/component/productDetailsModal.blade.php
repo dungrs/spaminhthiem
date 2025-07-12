@@ -49,68 +49,86 @@
                                 <div class="d-flex flex-column h-100 ps-lg-3">
     
                                     <!-- Product Name -->
-                                    <h2 class="fw-bold mb-2 product-main-title" style="font-size: 1.4rem;"></h2>
                                     <input type="hidden" class="product-name" value="">
-                                    <!-- Description -->
-                                    <div class="mb-3">
-                                        <p class="text-muted mb-2 product-main-description" style="font-size: 0.9rem; line-height: 1.5;">
+    
+                                    <!-- Product Details -->
+                                    <div class="d-flex flex-column gap-1">
+                                        <h4 class="text-start fw-bold mb-1 product-main-title">
+                                        </h4>
+                                        <input type="hidden" class="product-name" value="Gel Massage Desembre Jojoba &amp; Honey Massage" />
+                                        <div class="mb-1">
+                                            <p class="text-muted mb-1 product-main-description">
+                                                
+                                            </p>
+                                        </div>
+
+                                        <!-- Bọc toàn bộ phần đánh giá + tồn kho vào một hàng flex -->
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                                             
-                                        </p>
-                                    </div>
-    
-                                    <!-- Rating and Sales -->
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="text-warning me-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <span class="text-muted me-2" style="font-size: 0.85rem;">128 đánh giá</span>
-                                        <span class="text-muted ps-3 ms-2 text-muted border-start" style="font-size: 0.85rem;">Đã bán 320</span>
-                                    </div>
-    
-                                    <!-- Price -->
-                                    <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
-                                        <div class="me-auto">
-                                            <span class="text-danger fw-bold price-sale" style="font-size: 1.3rem;"></span>
-                                            <span class="text-decoration-line-through text-muted ms-2 price-old" style="font-size: 0.9rem;"></span>
-                                            <span class="badge bg-danger ms-2 discount" style="font-size: 0.8rem;"></span>
-                                        </div>
-                                        <div class="d-flex align-items-center text-primary">
-                                            <i class="fas fa-check-circle me-2"></i>
-                                            <span style="font-size: 0.9rem;">Còn hàng</span>
-                                        </div>
-                                    </div>
-    
-                                    <div class="attribute-container mb-4">
-    
-                                    </div>
-    
-                                    <!-- Quantity (Compact Design) -->
-                                    <div class="group-quantity">
-                                        <div class="d-flex flex-column gap-2 mt-2 mb-4">
-                                            <span class="fs-6 fw-bold d-block mb-1">SỐ LƯỢNG</span>
-                                            <div class="d-flex">
-                                                <div class="custom-btn-quantity minus">-</div>
-                                                <input type="number" value="1" name="quantity" id="quantity" class="custom-input-quantity text-center">
-                                                <div class="custom-btn-quantity add">+</div>
+                                            <div class="d-flex align-items-center flex-wrap gap-2 ">
+                                                <div class="product-review">
+                                                    
+                                                </div>
+
+                                                <div class="border-start ps-3 ms-2 text-muted product-sold" style="font-size: 0.9rem;">
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <!-- Stock status đưa sang bên phải cùng hàng -->
+                                            <div class="stock-status d-flex align-items-center mt-1">
+                                                <i class="fas fa-check-circle me-2 text-primary"></i>
+                                                <span class="text-primary" style="font-size: 0.9rem;">Còn hàng</span>
                                             </div>
                                         </div>
                                     </div>
 
+                                    {{-- Price and SKU --}}
+                                    <div class="d-flex align-items-center pb-3 border-bottom flex-wrap gap-2 mt-2">
+                                        <div class="me-auto">
+                                            <span class="text-danger fw-bold price-sale" style="font-size: 1.3rem;">862.400 đ</span>
+                                            <span class="text-decoration-line-through text-muted ms-2 price-old" style="font-size: 0.9rem;">980.000 đ</span>
+
+                                            <span class="badge bg-warning text-danger ms-2 discount" style="font-size: 0.8rem;">-12%</span>
+
+                                            <!-- SKU -->
+                                            <div class="mt-1 text-muted text-right" style="font-size: 0.85rem;">
+                                                Mã sản phẩm (SKU):
+                                                <span class="fw-semibold text-dark sku">DES-CLEANSER-WATER-104-113</span>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="attribute-container mb-4 mt-2">
+    
+                                    </div>
+    
+                                    <!-- Quantity (Compact Design) -->
+                                    <div class="group-quantity mb-2">
+                                        <div class="d-flex flex-column gap-2">
+                                            <span class="fs-6 fw-bold d-block text-uppercase">Số Lượng</span>
+                                            <div class="d-flex">
+                                                <div class="custom-btn-quantity minus">-</div>
+                                                <input type="number" value="1" name="quantity" id="quantity" class="custom-input-quantity text-center" min="1" max="">
+                                                <div class="custom-btn-quantity add">+</div>
+                                            </div>
+                                            <small class="text-muted available-quantity">Còn <span class="fw-bold"></span> sản phẩm</small>
+                                        </div>
+                                    </div>
+
                                     <div class="mt-auto pt-2 d-grid gap-3">
-                                        <button class="btn btn-primary py-auto fw-bold rounded-pill submitCartButton" 
-                                                data-check="{{ empty($customer) ? 'false' : 'true' }}"
-                                                style="background-color: #01964a; border-color: #01964a; letter-spacing: 0.5px; color: #fff;">
-                                            <i class="fas fa-cart-plus me-2"></i> THÊM VÀO GIỎ HÀNG
+                                        <button
+                                            data-check="{{ empty($customer) ? 'false' : 'true' }}"
+                                            type="submit" 
+                                            class="btn btn-primary rounded-1 w-100 py-2 submitCartButton"
+                                            >
+                                            
                                         </button>
-                                        <button class="btn btn-outline-primary py-auto fw-bold rounded-pill buyNowButton"
+                                        {{-- <button class="btn btn-outline-primary py-auto fw-bold rounded-pill buyNowButton"
                                                 data-check="{{ empty($customer) ? 'false' : 'true' }}"
                                                 style="color: #01964a; border-color: #01964a; letter-spacing: 0.5px;">
                                             <i class="fas fa-bolt me-2"></i> MUA NGAY
-                                        </button>
+                                        </button> --}}
                                     </div>
                                 </div>
                             </div>

@@ -536,16 +536,23 @@ class ProductService extends BaseService implements ProductServiceInterface {
         $product->promotions = $this->promotionService->getPromotionForProduct('product', $id);
         $product->attributes = $this->attributeService->getAttributeFrontEnd($product, $languageId);
         $seo = seo($product);
+        $product->sold = $product->orders
+                ->where('confirm', 'confirm')
+                ->sum(function ($order) {
+                    return $order->pivot->qty;
+                });
     
         if ($isJsonResponse) {
             $productArray = [
                 'id' => $product->id,
                 'name' => $product->name,
                 'description' => $product->description,
+                'sold' => $product->sold,
                 'content' => $product->content,
                 'image' => $product->image,
                 'promotions' => $product->promotions,
                 'attributes' => $product->attributes,
+                'reviews' => $product->reviews,
             ];
     
             return response()->json([

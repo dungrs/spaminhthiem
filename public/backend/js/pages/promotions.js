@@ -21,8 +21,7 @@ const Promotion = {
         toggleEndDateState();
     
         $checkbox.on('change', toggleEndDateState);
-    }
-    ,
+    },
 
     promotionSource: function() {
         $(document).on('click', '.chooseSource', function() {
@@ -530,7 +529,6 @@ const Promotion = {
     selectProductAndQuantity: function () {
         const initializeObjectChooses = (modal, objectInput) => {
             const objectChooses = [];
-    
             if (modal === 'Product' && Array.isArray(objectInput.name)) {
                 objectInput.name.forEach((name, index) => {
                     objectChooses.push({
@@ -547,7 +545,6 @@ const Promotion = {
                     });
                 });
             }
-    
             return objectChooses;
         };
     
@@ -564,8 +561,7 @@ const Promotion = {
         });
     
         const preloadModal = $('.preload_select_module_type').val();
-        const preloadObject = $('.input_object').val() || '{}';
-    
+        const preloadObject = JSON.parse($('.input_object').val() || '{}');
         if (preloadModal) {
             Promotion.objectChooses = initializeObjectChooses(preloadModal, preloadObject);
             Promotion.openAddProductQuantityModal(preloadModal);
@@ -1101,7 +1097,6 @@ const Promotion = {
             success: function(response) {
                 const tbody = $('.data-table');
                 tbody.empty();
-                console.log(response.data);
                 
                 response.data.data.forEach(item => {
                     const startDate = item.start_date ? moment(item.start_date).format('DD/MM/YYYY HH:mm') : '';

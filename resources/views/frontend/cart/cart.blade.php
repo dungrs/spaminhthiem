@@ -50,7 +50,7 @@
                                 <div class="cart-item p-3 border-bottom d-flex">
                                     <div class="item-image me-3">
                                         <img src="{{ $cart->image ?? '' }}" 
-                                            class="rounded-2 object-fit-contain" width="80px" height="100px">
+                                            class="rounded-2 object-fit-contain" width="80px" height="auto">
                                     </div>
                                     <div class="item-details flex-grow-1 ">
                                         <div class="d-flex justify-content-between">
@@ -70,6 +70,7 @@
                                                 <input type="number" value="{{ $cart->qty }}" name="quantity" id="quantity" 
                                                        class="custom-input-quantity cart text-center" min="1" style="height: 32px; !important; width: 32px !important; font-size: 0.8rem;">
                                                 <input type="hidden" class="rowId" value="{{ $cart->rowId }}">
+                                                <input type="hidden" class="id" value="{{ $cart->id }}">
                                                 <div class="custom-btn-quantity add cart" style="height: 32px; !important">+</div>
                                             </div>
                                             <div class="text-end">

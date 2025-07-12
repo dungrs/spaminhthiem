@@ -144,13 +144,13 @@ const Product = {
         // Trạng thái còn hàng / hết hàng
         if (isAvailable) {
             stockStatus.html(`
-                <i class="fas fa-check-circle me-2 text-success"></i>
-                <span class="text-success" style="font-size: 0.9rem;">Còn hàng</span>
+                <i class="fas fa-check-circle me-2 text-primary"></i>
+                <span class="text-primary" style="font-size: 0.9rem;">Còn hàng</span>
             `);
             quantityInput.prop('disabled', false);
             submitButton.prop('disabled', false).html(`
-                <img src="frontend/img/icon/icon-cart-plus.svg" />
-                 Thêm Vào Giỏ Hàng
+                <i class="fas fa-cart-plus me-2"></i>
+                Thêm Vào Giỏ Hàng
             `);
         } else {
             stockStatus.html(`
@@ -242,6 +242,7 @@ const Product = {
                 success: function (response) {
                     if (response.data) {
                         let data = response.data;
+                        console.log(data);
     
                         let formData = {
                             product_id: data.product.attributes.id,
@@ -255,6 +256,8 @@ const Product = {
     
                         Product.renderProductModalImage(data.product.attributes.album);
                         Product.renderProductNameModal(data.product);
+                        Product.renderSoldProductModal(data.product);
+                        Product.renderTotalReview(data.product);
                         Product.renderProductDescriptionModal(data.seo);
                         Product.renderAttributeGroups(data.product.attributes.attributeCatalogue);
     
@@ -332,6 +335,36 @@ const Product = {
 
     renderProductDescriptionModal: function(data) {
         $('.product-main-description').html(data.meta_description);
+    },
+
+    renderSoldProductModal: function(data) {
+        $('.product-sold').text(`Đã bán ${data.sold}`);
+    },
+
+    renderTotalReview: function(data) {
+        const totalReviews = data.reviews.length || 0;
+        let totalRate = 0;
+        let reviewHtml = ``;
+        if (totalReviews > 0 && data.reviews && data.reviews.length > 0) {
+            const sum = data.reviews.reduce((acc, review) => acc + review.score, 0);
+            totalRate = parseFloat((sum / totalReviews).toFixed(1));
+        }
+        if (totalReviews > 0) {
+            reviewHtml += `
+                    <div class="d-flex align-items-center">
+                        <div class="text-warning">
+                            ${Library.generateStar(totalRate)}
+                        </div>
+                        <span class="text-muted ms-1 small">(${totalReviews} đánh giá)</span>
+                    </div>`;
+        } else {
+            reviewHtml += `
+                        <span class="text-muted mb-1">
+                            <i class="fas fa-comment-slash me-2"></i> Chưa có đánh giá
+                        </span>
+                    `;
+        }
+        $('.product-review').html(reviewHtml);
     },
 
     renderAttributeGroups: function(attributeCatalogue) {
@@ -439,8 +472,8 @@ const Product = {
     storeCart: function(formData, callback) {
         const $button = $('.submitCartButton');
         const originalText = `
-            <img src="frontend/img/icon/icon-cart-plus.svg" >
-                    Thêm Vào Giỏ Hàng
+            <i class="fas fa-cart-plus me-2"></i>
+                Thêm Vào Giỏ Hàng
         `;
         $button.html('<i class="fas fa-spinner fa-spin me-2"></i> ĐANG XỬ LÝ...');
         $button.prop('disabled', true);

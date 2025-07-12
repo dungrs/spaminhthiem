@@ -209,7 +209,7 @@ const ProductCatalogue = {
                             productHtml += `
                                     <div class="d-flex align-items-center mb-1">
                                         <div class="text-warning small">
-                                            ${ProductCatalogue.generateStar(totalRate)}
+                                            ${Library.generateStar(totalRate)}
                                         </div>
                                         <span class="text-muted ms-1 small">(${totalReviews} đánh giá)</span>
                                     </div>`;
@@ -253,7 +253,6 @@ const ProductCatalogue = {
                         productList.append(productHtml);
                     });
                     
-                    console.log(response.data.links)
                     Product.setupProductDetailAndShowModal();
                     Library.renderPagination(response);
                 } else {
@@ -268,24 +267,6 @@ const ProductCatalogue = {
                 }
             },
         });
-    },
-
-    generateStar: function(rating) {
-        const fullStars = Math.floor(rating);
-        const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-        const emptyStars = 5 - fullStars - halfStar;
-        
-        let stars = '';
-        for (let i = 0; i < fullStars; i++) {
-            stars += '<i class="fas fa-star me-1"></i>';
-        }
-        if (halfStar) {
-            stars += '<i class="fas fa-star-half-alt me-1"></i>';
-        }
-        for (let i = 0; i < emptyStars; i++) {
-            stars += '<i class="far fa-star me-1"></i>';
-        }
-        return stars;
     },
 
     attachPaginationEvent: function () {

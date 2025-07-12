@@ -168,7 +168,6 @@ class CartController extends FrontendController
             'js' => [
                 'backend/js/library.js',
                 'backend/js/location.js',
-                'frontend/js/library.js',
                 'frontend/js/pages/auths.js',
                 'frontend/js/pages/carts.js',
             ],

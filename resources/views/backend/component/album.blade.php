@@ -28,17 +28,15 @@
 
     <div id="addproduct-img-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
         <div class="p-4 border-top rounded-3">
-            @if (!isset($gallery) || count($gallery) == 0)
-                <div class="click-to-upload">
-                    <div class="icon">
-                        <a href="#" class="upload-picture" data-name="album[]">
-                            <i class="display-4 text-muted mdi mdi-cloud-upload"></i>
-                        </a>
-                    </div>
-                    <h5 class="mt-2">{{ __('messages.album.upload_placeholder') }}</h5>
+            <div class="click-to-upload {{ isset($gallery) && count($gallery) ? "hidden" : "" }}">
+                <div class="icon">
+                    <a href="#" class="upload-picture" data-name="album[]">
+                        <i class="display-4 text-muted mdi mdi-cloud-upload"></i>
+                    </a>
                 </div>
-            @endif
-    
+                <h5 class="mt-2">{{ __('messages.album.upload_placeholder') }}</h5>
+            </div>
+
             <div class="upload-list upload-picture {{ (isset($gallery) && count($gallery)) ? '' : 'hidden' }}" data-name="album[]">
                 <ul id="sortable" class="clearfix data-album sortui ui-sortable">
                     @if (isset($gallery) && count($gallery))
@@ -49,7 +47,7 @@
                                         <img src="{{ $val }}" alt="{{ $val }}">
                                         <input type="hidden" name="album[]" value="{{ $val }}">
                                     </span>
-                                    <button type="button" class="delete-image"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="delete-image"><i class="bx bx-trash"></i></button>
                                 </div>
                             </li>
                         @endforeach

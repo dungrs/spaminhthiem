@@ -280,11 +280,7 @@
                             $canonical = writeUrl($product->canonical, true, true);
 
                             $total = $product->product_variants->sum('quantity');
-                            $sold = $product->orders
-                                    ->where('confirm', 'confirm')
-                                    ->sum(function ($order) {
-                                        return $order->pivot->qty;
-                                    });
+                            $sold = $product->sold;
                             $percent = round(($sold / $total) * 100);
 
                             $totalReviews = $product->reviews()->count();

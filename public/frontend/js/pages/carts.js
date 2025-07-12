@@ -11,6 +11,7 @@ const Cart = {
                 let option = {
                     qty: currentVal,
                     rowId: _this.siblings('.rowId').val(),
+                    id: _this.siblings('.id').val(),
                     _token: $('meta[name="csrf-token"]').attr('content'),
                 };
 
@@ -28,6 +29,7 @@ const Cart = {
             let option = {
                 qty: currentVal,
                 rowId: _this.siblings('.rowId').val(),
+                id: _this.siblings('.id').val(),
                 _token: $('meta[name="csrf-token"]').attr('content'),
             };
 
@@ -112,7 +114,12 @@ const Cart = {
                     Cart.updateCartTotalUI(response.data.cartRecaculate);
                     Cart.updateCartCountUI();
                 } else {
-                    alertify.error(response.message || 'Cập nhật thất bại');
+                    if (response.max_qty) {
+                        alertify.error('Số lượng vượt quá giỏ hàng. Số lượng tối đa có thể đặt là ' + response.max_qty);
+                        $input.val(response.max_qty);
+                    } else {
+                        alertify.error(response.message || 'Cập nhật thất bại');
+                    }
                 }
             },
             error: function () {

@@ -2,6 +2,15 @@
     $seoTables = $configs['seo']['permission']['table'];
     $seoTableHeaders = $configs['seo']['permission']['table']['table_header'];
 @endphp
+
+<style>
+    .table-container-scroll {
+        max-height: 600px;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+</style>
+
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -12,13 +21,15 @@
                             @include('backend.user.catalogue.component.cardHeader', ['permission' => true])
                             <div class="card-body">
                                 @include('backend.user.catalogue.component.filter', ['permission' => true])
-                                <div class="table-responsive">
-                                    <table class="table align-middle table-bordered" style="min-width: 1200px;">
+
+                                {{-- 📌 Bọc table bằng vùng scroll --}}
+                                <div class="table-container-scroll">
+                                    <table class="table align-middle table-bordered">
                                         <thead class="align-middle">
                                             <tr>
-                                                <th class="min-width-300">{{ $seoTableHeaders['name'] }}</th>
+                                                <th class="">{{ $seoTableHeaders['name'] }}</th>
                                                 @foreach ($userCatalogues as $userCatalogue)
-                                                    <th class="text-center min-width-200">{{ $userCatalogue->name }}</th>
+                                                    <th class="text-center">{{ $userCatalogue->name }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
@@ -32,19 +43,19 @@
                                                         </div>
                                                     </td>
                                                     @foreach ($userCatalogues as $userCatalogue)
-                                                    <td class="align-middle text-center">
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input 
-                                                                class="form-check-input checkbox-permission" 
-                                                                type="checkbox" 
-                                                                value="{{ $permission->id }}" 
-                                                                name="permissions[{{ $userCatalogue->id }}][]" 
-                                                                id="permissionCheck-{{ $userCatalogue->id }}-{{ $permission->id }}"
-                                                                {{ $userCatalogue->permissions->contains($permission->id) ? 'checked' : '' }}
-                                                            >
-                                                            <label class="form-check-label" for="permissionCheck-{{ $userCatalogue->id }}-{{ $permission->id }}"></label>
-                                                        </div>
-                                                    </td>
+                                                        <td class="align-middle text-center">
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input 
+                                                                    class="form-check-input checkbox-permission" 
+                                                                    type="checkbox" 
+                                                                    value="{{ $permission->id }}" 
+                                                                    name="permissions[{{ $userCatalogue->id }}][]" 
+                                                                    id="permissionCheck-{{ $userCatalogue->id }}-{{ $permission->id }}"
+                                                                    {{ $userCatalogue->permissions->contains($permission->id) ? 'checked' : '' }}
+                                                                >
+                                                                <label class="form-check-label" for="permissionCheck-{{ $userCatalogue->id }}-{{ $permission->id }}"></label>
+                                                            </div>
+                                                        </td>
                                                     @endforeach
                                                 </tr>
                                             @endforeach
@@ -53,19 +64,19 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mb-4">
                             <div class="col text-end">
                                 <button type="submit" class="btn btn-success submitButton">
                                     <i class="bx bx-file me-1"></i> {{ __('messages.save') }}
                                 </button>
-                            </div> <!-- end col -->
-                        </div> <!-- end row-->
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
-            <!-- end row -->
-        </div> <!-- container-fluid -->
+        </div>
     </div>
-    <!-- End Page-content -->
     @include('backend.component.footer')
 </div>

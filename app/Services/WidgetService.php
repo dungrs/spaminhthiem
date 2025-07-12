@@ -402,7 +402,8 @@ class WidgetService extends BaseService implements WidgetServiceInterface {
     }
 
     private function payload($request) {
-        $payload = $request->only('short_code', 'album', 'model', 'modelParent');
+        $payload = $request->only('short_code', 'model', 'modelParent');
+        $payload['album'] = $request->has('album') ? $request->input('album') : [];
         $payload['model_id'] = $request->input('modelItem.id');
         return $payload;
     }

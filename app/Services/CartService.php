@@ -252,17 +252,43 @@ class CartService extends BaseService implements CartServiceInterface
         DB::beginTransaction();    
         try {
             $payload = $request->input();
+
+            [$productId, $variantId] = explode('_', $payload['id']);
+
+            $productVariant = $this->productVariantRepository->findByCondition([
+                ['uuid', '=', $variantId]
+            ]);
+
+            if (!$productVariant) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Không tìm thấy biến thể sản phẩm.',
+                ], 404);
+            }
+
+            $totalQtyVariant = $productVariant->quantity;
+
+            if ((int) $payload['qty'] > $totalQtyVariant) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Số lượng yêu cầu vượt quá số lượng còn lại trong kho. Số lượng tối đa có thể đặt là ' . $totalQtyVariant,
+                    'max_qty' => $totalQtyVariant // Thêm thông tin số lượng tối đa
+                ], 200);
+            }
+
             $cart = Cart::instance('shopping')->update($payload['rowId'], $payload['qty']);
             $cartItem = Cart::instance('shopping')->get($payload['rowId']);
             $cartRecaculate = $this->cartAndPromotion();
-            
+
             $cartRecaculate['cartItemSubTotal'] = $cartItem->qty * $cartItem->price;
-    
+
+            DB::commit();
+
             $data = [
                 'cart'           => $cart,
                 'cartRecaculate' => $cartRecaculate
             ];
-    
+
             return response()->json([
                 'status'  => 'success',
                 'data'    => $data,

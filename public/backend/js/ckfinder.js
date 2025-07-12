@@ -129,6 +129,7 @@ const Finder = {
             Finder.updateImageOrder();
 
             if (uploadList.find('#sortable li').length === 0) {
+                console.log(123);
                 uploadList.addClass('hidden');
                 uploadContainer.removeClass('hidden');
             }

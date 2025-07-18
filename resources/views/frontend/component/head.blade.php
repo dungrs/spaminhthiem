@@ -44,8 +44,6 @@
 <!-- DNS Prefetch -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-<link rel="dns-prefetch" href="https://bizweb.dktcdn.net">
-<link rel="dns-prefetch" href="https://myphamthucuc.com">
 
 <!-- Fonts & Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -88,11 +86,6 @@
 @foreach ($customCss as $css)
       <link href="{{ asset($css) }}" rel="stylesheet">
 @endforeach
-
-<!-- Scripts - Preload -->
-<link rel="preload" as="script" href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/jquery.js?1717567288856"/>
-
-<script src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/jquery.js?1717567288856" type="text/javascript"></script>
 
 <!-- Google Tag Manager -->
 <script>

@@ -44,9 +44,9 @@
     </section>
 
     <section class="section">
-        <link rel="stylesheet" href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/flashsale.css?1717567288856" media="print" onload="this.media='all'" />
+        <link rel="stylesheet" href="{{ asset('frontend/css/flashsale.css') }}" media="print" onload="this.media='all'" />
         <noscript>
-            <link href="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/flashsale.css?1717567288856" rel="stylesheet" type="text/css" media="all" />
+            <link href="{{ asset('frontend/css/flashsale.css') }}" rel="stylesheet" type="text/css" media="all" />
         </noscript>
         <section
             class="section_flashsale flashsale"
@@ -95,7 +95,7 @@
                         </div>
                     @endif
                     <div class="text-center mb-3 mt-1">
-                        <a href="uu-dai-hot" title="Xem tất cả" class="btn btn-main btn-icon">
+                        <a href="{{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
                             Xem tất cả
                             <svg class="icon">
                                 <use xlink:href="#icon-arrow" />
@@ -129,7 +129,7 @@
             };
         </script>
 
-        <script src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/flashsale.js?1717567288856" defer></script>
+        <script src="{{ asset('frontend/js/flashsale.js') }}" defer></script>
     </section>
 
     {{-- Danh sách thương hiệu --}}
@@ -159,6 +159,7 @@
         </section>
     </section>
 
+    {{-- Sản phẩm nhiều lượt xem --}}
     <section class="section">
         <section class="section_product_tag section">
             <div class="container card border-0 shadow-none">
@@ -170,19 +171,16 @@
                 <div class="row">
                     <div class="col-lg-3 col-12">
                         <div class="d-lg-block d-none py-3">
-                            <a class="banner" href="#" title=" best seller">
-                                <img loading="lazy" class="img-fluid" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/product_tag_banner.jpg?1717567288856" width="330" height="463" alt=" best seller" />
+                            <a class="banner" href="#" title=" {{ $widgets['product-most-viewed']['name'] }}">
+                                <img loading="lazy" class="img-fluid" src="{{ writeUrl($widgets['product-most-viewed']['album']['0']) }}" width="330" height="463" alt=" {{ $widgets['product-most-viewed']['name'] }}" />
                             </a>
                         </div>
                         <div class="tag-list pb-3" style="--tag-bg: #efe7d5; --tag-color: #2f4858;">
-                            <a class="tag-item" href="/search?q=tags:(desembre)" title="desembre">desembre</a>
-                            <a class="tag-item" href="/search?q=tags:(+GSC%2B)" title=" GSC+">GSC+</a>
-                            <a class="tag-item" href="/search?q=tags:(+Esthemax)" title=" Esthemax">Esthemax</a>
-                            <a class="tag-item" href="/search?q=tags:(+Serum+M%E1%BB%A5n)" title=" Serum Mụn">Serum Mụn</a>
-                            <a class="tag-item" href="/search?q=tags:(+M%E1%BA%B7t+N%E1%BA%A1)" title=" Mặt Nạ">Mặt Nạ</a>
-                            <a class="tag-item" href="/search?q=tags:(+Medic+Roller)" title=" Medic Roller">Medic Roller</a>
-                            <a class="tag-item" href="/search?q=tags:(+Smas)" title=" Smas">Smas</a>
-                            <a class="tag-item" href="/search?q=tags:(+Gi%E1%BA%A3m+Gi%C3%A1)" title=" Giảm Giá">Giảm Giá</a>
+                            @if ($widgets['tag-list-product'])
+                                @foreach ($widgets['tag-list-product']['object']->take(8) as $object)
+                                    <a class="tag-item" href="{{ writeUrl($object->canonical, true, true) }}" title="{{ $object->name }}">{{ $object->name }}</a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="col-lg-9 col-12">
@@ -201,7 +199,7 @@
                             </script>
                         </div>
                         <div class="text-center mt-3 col-12">
-                            <a href="serum-tinh-chat-tri-mun" title="Xem tất cả" class="btn btn-main btn-icon">
+                            <a href="{{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
                                 Xem tất cả
                                 <svg class="icon">
                                     <use xlink:href="#icon-arrow" />
@@ -221,8 +219,7 @@
                 <div class="text-center row">
                     <a class="col-12 banner" href="#" title="Hot product">
                         <picture>
-                            <source media="(max-width: 600px)" srcset="//bizweb.dktcdn.net/thumb/grande/100/494/811/themes/921992/assets/section_hot_banner.png?1717567288856" />
-                            <img class="img-fluid" loading="lazy" src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/section_hot_banner.png?1717567288856" alt="Hot product" width="1410" height="176" />
+                            <img class="img-fluid" loading="lazy" src="{{ writeUrl($widgets['spa-cosmetics']['album']['0']) }}" alt="Hot product" width="1410" height="176" />
                         </picture>
                     </a>
                 </div>
@@ -256,7 +253,7 @@
                             </script>
                         </div>
                         <div class="text-center mt-3 col-12">
-                            <a href="kem-massage-mat" title="Xem tất cả" class="btn btn-main btn-icon">
+                            <a href={{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
                                 Xem tất cả
                                 <svg class="icon">
                                     <use xlink:href="#icon-arrow" />
@@ -281,11 +278,10 @@
                     <div class="col-12 col-xl-30 text-center pb-3 product-col">
                         <a class="banner" href="#" title="{{ $widgets['spa-cleansing']['name'] }}">
                             <picture>
-                                <source media="(max-width: 480px)" srcset="//bizweb.dktcdn.net/thumb/large/100/494/811/themes/921992/assets/section_hot.jpg?1717567288856" />
                                 <img
                                     class="img-fluid"
                                     loading="lazy"
-                                    src="//bizweb.dktcdn.net/thumb/grande/100/494/811/themes/921992/assets/section_hot.jpg?1717567288856"
+                                    src="{{ writeUrl($widgets['spa-cleansing']['album']['0']) }}"
                                     width="546"
                                     height="353"
                                     alt="{{ $widgets['spa-cleansing']['name'] }}"
@@ -308,7 +304,7 @@
                     </script>
                 </div>
                 <div class="text-center mt-3 col-12">
-                    <a href="dau-tay-trang" title="Xem tất cả" class="btn btn-main">
+                    <a href="{{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main">
                         Xem tất cả
                         <svg class="icon">
                             <use xlink:href="#icon-arrow" />

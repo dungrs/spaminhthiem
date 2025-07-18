@@ -95,7 +95,7 @@
                     <div class="payment-methods mb-4">
                         <h5 class="mb-3">Chấp nhận thanh toán</h5>
                         <div class="d-flex flex-wrap gap-2">
-                            <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/footer_trustbadge.jpg?1717567288856" 
+                            <img src="{{ writeUrl('frontend/img/icon/footer_trustbadge.png', true) }}" 
                                  alt="Payment methods" 
                                  class="img-fluid rounded" 
                                  loading="lazy">
@@ -103,7 +103,7 @@
                     </div>
                     
                     <div class="certification">
-                        <img src="//bizweb.dktcdn.net/100/494/811/themes/921992/assets/logo_bct.png?1717567288856" 
+                        <img src="{{ writeUrl('frontend/img/icon/logo_bct.webp', true) }}" 
                              alt="Bộ Công Thương" 
                              class="img-fluid" 
                              loading="lazy"

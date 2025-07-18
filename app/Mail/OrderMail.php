@@ -32,7 +32,7 @@ class OrderMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: '🛍️ TokyoLife - Đơn hàng của bạn đã được xác nhận!',
+            subject: '🛍️ MinhThiemSpa - Đơn hàng của bạn đã được xác nhận!',
         );
     }
 
@@ -46,8 +46,8 @@ class OrderMail extends Mailable
         return new Content(
             view: 'mail.order', // Template email đơn hàng
             with: [
-                'brand' => 'TokyoLife',
-                'support_email' => 'support@tokyolife.vn',
+                'brand' => 'MinhThiemSpa',
+                'support_email' => 'support@minhthiemspa.vn',
             ],
         );
     }

@@ -46,6 +46,7 @@ class HomeController extends FrontendController
             'hot-deal' => ['keyword' => 'hot-deal', 'options' => ['object' => false, 'promotion' => true, 'model' => "Product"]],
             'spa-brand-highlight' => ['keyword' => 'spa-brand-highlight', 'options' => ['object' => false]],
             'product-most-viewed' => ['keyword' => 'product-most-viewed', 'options' => ['object' => false, 'promotion' => true, 'model' => "Product"]],
+            'tag-list-product' => ['keyword' => 'tag-list-product', 'options' => ['object' => false]],
             'spa-cosmetics' => ['keyword' => 'spa-cosmetics', 'options' => ['object' => false, 'promotion' => true, 'model' => "Product"]],
             'spa-cleansing' => ['keyword' => 'spa-cleansing', 'options' => ['object' => false, 'promotion' => true, 'model' => "Product"]],
             'post-hl' => ['keyword' => 'post-hl', 'options' => ['object' => false]],

@@ -2,7 +2,6 @@ var HT = {
     _token: $('meta[name="csrf-token"]').attr('content'),
     filterTimeout: null,
     currentPage: 1,
-    app_url: 'http://127.0.0.1:8000',
 
     initializeChoices: function () {
         $(".choice-single").each(function () {

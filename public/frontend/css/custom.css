@@ -551,6 +551,14 @@
     border-color: #01964a !important;
 }
 
+.buyNowButton:disabled {
+    color: #aaa !important;
+    background-color: #f0f0f0 !important;
+    border-color: #ccc !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 .accordion-button:not(.collapsed) {
   color: #01964a;
 }

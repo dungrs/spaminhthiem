@@ -64,12 +64,13 @@ class CartService extends BaseService implements CartServiceInterface
     public function create($request, $languageId = 1)
     {
         DB::beginTransaction();
-    
+
         try {
             $payload = $request->input();
             $productId = $payload['product_id'] ?? null;
             $quantity = $payload['quantity'] ?? 1;
-    
+            $actionType = $payload['action_type'] ?? 'add_to_cart';
+
             $product = $this->productService->getProductDetails($productId, $languageId);
 
             $data = [
@@ -79,49 +80,69 @@ class CartService extends BaseService implements CartServiceInterface
                 'price'  => $product->price ?? 0,
                 'weight' => 0,
             ];
-    
+
             if (!empty($payload['attribute_id'])) {
                 $attributeId = $payload['attribute_id'];
                 $attributeString = sortAttributeId($attributeId);
                 $attributes = $this->attributeService->getAttributeIn($attributeId, $languageId);
-            
+
                 $attributeData = [];
                 foreach ($attributes as $attribute) {
                     $attributeData[] = [
-                        'attribute_catalogue_id' => $attribute->attribute_catalogue_id,
+                        'attribute_catalogue_id'   => $attribute->attribute_catalogue_id,
                         'attribute_catalogue_name' => $this->attributeCatalogueService
                             ->getAttributeCatalogueDetails($attribute->attribute_catalogue_id, $languageId)->name,
-                        'attribute_id' => $attribute->id,
-                        'attribute_name' => $attribute->name,
+                        'attribute_id'             => $attribute->id,
+                        'attribute_name'           => $attribute->name,
                     ];
                 }
-            
+
                 $productVariant = $this->productVariantService->getProductVariant($payload, $languageId, $attributeString);
-                
+
                 if ($productVariant) {
                     $data['id'] = $product->id . '_' . $productVariant->uuid;
                     $data['name'] = $product->name . ' ' . ($productVariant->name ?? '');
                     $data['price'] = $productVariant->price ?? 0;
                     $data['options'] = [
                         'attributes' => $attributeData,
-                        'image' => $product->image ?? null
+                        'image'      => $product->image ?? null
                     ];
-            
-                    $promotion = $this->promotionService->getPromotionForProductVariant($productId, $productVariant)->first();
+
+                    $promotion = $this->promotionService
+                        ->getPromotionForProductVariant($productId, $productVariant)
+                        ->first();
+
                     if ($promotion) {
                         $data['price'] = $promotion->product_price - $promotion->finalDiscount;
                     }
                 }
             }
 
-            Cart::instance('shopping')->add($data);
-            DB::commit();
-    
-            return response()->json([
-                'status'  => 'success',
-                'cart'    => Cart::instance('shopping')->content(),
-                'message' => 'Sản phẩm đã được thêm vào giỏ hàng thành công!',
-            ], 200);
+            if ($actionType === 'buy_now') {
+                Cart::instance('buy_now')->destroy();
+                Cart::instance('buy_now')->add($data);
+
+                DB::commit();
+
+                return response()->json([
+                    'status'  => 'success',
+                    'cart'    => Cart::instance('buy_now')->content(),
+                    'message' => 'Sản phẩm đã được thêm vào giỏ mua ngay!',
+                    // 'redirect_url' => route('checkout.buynow') // Có thể trả thêm URL để FE redirect
+                ], 200);
+
+            } else {
+                Cart::instance('shopping')->add($data);
+
+                DB::commit();
+
+                return response()->json([
+                    'status'  => 'success',
+                    'cart'    => Cart::instance('shopping')->content(),
+                    'message' => 'Sản phẩm đã được thêm vào giỏ hàng thành công!',
+                ], 200);
+            }
+
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
@@ -191,8 +212,8 @@ class CartService extends BaseService implements CartServiceInterface
         return $carts;
     }
 
-    public function reCalculate() {
-        $carts = Cart::instance('shopping')->content();
+    public function reCalculate($checkoutMode) {
+        $carts = Cart::instance($checkoutMode)->content();
         $total = 0;
         $totalItem = 0;
         foreach($carts as $cart) {
@@ -357,15 +378,15 @@ class CartService extends BaseService implements CartServiceInterface
         }
     }
 
-    public function order($request) {
+    public function order($request, $checkoutMode) {
         DB::beginTransaction();
-    
+        
         try {
-            $payload = $this->request($request);
+            $payload = $this->request($request, $checkoutMode);
             $order = $this->orderRepository->create($payload);
             if ($order && $order->id > 0) {
                 $this->createOrderProduct($payload, $order);
-                Cart::instance('shopping')->destroy();
+                Cart::instance($checkoutMode)->destroy();
             }
             DB::commit();
             return [
@@ -382,8 +403,8 @@ class CartService extends BaseService implements CartServiceInterface
         }
     }
     
-    private function cartAndPromotion() {
-        $cartRecaculate = $this->reCalculate();
+    private function cartAndPromotion($checkoutMode = 'shopping') {
+        $cartRecaculate = $this->reCalculate($checkoutMode);
         $cartPromotion = $this->cartPromotion($cartRecaculate['cartTotal']);
         $cartRecaculate['cartTotal'] = $cartRecaculate['cartTotal'] - $cartPromotion['discount'];
         $cartRecaculate['cartDiscount'] = $cartPromotion['discount'];
@@ -411,10 +432,10 @@ class CartService extends BaseService implements CartServiceInterface
         }
     }
 
-    private function request($request) {
-        $carts = Cart::instance('shopping')->content();
+    private function request($request, $checkoutMode) {
+        $carts = Cart::instance($checkoutMode)->content();
         $carts = $this->remakeCart($carts);
-        $reCalculateCart = $this->reCalculate();
+        $reCalculateCart = $this->reCalculate($checkoutMode);
         $cartPromotion = $this->cartPromotion($reCalculateCart['cartTotal']);
         
         $payload = $request->except(['_token', 'voucher', 'create']);
@@ -429,6 +450,7 @@ class CartService extends BaseService implements CartServiceInterface
         $payload['confirm'] = 'pending';
         $payload['delivery'] = 'pending';
         $payload['payment'] = 'unpaid';
+
 
         return $payload;
     }

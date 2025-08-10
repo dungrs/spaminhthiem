@@ -156,10 +156,9 @@ class ProductService extends BaseService implements ProductServiceInterface {
         $productIds = $products->pluck('id')->toArray();
         $promotions = $this->promotionService->getBestPromotion('product', $productIds);
 
-        // Xử lý giá khuyến mãi và lọc theo điều kiện
         $filtered = $products->filter(function ($product) use ($priceMin, $priceMax, $rating, $promotions) {
+            // Tính giá
             $promotion = $promotions->firstWhere('product_id', $product->id);
-
             if ($promotion) {
                 $product->promotion = $promotion;
                 $product->price = $promotion->product_price - $promotion->finalDiscount;
@@ -167,11 +166,27 @@ class ProductService extends BaseService implements ProductServiceInterface {
                 $product->price = optional($product->product_variants->first())->price ?? 0;
             }
 
+            // Lọc theo giá
             if ($priceMin && $product->price < $priceMin) return false;
             if ($priceMax && $product->price > $priceMax) return false;
 
-            if (!is_null($rating) && isset($product->average_rating)) {
-                if ($product->average_rating < $rating) return false;
+            // 👉 Lọc theo rating từ reviews (nếu có)
+            if (!is_null($rating)) {
+                $totalReviews = $product->reviews->count();
+                if ($totalReviews > 0) {
+                    $totalScore = 0;
+                    foreach ($product->reviews as $review) {
+                        $totalScore += $review->score;
+                    }
+                    $averageRating = $totalScore / $totalReviews;
+
+                    if ($averageRating < $rating) return false;
+
+                    // Gắn vào product nếu cần hiển thị
+                    $product->average_rating = round($averageRating, 1);
+                } else {
+                    return false; // không có đánh giá thì loại luôn
+                }
             }
 
             return true;

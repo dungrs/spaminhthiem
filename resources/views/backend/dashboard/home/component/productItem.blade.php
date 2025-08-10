@@ -1,6 +1,10 @@
 @php
     $total = $product->product_variants->sum('quantity');
-    $sold = $product->sold;
+    $sold = $product->orders
+        ->where('confirm', 'confirm')
+        ->sum(function ($order) {
+            return $order->pivot->qty;
+        });
     $name = $product->name;
     $image = asset(image($product->image));
     $price = number_format($product->product_variants->first()->price ?? 0);

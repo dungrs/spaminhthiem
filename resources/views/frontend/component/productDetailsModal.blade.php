@@ -116,19 +116,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-auto pt-2 d-grid gap-3">
+                                    <div class="mt-auto pt-2 d-grid gap-2">
                                         <button
                                             data-check="{{ empty($customer) ? 'false' : 'true' }}"
                                             type="submit" 
-                                            class="btn btn-primary rounded-1 w-100 py-2 submitCartButton"
-                                            >
-                                            
+                                            class="btn btn-primary rounded-1 w-100 py-2 submitCartButton">
+                                            <i class="fas fa-cart-plus me-2"></i>Thêm Vào Giỏ Hàng
                                         </button>
-                                        {{-- <button class="btn btn-outline-primary py-auto fw-bold rounded-pill buyNowButton"
+                                        <button class="btn btn-outline-primary fw-bold rounded-1 buyNowButton"
                                                 data-check="{{ empty($customer) ? 'false' : 'true' }}"
                                                 style="color: #01964a; border-color: #01964a; letter-spacing: 0.5px;">
-                                            <i class="fas fa-bolt me-2"></i> MUA NGAY
-                                        </button> --}}
+                                            <i class="fas fa-bolt me-2"></i> Mua Ngay
+                                        </button>
                                     </div>
                                 </div>
                             </div>

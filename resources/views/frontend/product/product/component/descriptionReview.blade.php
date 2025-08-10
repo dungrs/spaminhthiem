@@ -69,7 +69,7 @@
                                             <div class="rating-progress mb-2">
                                                 <div class="d-flex align-items-center">
                                                     <small class="me-2">{{ $i }} <i class="fas fa-star text-warning"></i></small>
-                                                    <div class="progress flex-grow-1" style="height: 8px;">
+                                                    <div class="progress flex-grow-1" style="height: 6px;">
                                                         <div class="progress-bar bg-warning" style="width: {{ $percent }}%"></div>
                                                     </div>
                                                     <small class="text-muted ms-2">{{ $countStar }}</small>
@@ -280,7 +280,11 @@
                             $canonical = writeUrl($product->canonical, true, true);
 
                             $total = $product->product_variants->sum('quantity');
-                            $sold = $product->sold;
+                            $sold = $product->orders
+                                ->where('confirm', 'confirm')
+                                ->sum(function ($order) {
+                                    return $order->pivot->qty;
+                                });
                             $percent = round(($sold / $total) * 100);
 
                             $totalReviews = $product->reviews()->count();

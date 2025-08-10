@@ -67,7 +67,7 @@
                     <ul class="list-unstyled">
                         @foreach ($menuBlock['children'] as $child)
                         <li class="mb-2">
-                            <a href="{{ url($child['item']->canonical) }}" class="text-muted text-decoration-none hover-primary">
+                            <a href="{{ writeUrl($child['item']->canonical, true, true) }}" class="text-muted text-decoration-none hover-primary">
                                 {{ $child['item']->name }}
                             </a>
                         </li>

@@ -7,7 +7,6 @@ use App\Http\Controllers\FrontendController;
 use App\Repositories\SystemRepository;
 
 use App\Services\CartService;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends FrontendController

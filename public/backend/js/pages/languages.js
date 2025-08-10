@@ -109,7 +109,7 @@ const Language = {
                                 </div>
                             </td>
                             <td>
-                                <image src="${HT.app_url + item.image}" class="rounded img-flag">
+                                <image src="${item.image}" class="rounded img-flag">
                             </td>
                             <td>${item.name ?? '-'}</td>
                             <td>${item.canonical ?? '-'}</td>

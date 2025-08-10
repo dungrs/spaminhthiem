@@ -19,6 +19,8 @@ use App\Classes\Paypal;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\Request;
+
 class CartController extends FrontendController
 {   
     protected $orderService;
@@ -50,7 +52,7 @@ class CartController extends FrontendController
     public function cart() {
         if (Auth::guard('customer')->check()) {
             $carts = Cart::instance('shopping')->content();
-            $reCalculateCart = $this->cartService->reCalculate();
+            $reCalculateCart = $this->cartService->reCalculate('shopping');
             $cartPromotion = $this->cartService->cartPromotion($reCalculateCart['cartTotal']);
             $carts = $this->cartService->remakeCart($carts);
             $seo = [
@@ -75,10 +77,11 @@ class CartController extends FrontendController
         }
     }
 
-    public function checkout() {
+    public function checkout(Request $request) {
         if (Auth::guard('customer')->check()) {
-            $carts = Cart::instance('shopping')->content();
-            $reCalculateCart = $this->cartService->reCalculate();
+            $checkoutMode = $request->input('action_type') ?? 'shopping';
+            $carts = Cart::instance($checkoutMode)->content();
+            $reCalculateCart = $this->cartService->reCalculate($checkoutMode);
             $cartPromotion = $this->cartService->cartPromotion($reCalculateCart['cartTotal']);
             $carts = $this->cartService->remakeCart($carts);
             $seo = [
@@ -86,7 +89,7 @@ class CartController extends FrontendController
                 'meta_keyword' => '',
                 'meta_description' => '',
                 'meta_image' => '',
-                'canonical' => writeUrl('gio-hang', true, true)
+                'canonical' => writeUrl('thanh-toan', true, true)
             ];
 
             $template = 'frontend.cart.checkout';
@@ -95,8 +98,10 @@ class CartController extends FrontendController
                 'seo' => $seo,
                 'carts' => $carts,
                 'reCalculateCart' => $reCalculateCart,
-                'cartPromotion' => $cartPromotion
+                'cartPromotion' => $cartPromotion,
+                'checkoutMode' => $checkoutMode,
             ];
+
             return view('frontend.homepage.layout', $this->prepareViewData($extra));
         } else {
             return redirect()->route('home.index');
@@ -104,7 +109,8 @@ class CartController extends FrontendController
     }
 
     public function store(StoreCartRequest $request) {
-        $order = $this->cartService->order($request);
+        $checkoutMode = $request->input('action_type') ?? 'shopping';
+        $order = $this->cartService->order($request, $checkoutMode);
         if ($order['status']) {
             if ($order['order']->method === 'cod') {
                 return redirect()->route('cart.success', ['code' => $order['order']->code])->with('success', 'Đặt hàng thành công');

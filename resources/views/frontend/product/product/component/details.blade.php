@@ -105,19 +105,16 @@
             </div>
 
             <div class="group-btn d-flex gap-4 mt-3">
-                <div class="btn border-primary text-primary btn-outline-primary rounded-1 w-100 py-2">
-                    <div class="mt-1">
-                        <i class="fa-solid fa-heart"></i>
-                        Yêu Thích
-                    </div>
-                </div>
-
+                <button class="btn border-primary text-primary btn-outline-primary rounded-1 w-100 py-2 buyNowButton"
+                        data-check="{{ empty($customer) ? 'false' : 'true' }}"
+                        >
+                    <i class="fas fa-bolt me-2"></i> Mua Ngay
+                </button>
                 <button
                     data-check="{{ empty($customer) ? 'false' : 'true' }}"
                     type="submit" 
-                    class="btn btn-primary rounded-1 w-100 py-2 submitCartButton"
-                    >
-                    
+                    class="btn btn-primary rounded-1 w-100 py-2 submitCartButton"> 
+                    <i class="fas fa-cart-plus me-2"></i>Thêm Vào Giỏ Hàng
                 </button>
             </div>
         </form>

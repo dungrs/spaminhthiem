@@ -123,7 +123,7 @@ const ProductCatalogue = {
                         
                         const name = item.name || 'Sản phẩm';
                         const brand = item.made_in || 'Thương hiệu';
-                        const image = item.image && item.image.startsWith('http') ? item.image : `${baseUrl}${item.image || ''}`;
+                        const image = item.image;
                         const canonical = `${baseUrl}/${item.canonical || 'product-detail'}.html`;
                         
                         // Process promotion
@@ -148,14 +148,23 @@ const ProductCatalogue = {
                             }
                         }
                         
-                        const totalReviews = item.reviews.length || 0;
                         let totalRate = 0;
-                        
-                        if (totalReviews > 0 && item.reviews && item.reviews.length > 0) {
-                            const sum = item.reviews.reduce((acc, review) => acc + review.score, 0);
+                        let totalReviews = 0;
+
+                        if (item.reviews && Array.isArray(item.reviews) && item.reviews.length > 0) {
+                            totalReviews = item.reviews.length;
+
+                            let sum = 0;
+                            for (let i = 0; i < item.reviews.length; i++) {
+                                const score = item.reviews[i].score;
+                                if (typeof score === 'number') {
+                                    sum += score;
+                                }
+                            }
+
                             totalRate = parseFloat((sum / totalReviews).toFixed(1));
                         }
-                        
+                                        
                         let productHtml = `
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6 product-col">
                             <div class="item_product_main">

@@ -129,6 +129,7 @@ const Product = {
         const stockStatus = $('.stock-status');
         const quantityInput = $('#quantity');
         const submitButton = $('.submitCartButton');
+        const buyNowButton = $('.buyNowButton');
         const availableQuantity = $('.available-quantity span');
         const skuElement = $('.sku');
 
@@ -148,6 +149,7 @@ const Product = {
                 <span class="text-primary" style="font-size: 0.9rem;">Còn hàng</span>
             `);
             quantityInput.prop('disabled', false);
+            buyNowButton.prop('disabled', false);
             submitButton.prop('disabled', false).html(`
                 <i class="fas fa-cart-plus me-2"></i>
                 Thêm Vào Giỏ Hàng
@@ -158,6 +160,7 @@ const Product = {
                 <span class="text-danger" style="font-size: 0.9rem;">Hết hàng</span>
             `);
             quantityInput.prop('disabled', true);
+            buyNowButton.prop('disabled', true);
             submitButton.prop('disabled', true).html(`
                 <i class="fas fa-times-circle me-2"></i> Hết hàng
             `);
@@ -422,7 +425,7 @@ const Product = {
             let formElement = document.getElementById('form-store-cart');
             if (formElement) {
                 let formData = new FormData(formElement);
-                Product.storeCart(formData);
+                Product.storeCart(formData, '.submitCartButton');
             }
         });
     
@@ -438,9 +441,8 @@ const Product = {
             let formElement = document.getElementById('form-store-cart');
             if (formElement) {
                 let formData = new FormData(formElement);
-    
-                Product.storeCart(formData, function () {
-                    window.location.href = 'gio-hang.html';
+                Product.storeCart(formData, '.buyNowButton', function () {
+                    window.location.href = `thanh-toan.html?action_type=buy_now`;
                 });
             }
         });
@@ -469,12 +471,23 @@ const Product = {
         });
     },
     
-    storeCart: function(formData, callback) {
-        const $button = $('.submitCartButton');
-        const originalText = `
-            <i class="fas fa-cart-plus me-2"></i>
-                Thêm Vào Giỏ Hàng
-        `;
+    storeCart: function(formData, button, callback) {
+        let $button = $(button);
+        let originalText;
+        let action_type;
+
+        if ($button.hasClass('buyNowButton')) {
+            originalText = `<i class="fas fa-bolt me-2"></i> Mua Ngay`;
+            action_type = 'buy_now';
+        } else {
+            originalText = `<i class="fas fa-cart-plus me-2"></i>Thêm Vào Giỏ Hàng`;
+            action_type = 'add_to_cart';
+        }
+
+        if (formData instanceof FormData) {
+            formData.append('action_type', action_type);
+        }
+
         $button.html('<i class="fas fa-spinner fa-spin me-2"></i> ĐANG XỬ LÝ...');
         $button.prop('disabled', true);
         
@@ -485,7 +498,7 @@ const Product = {
             processData: false,
             contentType: false,
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 $button.html(originalText);
                 $button.prop('disabled', false);
                 
@@ -497,7 +510,7 @@ const Product = {
                     }
                 }
             },
-            error: function (xhr) {
+            error: function(xhr) {
                 $button.html(originalText);
                 $button.prop('disabled', false);
                 

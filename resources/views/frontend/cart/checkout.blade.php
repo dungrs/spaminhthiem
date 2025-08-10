@@ -14,6 +14,7 @@
                         
                         <div class="card-body">
                             <form class="needs-validation" novalidate>
+                                <input type="hidden" name="action_type" value="{{ $checkoutMode }}">
                                 @include('frontend.cart.component.information')
                                 @include('frontend.cart.component.shippingAddress')
                                 @include('frontend.cart.component.method')

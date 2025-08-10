@@ -253,7 +253,7 @@
                             </script>
                         </div>
                         <div class="text-center mt-3 col-12">
-                            <a href={{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
+                            <a href="{{ writeUrl('my-pham', true, true) }}" title="Xem tất cả" class="btn btn-main btn-icon">
                                 Xem tất cả
                                 <svg class="icon">
                                     <use xlink:href="#icon-arrow" />

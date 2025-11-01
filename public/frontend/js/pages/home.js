@@ -49,6 +49,8 @@ const Home = {
             return;
         }
 
+        console.log(keyword)
+
         $.ajax({
             url: '/ajax/product/filterUser',
             type: 'GET',
@@ -80,7 +82,11 @@ const Home = {
                     productsData.forEach(item => {
                         if (!item) return;
                         
-                        const name = item.name || 'Sản phẩm';
+                        const made_in = item.made_in;
+                        const name = item.name 
+                        ? (item.name.length > 50 ? item.name.substring(0, 30) + '...' : item.name) 
+                        : 'Sản phẩm';
+
                         const image = item.image && item.image.startsWith('http') ? item.image : `${baseUrl}${item.image || ''}`;
                         const canonical = `${baseUrl}/${item.canonical || 'product-detail'}.html`;
                         
@@ -106,9 +112,11 @@ const Home = {
                             }
                         }
                         
-                        const totalReviews = item.reviews_count || 0;
+                        const totalReviews = item.reviews.length || 0;
                         let totalRate = 0;
-                        
+
+                        console.log(item);
+
                         if (totalReviews > 0 && item.reviews && item.reviews.length > 0) {
                             const sum = item.reviews.reduce((acc, review) => acc + review.score, 0);
                             totalRate = parseFloat((sum / totalReviews).toFixed(1));
@@ -118,7 +126,7 @@ const Home = {
                         let productHtml = `
                         <tr class="search-item">
                             <!-- Product Image -->
-                            <td style="width: 80px;" class="ps-3">
+                            <td style="width: 100px;" class="ps-3">
                                 <div class="position-relative">
                                     <img src="${image}" 
                                         class="img-fluid rounded-2 border" 
@@ -129,16 +137,17 @@ const Home = {
                         // Discount badge
                         if (discount) {
                             productHtml += `
-                                    <span class="badge bg-danger position-absolute top-0 start-0 translate-middle">-${discount}%</span>`;
+                                    <span class="badge bg-warning position-absolute top-0 start-0 translate-middle">-${discount}%</span>`;
                         }
-                        
+
                         productHtml += `
                                 </div>
                             </td>
         
                             <!-- Product Info -->
-                            <td class="px-3">
+                            <td class="p-3" style="min-width: 200px;">
                                 <div class="d-flex flex-column">
+                                    <span class="product-vendor">${made_in}</span>
                                     <a href="${canonical}" class="fw-semibold text-dark mb-1 text-decoration-none">
                                         ${name}
                                     </a>
@@ -160,7 +169,6 @@ const Home = {
                         
                         productHtml += `
                                     </div>
-                                    <div class="text-success small fw-bold">Còn hàng</div>
                                 </div>
                             </td>
         
@@ -222,13 +230,13 @@ const Home = {
         
         let stars = '';
         for (let i = 0; i < fullStars; i++) {
-            stars += '<i class="fas fa-star"></i>';
+            stars += '<i class="me-1 fas fa-star"></i>';
         }
         if (halfStar) {
-            stars += '<i class="fas fa-star-half-alt"></i>';
+            stars += '<i class="me-1 fas fa-star-half-alt"></i>';
         }
         for (let i = 0; i < emptyStars; i++) {
-            stars += '<i class="far fa-star"></i>';
+            stars += '<i class="me-1 far fa-star"></i>';
         }
         return stars;
     },

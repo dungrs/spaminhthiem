@@ -141,7 +141,8 @@ class ProductService extends BaseService implements ProductServiceInterface {
         }
 
         $condition = [
-            ['pl.language_id', '=', $languageId]
+            ['pl.language_id', '=', $languageId],
+            ['products.publish', '=', '2']
         ];
         if ($keyword) {
             $condition[] = ['pl.name', 'LIKE', "%{$keyword}%"];

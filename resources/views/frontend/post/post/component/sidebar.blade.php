@@ -3,14 +3,14 @@
     <!-- Categories Widget -->
     <div class="category-sidebar mb-4">
         <div class="card-header bg-white border-bottom-0 pb-2">
-            <h3 class="h6 mb-0 text-primary"><i class="fas fa-list-alt me-2"></i> Danh mục
+            <h3 class="h6 mb-0 text-primary"><i class="fas fa-list-alt me-2"></i> Danh mục</h3>
         </div>
 
         <div class="category-body bg-white p-3 rounded-bottom border border-top-0">
             <ul class="category-list list-unstyled mb-0">
-                @foreach($postCatalogues->where('level', 2) as $parent)
+                @foreach($postCatalogues->where('level', 2)->take(5) as $parent) {{-- chỉ lấy tối đa 5 danh mục --}}
                     @php
-                        $children = $postCatalogues->where('parent_id', $parent->id);
+                        $children = $postCatalogues->where('parent_id', $parent->id)->take(5); // giới hạn con cũng 5
                         $collapseId = 'cat-' . $parent->id;
                     @endphp
                     <li class="category-item">
@@ -50,11 +50,11 @@
         </div>
         <div class="card-body pt-2 px-3">
             <div class="list-group list-group-flush">
-                @foreach ($postRelateds as $post)
+                @foreach ($postRelateds->take(5) as $post) {{-- chỉ lấy tối đa 5 tin liên quan --}}
                     <a href="{{ writeUrl($post->canonical, true, true) }}" class="list-group-item list-group-item-action px-0 py-3">
                         <div class="d-flex align-items-start">
                             <img src="{{ $post->image }}"
-                                class="rounded me-3 flex-shrink-0" width="60" height="60" alt="Top 9 Spa tại Bắc Giang">
+                                class="rounded me-3 flex-shrink-0" width="60" height="60" alt="{{ $post->name }}">
                             <div>
                                 <div class="small fw-bold text-dark mb-1">{{ Str::limit($post->name, 30, '...') }}</div>
                                 <div class="text-muted small mb-1">{{ Str::limit($post->meta_description, 25, '...') }}</div>
@@ -63,8 +63,6 @@
                         </div>
                     </a>
                 @endforeach
-                
-                <!-- Thêm tin nổi bật khác -->
             </div>
         </div>
     </div>

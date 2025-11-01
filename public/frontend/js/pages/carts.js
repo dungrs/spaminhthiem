@@ -160,8 +160,24 @@ const Cart = {
 
         if (count > 0) {
             $('.delete-all-cart').removeClass('d-none');
+            $('.btn-checkout').removeClass('d-none');
         } else {
             $('.delete-all-cart').addClass('d-none');
+            $('.btn-checkout').addClass('d-none');
+
+            // Hiển thị giao diện giỏ hàng trống
+            if (!$('.empty-cart').length) {
+                $('.card-body').html(`
+                    <div class="p-5 text-center text-muted empty-cart">
+                        <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                        <h6 class="fw-bold">Giỏ hàng của bạn đang trống</h6>
+                        <p class="small">Hãy thêm sản phẩm vào giỏ để tiếp tục mua sắm.</p>
+                        <a href="/" class="btn btn-primary mt-3">
+                            <i class="fas fa-arrow-left me-2"></i> Tiếp tục mua sắm
+                        </a>
+                    </div>
+                `);
+            }
         }
     },
 

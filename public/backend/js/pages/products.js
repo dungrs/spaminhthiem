@@ -358,7 +358,7 @@ const Product = {
         let attributesHtml = `
             <tr class="variant-row tr-variant-${classModified}" style="cursor: pointer">
                 <td>
-                    <img class="rounded imageVariant avatar" src="http://127.0.0.1:8000/backend/images/no-image.jpg" alt="Image">
+                    <img class="rounded imageVariant avatar" src="/backend/images/no-image.jpg" alt="Image">
                 </td>
                 ${attributeTd}
                 <td class="align-middle td_quantity">-</td>
@@ -655,7 +655,7 @@ const Product = {
             const fileName = variant.file_name ?? '';
             const fileUrl = variant.file_url ?? '';
             const album = variant.album ?? '';
-            const imageUrl = album ? album.split(',')[0] : 'http://127.0.0.1:8000/backend/images/no-image.jpg';
+            const imageUrl = album ? album.split(',')[0] : '/backend/images/no-image.jpg';
     
             const fieldMap = {
                 'variant_quantity': quantity,

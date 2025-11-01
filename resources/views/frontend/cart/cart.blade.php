@@ -91,6 +91,15 @@
                                     </div>
                                 </div>
                             @endforeach
+                        @else
+                            <div class="p-5 text-center text-muted empty-cart">
+                                <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                                <h6 class="fw-bold">Giỏ hàng của bạn đang trống</h6>
+                                <p class="small">Hãy thêm sản phẩm vào giỏ để tiếp tục mua sắm.</p>
+                                <a href="{{ route('homepage') }}" class="btn btn-primary mt-3">
+                                    <i class="fas fa-arrow-left me-2"></i> Tiếp tục mua sắm
+                                </a>
+                            </div>
                         @endif
                     </div>
                     <div class="card-footer delete-all-cart bg-white border-0 {{ count($carts) && !is_null($carts) ? '' : 'd-none' }}" id="delete-all-cart-btn">
@@ -105,11 +114,13 @@
             <div class="col-lg-4">
                 <div class="card border-0 shadow-lg rounded-3">
                     @include('frontend.cart.component.summary')
-                    <div class="card-footer bg-white border-0">
-                        <a href="{{ route('checkout') }}" class="btn btn-save w-100 py-2">
-                            <i class="fas fa-credit-card me-2"></i> Thanh Toán
-                        </a>
-                    </div>
+                    @if (count($carts) && !is_null($carts))
+                        <div class="card-footer bg-white border-0">
+                            <a href="{{ route('checkout') }}" class="btn btn-save w-100 py-2 btn-checkout">
+                                <i class="fas fa-credit-card me-2"></i> Thanh Toán
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

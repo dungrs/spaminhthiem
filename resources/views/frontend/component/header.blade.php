@@ -24,10 +24,10 @@
                         <img class="img-fluid" style="max-width: 80% !important;" src="{{ writeUrl($systems['homepage_logo'], true) }}" alt="logo Mỹ Phẩm Minh Thiêm" width="248" height="50" />
                     </a>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-12 header-center" id="search-header">
-                    <form action="/search" method="get" class="input-group search-bar custom-input-group" role="search">
-                        <input type="text" name="query" value="" autocomplete="off" class="input-group-field auto-search form-control" required="" data-placeholder="Tìm theo tên sản phẩm...; Tìm theo thương hiệu...;" />
-                        <input type="hidden" name="type" value="product" />
+                
+                <div class="col-xl-4 col-lg-4 col-12 position-relative header-center">
+                    <form class="input-group form-search custom-input-group">
+                        <input type="text" autocomplete="off" class="input-group-field search-box auto-search form-control" data-placeholder="Tìm theo tên sản phẩm...; Tìm kiếm theo tên thương hiệu...;" />
                         <span class="input-group-btn btn-action">
                             <button type="submit" aria-label="search" class="btn text-white icon-fallback-text h-100">
                                 <svg class="icon">
@@ -36,8 +36,19 @@
                             </button>
                         </span>
                     </form>
-                    <div class="search-overlay"></div>
+
+                    {{-- Kết quả tìm kiếm --}}
+                    <div class="search-result position-absolute top-100 mt-1 rounded-3 shadow-lg bg-white overflow-hidden" style="z-index: 9999; width: 100% !important; display: block; border: none;">
+                        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table align-middle table-hover mb-0">
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-3 col-xl-5 col-lg-5">
                     <ul class="header-right mb-0 float-right list-unstyled d-flex align-items-center">
                         <!-- Hotline -->
@@ -167,6 +178,7 @@
         @endif
     </div>
 </div>
+
 <script type="text/x-custom-template" data-template="stickyHeader">
     <header class="header header_sticky">
         <div class="mid-header wid_100 d-flex align-items-center">
@@ -240,22 +252,31 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="sticky-overlay"></div>
                     </div>
 
                     <!-- Search Bar -->
-                    <div class="col-8 col-md-6 col-lg-4 col-xl-4 header-center py-1" id="search-header">
-                        <form action="/search" method="get" class="input-group search-bar custom-input-group" role="search">
-                            <input type="text" name="query" value="" autocomplete="off"
-                                class="input-group-field auto-search form-control" required=""
-                                data-placeholder="Tìm theo tên sản phẩm...; Tìm theo thương hiệu...;">
-                            <input type="hidden" name="type" value="product">
+                    <div class="col-xl-4 col-lg-4 col-12 position-relative header-center">
+                        <form class="input-group form-search custom-input-group">
+                            <input type="text" autocomplete="off" class="input-group-field search-box auto-search form-control" data-placeholder="Tìm theo tên sản phẩm...; Tìm kiếm theo tên thương hiệu...;" />
                             <span class="input-group-btn btn-action">
                                 <button type="submit" aria-label="search" class="btn text-white icon-fallback-text h-100">
-                                    <svg class="icon"><use xlink:href="#icon-search" /></svg>
+                                    <svg class="icon">
+                                        <use xlink:href="#icon-search" />
+                                    </svg>
                                 </button>
                             </span>
                         </form>
+
+                        {{-- Kết quả tìm kiếm --}}
+                        <div class="search-result position-absolute top-100 mt-1 rounded-3 shadow-lg bg-white overflow-hidden" style="z-index: 9999; width: 100% !important; display: block; border: none;">
+                            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                                <table class="table align-middle table-hover mb-0">
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="search-overlay"></div>
                     </div>
 

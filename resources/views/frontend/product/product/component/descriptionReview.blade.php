@@ -85,126 +85,128 @@
                                         @php
                                             $review->is_liked_by_customer = $review->likedUsers()->where('customer_id', auth('customer')->id())->exists();
                                         @endphp
-                                        <div class="review-item card mb-3 border-0 shadow-sm" id="review-{{ $review->id }}">
-                                            <div class="card-body p-4">
-                                                <!-- Phần thông tin review gốc (giữ nguyên) -->
-                                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
-                                                            alt="{{ $review->customers->name }}" 
-                                                            class="rounded-circle me-3" 
-                                                            style="width: 40px; height: 40px; object-fit: cover;">
-                                                        <div>
-                                                            <h6 class="mb-0 fw-bold">{{ $review->customers->name }}</h6>
-                                                            <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <div class="star-rating mb-1">
-                                                            {!! generateStar($review->score) !!}
-                                                        </div>
-                                                        <small class="text-muted">{{ $review->created_at->format('d/m/Y') }}</small>
-                                                    </div>
-                                                </div>
-                                                <p class="mb-0">{{ $review->description }}</p>
-                                                
-                                                <!-- Phần actions -->
-                                                <div class="comment-actions mt-3 d-flex gap-2">
-                                                    <button class="btn btn-light border rounded-pill d-flex align-items-center px-3 py-1 shadow-sm btn-like-review {{ $review->is_liked_by_customer ? 'active' : '' }}"
-                                                        data-review-id="{{ $review->id }}"
-                                                        data-customer-id="{{ $customer->id ?? 0 }}">
-                                                        <i class="{{ $review->is_liked_by_customer ? 'fas' : 'far' }} fa-thumbs-up me-2 text-primary"></i> Thích
-                                                        @if ($review->like_count > 0)
-                                                            <span class="ms-1 like-count">({{ $review->like_count }})</span>
-                                                        @else
-                                                            <span class="ms-1 like-count" style="display: none;"></span>
-                                                        @endif
-                                                    </button>
-
-                                                    <button class="btn btn-light border rounded-pill d-flex align-items-center px-3 py-1 shadow-sm btn-reply"
-                                                        data-review-id="{{ $review->id }}">
-                                                        <i class="fas fa-reply me-2 text-success"></i> Trả lời
-                                                    </button>
-                                                </div>
-
-                                                {{-- <!-- Danh sách các phản hồi (nếu có) -->
-                                                <div class="replies-list mt-3 ps-4 border-start border-2 border-light">
-                                                    <div class="reply-item mb-3">
-                                                        <div class="d-flex align-items-start">
+                                        @if ($review->customers->name)
+                                            <div class="review-item card mb-3 border-0 shadow-sm" id="review-{{ $review->id }}">
+                                                <div class="card-body p-4">
+                                                    <!-- Phần thông tin review gốc (giữ nguyên) -->
+                                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                                        <div class="d-flex align-items-center">
                                                             <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
                                                                 alt="{{ $review->customers->name }}" 
                                                                 class="rounded-circle me-3" 
                                                                 style="width: 40px; height: 40px; object-fit: cover;">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-0 fw-bold">{{ $customer->name }}</h6>
+                                                            <div>
+                                                                <h6 class="mb-0 fw-bold">{{ $review->customers->name }}</h6>
                                                                 <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
-                                                                <p class="mb-0 mt-1">{{ $review->description }}</p>
                                                             </div>
                                                         </div>
+                                                        <div class="text-end">
+                                                            <div class="star-rating mb-1">
+                                                                {!! generateStar($review->score) !!}
+                                                            </div>
+                                                            <small class="text-muted">{{ $review->created_at->format('d/m/Y') }}</small>
+                                                        </div>
+                                                    </div>
+                                                    <p class="mb-0">{{ $review->description }}</p>
+                                                    
+                                                    <!-- Phần actions -->
+                                                    <div class="comment-actions mt-3 d-flex gap-2">
+                                                        <button class="btn btn-light border rounded-pill d-flex align-items-center px-3 py-1 shadow-sm btn-like-review {{ $review->is_liked_by_customer ? 'active' : '' }}"
+                                                            data-review-id="{{ $review->id }}"
+                                                            data-customer-id="{{ $customer->id ?? 0 }}">
+                                                            <i class="{{ $review->is_liked_by_customer ? 'fas' : 'far' }} fa-thumbs-up me-2 text-primary"></i> Thích
+                                                            @if ($review->like_count > 0)
+                                                                <span class="ms-1 like-count">({{ $review->like_count }})</span>
+                                                            @else
+                                                                <span class="ms-1 like-count" style="display: none;"></span>
+                                                            @endif
+                                                        </button>
+
+                                                        <button class="btn btn-light border rounded-pill d-flex align-items-center px-3 py-1 shadow-sm btn-reply"
+                                                            data-review-id="{{ $review->id }}">
+                                                            <i class="fas fa-reply me-2 text-success"></i> Trả lời
+                                                        </button>
                                                     </div>
 
-                                                    <div class="reply-item mb-3">
-                                                        <div class="d-flex align-items-start">
-                                                            <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
-                                                                alt="{{ $review->customers->name }}" 
-                                                                class="rounded-circle me-3" 
-                                                                style="width: 40px; height: 40px; object-fit: cover;">
-                                                            <div class="flex-grow-1">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <h6 class="mb-0 fw-bold text-dark">{{ $customer->name }}</h6>
-                                                                    <i class="fas fa-reply text-muted small"></i>
-                                                                    <h6 class="mb-0 fw-bold text-primary">Thiều Lê Dũng</h6>
+                                                    {{-- <!-- Danh sách các phản hồi (nếu có) -->
+                                                    <div class="replies-list mt-3 ps-4 border-start border-2 border-light">
+                                                        <div class="reply-item mb-3">
+                                                            <div class="d-flex align-items-start">
+                                                                <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
+                                                                    alt="{{ $review->customers->name }}" 
+                                                                    class="rounded-circle me-3" 
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="mb-0 fw-bold">{{ $customer->name }}</h6>
+                                                                    <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
+                                                                    <p class="mb-0 mt-1">{{ $review->description }}</p>
                                                                 </div>
-
-                                                                <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
-                                                                <p class="mb-0 mt-1">{{ $review->description }}</p>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="reply-item mb-3">
-                                                        <div class="d-flex align-items-start">
-                                                            <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
-                                                                alt="{{ $review->customers->name }}" 
-                                                                class="rounded-circle me-3" 
-                                                                style="width: 40px; height: 40px; object-fit: cover;">
-                                                            <div class="flex-grow-1">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <h6 class="mb-0 fw-bold text-dark">{{ $customer->name }}</h6>
-                                                                    <i class="fas fa-reply text-muted small"></i>
-                                                                    <h6 class="mb-0 fw-bold text-primary">Dương Hồng Nhung</h6>
+                                                        <div class="reply-item mb-3">
+                                                            <div class="d-flex align-items-start">
+                                                                <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
+                                                                    alt="{{ $review->customers->name }}" 
+                                                                    class="rounded-circle me-3" 
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                                <div class="flex-grow-1">
+                                                                    <div class="d-flex align-items-center gap-2">
+                                                                        <h6 class="mb-0 fw-bold text-dark">{{ $customer->name }}</h6>
+                                                                        <i class="fas fa-reply text-muted small"></i>
+                                                                        <h6 class="mb-0 fw-bold text-primary">Thiều Lê Dũng</h6>
+                                                                    </div>
+
+                                                                    <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
+                                                                    <p class="mb-0 mt-1">{{ $review->description }}</p>
                                                                 </div>
+                                                            </div>
+                                                        </div>
 
-                                                                <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
-                                                                <p class="mb-0 mt-1">{{ $review->description }}</p>
+                                                        <div class="reply-item mb-3">
+                                                            <div class="d-flex align-items-start">
+                                                                <img src="{{ $review->customers->image ?? asset('frontend/img/icon/icon-user.svg') }}" 
+                                                                    alt="{{ $review->customers->name }}" 
+                                                                    class="rounded-circle me-3" 
+                                                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                                                <div class="flex-grow-1">
+                                                                    <div class="d-flex align-items-center gap-2">
+                                                                        <h6 class="mb-0 fw-bold text-dark">{{ $customer->name }}</h6>
+                                                                        <i class="fas fa-reply text-muted small"></i>
+                                                                        <h6 class="mb-0 fw-bold text-primary">Dương Hồng Nhung</h6>
+                                                                    </div>
+
+                                                                    <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
+                                                                    <p class="mb-0 mt-1">{{ $review->description }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <!-- Phần form trả lời (ẩn ban đầu) -->
+                                                    <div class="reply-form mt-3" id="reply-form-{{ $review->id }}" style="display: none;">
+                                                        <form class="reply-form-inner" data-review-id="{{ $review->id }}">
+                                                            @csrf
+                                                            <div class="form-group mb-2">
+                                                                <textarea class="form-control reply-textarea" 
+                                                                        rows="3" 
+                                                                        placeholder="Viết phản hồi của bạn..." 
+                                                                        required></textarea>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end gap-2">
+                                                                <button type="button" class="btn btn-outline-secondary btn-cancel-reply" 
+                                                                        data-review-id="{{ $review->id }}">
+                                                                    Hủy
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary btn-submit-reply">
+                                                                    Gửi phản hồi
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div> --}}
                                                 </div>
-                                                
-                                                <!-- Phần form trả lời (ẩn ban đầu) -->
-                                                <div class="reply-form mt-3" id="reply-form-{{ $review->id }}" style="display: none;">
-                                                    <form class="reply-form-inner" data-review-id="{{ $review->id }}">
-                                                        @csrf
-                                                        <div class="form-group mb-2">
-                                                            <textarea class="form-control reply-textarea" 
-                                                                    rows="3" 
-                                                                    placeholder="Viết phản hồi của bạn..." 
-                                                                    required></textarea>
-                                                        </div>
-                                                        <div class="d-flex justify-content-end gap-2">
-                                                            <button type="button" class="btn btn-outline-secondary btn-cancel-reply" 
-                                                                    data-review-id="{{ $review->id }}">
-                                                                Hủy
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary btn-submit-reply">
-                                                                Gửi phản hồi
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div> --}}
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>
